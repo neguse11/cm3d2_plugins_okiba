@@ -1,0 +1,11 @@
+@rem バニラの CM3D2 の位置
+set CM3D2_VANILLA_DIR=C:\KISS\CM3D2
+
+@rem 改造版の CM3D2 の位置
+set CM3D2_MOD_DIR=C:\KISS\CM3D2_KAIZOU
+
+@rem 64bit/32bit の選択 (64bitなら「x64」、32bitなら「x86」)
+set CM3D2_PLATFORM=x64
+
+@rem ReiPatcher の ini ファイル名
+set REIPATCHER_INI=CM3D2%CM3D2_PLATFORM%.ini

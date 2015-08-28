@@ -1,0 +1,10 @@
+.vs/
+bin/
+obj/
+.*/
+
+*.user
+
+lib/*/
+*.rsp
+config.bat
