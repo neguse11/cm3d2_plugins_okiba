@@ -1,9 +1,9 @@
-call %~dp0csc-basic-options.bat>%RF%
+call "%~dp0csc-basic-options.bat" > %RF%
 del %OUT% >nul 2>&1
 %csc% @%RF% || exit /b %ERRORLEVEL%
 del %RF% >nul 2>&1
 
-if not exist %OUT% (
+if not exist "%OUT%" (
   echo エラー：コンパイルに失敗しました。%OUT%が生成できませんでした
   exit /b 1
 ) else (
