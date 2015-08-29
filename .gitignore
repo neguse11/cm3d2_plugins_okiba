@@ -4,6 +4,7 @@ obj/
 .*/
 
 *.user
+*.exe
 
 lib/*/
 *.rsp

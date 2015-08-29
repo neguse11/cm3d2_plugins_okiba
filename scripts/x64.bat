@@ -2,15 +2,25 @@
 setlocal ENABLEEXTENSIONS
 
 set PLATFORM=x64
+set REIPATCHER_URL=https://mega.co.nz/#!rsImja6D!Of4s5lsD7y9JylVZ7miWg63Mxt5MVKniLgWqBr0oJl8
 set REIPATCHER_7Z=ReiPatcher_0.9.0.7.7z
+set UNITYINJECTOR_URL=https://mega.co.nz/#!m1YV1CpI!Knssx6-S1q2q6Qfuq8cFQQ6LKZeA-JiLRm4I7tkQxo8
 set UNITYINJECTOR_7Z=UnityInjector_1.0.1.1.7z
 set PASSWD=byreisen
+
+set ZIP_URL=https://github.com/neguse11/cm3d2_plugins_okiba/archive/master.zip
+set ZIP=master.zip
+
+set _7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip
+set _7Z_FILE=7za920.zip
 
 set DP0=%~dp0
 set ROOT=%DP0:~0,-1%
 
 set REIPATCHER_INI=%ROOT%\ReiPatcher\CM3D2%PLATFORM%.ini
-set _7z=%ROOT%\_7z\7za.exe
+set _7z="%ROOT%\_7z\7za.exe"
+set CSC=C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe
+set MEGADL="%ROOT%\cm3d2_plugins_okiba-master\scripts\megadl.exe"
 
 set INSTALL_PATH=
 set MOD_PATH=
@@ -75,18 +85,6 @@ if not exist "%ROOT%\CM3D2%PLATFORM%_Data" (
   exit /b 1
 )
 
-if not exist "%REIPATCHER_7Z%" (
-  echo ReiPatcherのアーカイブファイル「%REIPATCHER_7Z%」がありません
-  echo アーカイブをダウンロードして、「%ROOT%」に配置してください
-  exit /b 1
-)
-
-if not exist "%UNITYINJECTOR_7Z%" (
-  echo ReiPatcherのアーカイブファイル「%UNITYINJECTOR_7Z%」がありません
-  echo アーカイブをダウンロードして、「%ROOT%」に配置してください
-  exit /b 1
-)
-
 
 @rem
 @rem %ROOT%\_7z\ 下に 7zip を展開する
@@ -94,8 +92,6 @@ if not exist "%UNITYINJECTOR_7Z%" (
 
 mkdir _7z >nul 2>&1
 pushd _7z
-set _7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip
-set _7Z_FILE=7za920.zip
 echo 7zのアーカイブ「%_7Z_URL%」のダウンロード、展開中
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%_7Z_URL%', '%_7Z_FILE%')"
 if not exist "%_7Z_FILE%" (
@@ -108,8 +104,72 @@ popd
 
 
 @rem
+@rem cm3d2_plugins_okibaのアーカイブをダウンロードし、
+@rem %ROOT%\cm3d2_plugins_okiba\ 下に展開する
+@rem
+
+echo ZIPファイル「%ZIP_URL%」のダウンロード中
+
+@rem http://stackoverflow.com/a/20476904/2132223
+powershell -Command "(New-Object Net.WebClient).DownloadFile('%ZIP_URL%', '%ZIP%')"
+if not exist "%ZIP%" (
+  echo zipファイル %ZIP_URL% のダウンロードに失敗しました。
+  exit /b 1
+)
+
+rmdir /s /q cm3d2_plugins_okiba-master >nul 2>&1
+
+@rem http://www.howtogeek.com/tips/how-to-extract-zip-files-using-powershell/
+@rem http://stackoverflow.com/questions/2359372/
+powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%ROOT%\%ZIP%');foreach($i in $z.items()){$s.Namespace('%ROOT%').copyhere($i,0x14)}"
+del %ZIP% >nul 2>&1
+
+echo ZIPファイルをフォルダー「%ROOT%\cm3d2_plugins_okiba-master」に展開しました
+
+
+@rem
+@rem megadl のコンパイル
+@rem
+del %MEGADL% >nul 2>&1
+pushd "%ROOT%\cm3d2_plugins_okiba-master\scripts\"
+%CSC% megadl.cs
+popd
+if not exist %MEGADL% (
+  echo 「%ROOT%\cm3d2_plugins_okiba-master\scripts\megadl.cs」のコンパイルに失敗しました
+  exit /b 1
+)
+
+
+@rem
+@rem %ROOT%\ 下に ReiPatcher をダウンロード
+@rem
+echo 「%REIPATCHER_URL%」をダウンロード中
+%MEGADL% %REIPATCHER_URL% %REIPATCHER_7Z%
+if not exist %REIPATCHER_7Z% (
+  echo 「%REIPATCHER_URL%」のダウンロードに失敗しました
+  exit /b 1
+)
+
+
+@rem
+@rem %ROOT%\ 下に UnityInjector をダウンロード
+@rem
+echo 「%UNITYINJECTOR_URL%」をダウンロード中
+%MEGADL% %UNITYINJECTOR_URL% %UNITYINJECTOR_7Z%
+if not exist %UNITYINJECTOR_7Z% (
+  echo 「%UNITYINJECTOR_7Z%」のダウンロードに失敗しました
+  exit /b 1
+)
+
+
+@rem
 @rem %ROOT%\ReiPatcher\ 下に ReiPatcher を展開する
 @rem
+if not exist "%REIPATCHER_7Z%" (
+  echo ReiPatcherのアーカイブファイル「%REIPATCHER_7Z%」がありません
+  echo アーカイブをダウンロードして、「%ROOT%」に配置してください
+  exit /b 1
+)
 
 echo ReiPatcherのアーカイブ「%REIPATCHER_7Z%」の展開中
 rmdir /s /q ReiPatcher >nul 2>&1
@@ -142,6 +202,11 @@ echo ReiPatcherの展開完了
 @rem
 @rem %ROOT%\UnityInjector\ 下に UnityInjector を展開する
 @rem
+if not exist "%UNITYINJECTOR_7Z%" (
+  echo ReiPatcherのアーカイブファイル「%UNITYINJECTOR_7Z%」がありません
+  echo アーカイブをダウンロードして、「%ROOT%」に配置してください
+  exit /b 1
+)
 
 echo UnityInjectorのアーカイブ「%UNITYINJECTOR_7Z%」の展開中
 rmdir /s /q UnityInjector >nul 2>&1
@@ -152,35 +217,6 @@ copy /y Managed\*.dll ..\CM3D2%PLATFORM%_Data\Managed\ >nul 2>&1
 copy /y ReiPatcher\*.dll ..\ReiPatcher\Patches\ >nul 2>&1
 popd
 echo UnityInjectorの展開完了
-
-
-@rem
-@rem cm3d2_plugins_okibaのアーカイブをダウンロードし、展開する
-@rem
-
-set ZIP_URL=https://github.com/neguse11/cm3d2_plugins_okiba/archive/master.zip
-set ZIP=master.zip
-
-echo ZIPファイル「%ZIP_URL%」のダウンロード中
-
-@rem http://stackoverflow.com/a/20476904/2132223
-powershell -Command "(New-Object Net.WebClient).DownloadFile('%ZIP_URL%', '%ZIP%')"
-if not exist "%ZIP%" (
-  echo zipファイル %ZIP_URL% のダウンロードに失敗しました。
-  exit /b 1
-)
-
-rmdir /s /q cm3d2_plugins_okiba-master >nul 2>&1
-
-@rem http://www.howtogeek.com/tips/how-to-extract-zip-files-using-powershell/
-@rem http://stackoverflow.com/questions/2359372/
-powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%ROOT%\%ZIP%');foreach($i in $z.items()){$s.Namespace('%ROOT%').copyhere($i,0x14)}"
-del %ZIP% >nul 2>&1
-
-echo ZIPファイルをフォルダー「%ROOT%\cm3d2_plugins_okiba-master」に展開しました
-
-
-
 
 
 if defined SAME_PATH (
