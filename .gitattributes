@@ -1,0 +1,8 @@
+*        text=auto
+
+*.csproj text merge=union
+*.sln    text merge=union eol=crlf
+
+*.cs     text diff=csharp
+*.bat text eol=crlf
+*.bat.txt text eol=crlf
