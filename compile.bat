@@ -1,8 +1,4 @@
-@echo off
-setlocal ENABLEEXTENSIONS
-
-call %~dp0base.bat || exit /b %ERRORLEVEL%
-pushd %~dp0
+@echo off && setlocal ENABLEEXTENSIONS && pushd %~dp0 && call %~dp0scripts\base.bat || exit /b %ERRORLEVEL%
 
 call ExternalSaveData\compile.bat || exit /b %ERRORLEVEL%
 call FastFade\compile.bat || exit /b %ERRORLEVEL%

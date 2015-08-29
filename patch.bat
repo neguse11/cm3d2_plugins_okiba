@@ -1,7 +1,4 @@
-@echo off
-setlocal ENABLEEXTENSIONS
-call %~dp0base.bat || exit /b %ERRORLEVEL%
-pushd %~dp0
+@echo off && setlocal ENABLEEXTENSIONS && pushd %~dp0 && call %~dp0scripts\base.bat || exit /b %ERRORLEVEL%
 
 pushd %REIPATCHER_DIR%
 del /q %CM3D2_MOD_MANAGED_DIR%\Assembly-CSharp.dll.*.bak >nul 2>&1
