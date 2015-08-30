@@ -5,7 +5,9 @@ obj/
 
 *.user
 *.exe
+*.zip
 
+cm3d2_plugins_okiba-master/
 lib/*/
 *.rsp
 config.bat
