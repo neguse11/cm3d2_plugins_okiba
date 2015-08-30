@@ -1,7 +1,7 @@
 @echo off
 setlocal ENABLEEXTENSIONS
 
-set PLATFORM=x64
+set PLATFORM=x86
 set REIPATCHER_URL=https://mega.co.nz/#!rsImja6D!Of4s5lsD7y9JylVZ7miWg63Mxt5MVKniLgWqBr0oJl8
 set REIPATCHER_7Z=ReiPatcher_0.9.0.7.7z
 set UNITYINJECTOR_URL=https://mega.co.nz/#!m1YV1CpI!Knssx6-S1q2q6Qfuq8cFQQ6LKZeA-JiLRm4I7tkQxo8

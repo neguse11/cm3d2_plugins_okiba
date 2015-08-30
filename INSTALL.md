@@ -1,4 +1,4 @@
-# ネットワークインストーラーもどき (x64用)
+# ネットワークインストーラーもどき
 
 コマンドを実行することで、自動的にアーカイブのダウンロード、展開と初期設定を行います。
 設定や環境を頻繁にいじる人向けではなく、新規に環境を作るときのためのツールです
@@ -32,7 +32,12 @@ cd /d C:\KISS\CM3D2_TEST
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/neguse11/cm3d2_plugins_okiba/master/scripts/x64.bat','d')"&&type d|more /p>d.bat&&d.bat&&del /q d d.bat
 ```
 
- - x86 は現状未対応です
+ - x86 の場合は以下のコマンドを実行してください
+
+```
+cd /d C:\KISS\CM3D2_TEST
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/neguse11/cm3d2_plugins_okiba/master/scripts/x86.bat','d')"&&type d|more /p>d.bat&&d.bat&&del /q d d.bat
+```
 
 
 ## あとは？
