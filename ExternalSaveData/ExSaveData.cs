@@ -873,7 +873,6 @@ namespace CM3D2.ExternalSaveData.Managed
             public bool Remove(string propName)
             {
                 bool b = props.Remove(propName);
-                Console.WriteLine("Plugin.Remove({0}) -> {1}", propName, b);
                 return b;
             }
         }
