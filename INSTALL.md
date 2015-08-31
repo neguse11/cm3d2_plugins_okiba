@@ -1,51 +1,50 @@
 # ネットワークインストーラーもどき
 
-コマンドを実行することで、自動的にアーカイブのダウンロード、展開と初期設定を行います。
-設定や環境を頻繁にいじる人向けではなく、新規に環境を作るときのためのツールです
+新規に改造版の環境を作るときのためのネットワークインストーラーです
 
+実行を行うと、以下の設定を行います
 
-## 既存の改造用フォルダーでは注意して実行してください
-
-実行すると、ReiPatcher, UnityInjector, cm3d2_plugins_okiba-master フォルダーを削除してから新規に展開します。
-
-このため「ReiPatcher\Patches\」や「UnityInjector\Config\」が消えます。
-
-既存の改造用フォルダーで実験する際は注意してください。
+ - ReiPatcherを自動ダウンロードし、動作するように設定します
+ - UnityInjectorを自動ダウンロードし、動作するように設定します
+ - 以下のプラグインをコンパイルし、動作するように設定します
+    - ExternalSaveData (拡張セーブデータ)
+    - FastFade (フェードイン高速化)
+    - MaidVoicePitch (ボイスピッチ、身長制限等を変更)
+    - AddModSlider (上記 MaidVoicePitch のパラメーターを GUI から設定)
+    - SkillCommandShortCut (スキルをショートカットキーで選択)
+    - PersonalizedEditSceneSettings (エディットシーンの背景等の保存)
+    - ConsistentWindowPosition (ウィンドウ位置の保存)
 
 
 ## 準備
 
  - 公式パッチを 1.05 まであてます
- - 以下のようなコマンドで改造用フォルダーを作ります
+
+
+## 実行 (64bit, x64)
+
+x64 (64bit) の場合は以下のコマンドを実行してください
 
 ```
-xcopy /E C:\KISS\CM3D2 C:\KISS\CM3D2_TEST\
-```
-
-
-## 実行
-
- - x64 の場合は以下のコマンドを実行してください
-
-```
-cd /d C:\KISS\CM3D2_TEST
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/neguse11/cm3d2_plugins_okiba/master/scripts/x64.bat','d')"&&type d|more /p>d.bat&&d.bat&&del /q d d.bat
-```
-
- - x86 の場合は以下のコマンドを実行してください
-
-```
-cd /d C:\KISS\CM3D2_TEST
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/neguse11/cm3d2_plugins_okiba/master/scripts/x86.bat','d')"&&type d|more /p>d.bat&&d.bat&&del /q d d.bat
+mkdir C:\KISS\CM3D2_KAIZOU
+cd /d C:\KISS\CM3D2_KAIZOU
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/64','.bat')"&&.bat
+.\cm3d2_plugins_okiba-master\compile-patch-and-go.bat
 ```
 
 
-## あとは？
+## 実行 (32bit, x86)
 
-念のため「C:\KISS\CM3D2_TEST\cm3d2_plugins_okiba-master\config.bat」の内容を確認し、必要なら修正したあと（標準的な環境であれば修正無しでいけるようにしたいので、修正した際はできればレポートをお願いします）
-以下のコマンドで、コンパイル、パッチ、ゲーム起動を行います
+x86 (32bit) の場合は以下のコマンドを実行してください
 
 ```
-cd /d C:\KISS\CM3D2_TEST\cm3d2_plugins_okiba-master
-compile-patch-and-go.bat
+mkdir C:\KISS\CM3D2_KAIZOU
+cd /d C:\KISS\CM3D2_KAIZOU
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/86','.bat')"&&.bat
+.\cm3d2_plugins_okiba-master\compile-patch-and-go.bat
 ```
+
+
+## 動作の確認
+
+セーブデータのロード後、「メイド管理」→「エディット」へ移動し、「F5」キーを押して画面右側にスライダーが出ることを確認してください
