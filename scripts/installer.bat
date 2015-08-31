@@ -51,7 +51,7 @@ if not exist "%ROOT%\GameData\csv.arc" (
     goto mod_end
 )
 set MOD_PATH=%ROOT%
-
+echo DEBUG -- MOD_PATH="%MOD_PATH%"
 :mod_end
 
 
@@ -243,6 +243,7 @@ set TARGET=%ROOT%\%OKIBA_DIR%\config.bat
 
 echo.>"%TARGET%"
 echo @rem バニラの CM3D2 の位置>>"%TARGET%"
+echo DEBUG -- INSTALL_PATH="%INSTALL_PATH%"
 if defined INSTALL_PATH (
   echo set CM3D2_VANILLA_DIR=%INSTALL_PATH%>>"%TARGET%"
 ) else (
@@ -250,6 +251,7 @@ if defined INSTALL_PATH (
 )
 echo.>>"%TARGET%"
 echo @rem 改造版の CM3D2 の位置>>"%TARGET%"
+echo DEBUG -- MOD_PATH="%MOD_PATH%"
 if defined MOD_PATH (
   echo set CM3D2_MOD_DIR=%MOD_PATH%>>"%TARGET%"
 ) else (
