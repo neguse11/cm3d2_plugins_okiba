@@ -18,6 +18,10 @@ set UNITY_INJECTOR_DIR=%CM3D2_MOD_DIR%\UnityInjector
 set CSC=C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe
 set RF=temp.rsp
 
+if not defined OKIBA_BRANCH (
+  set OKIBA_BRANCH=master
+)
+
 if not exist "%CM3D2_VANILLA_DIR%" (
   echo エラー：config.bat内のCM3D2_VANILLA_DIRが示すフォルダー「%CM3D2_VANILLA_DIR%」が存在しません
   exit /b 1
