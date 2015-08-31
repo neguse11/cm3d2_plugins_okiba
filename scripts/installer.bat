@@ -75,12 +75,6 @@ if defined SAME_PATH (
   exit /b 1
 )
 
-if not exist "%ROOT%\CM3D2%PLATFORM%_Data" (
-  echo 指定されたプラットフォーム「%PLATFORM%」用のデータフォルダーがありません
-  echo 適切なプラットフォームを指定してください
-  exit /b 1
-)
-
 if exist "%ROOT%\ReiPatcher" (
   echo フォルダー「%ROOT%\ReiPatcher」が存在するため、処理を中止します
   echo このフォルダーを移動、リネームするか、削除してから実行してください
@@ -91,6 +85,15 @@ if exist "%ROOT%\UnityInjector" (
   echo フォルダー「%ROOT%\UnityInjector」が存在するため、処理を中止します
   echo このフォルダーを移動、リネームするか、削除してから実行してください
   exit /b 1
+)
+
+
+@rem
+@rem 新規ディレクトリの場合、xcopyを行う
+@rem
+if not exist "%ROOT%\CM3D2%PLATFORM%_Data" (
+  echo バニラからのコピーを行います
+  xcopy /e /y "%INSTALL_PATH%" "%ROOT%"
 )
 
 
