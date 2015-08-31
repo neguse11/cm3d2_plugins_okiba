@@ -6,6 +6,7 @@ echo.& echo MaidVoicePitch && call MaidVoicePitch\compile.bat || exit /b %ERRORL
 echo.& echo PersonalizedEditSceneSettings && call PersonalizedEditSceneSettings\compile.bat || exit /b %ERRORLEVEL%
 echo.& echo SkillCommandShortCut && call SkillCommandShortCut\compile.bat || exit /b %ERRORLEVEL%
 echo.& echo ConsistentWindowPosition && call ConsistentWindowPosition\compile.bat || exit /b %ERRORLEVEL%
+echo.& echo AddModsSlider && call AddModsSlider\compile.bat || exit /b %ERRORLEVEL%
 
 echo.& echo 成功：全ファイルのコンパイルに成功しました
 
