@@ -3,8 +3,8 @@ setlocal ENABLEEXTENSIONS
 set DP0=%~dp0
 set ROOT=%DP0:~0,-1%
 
-set PLATFORM=x86
-set OKIBA_BRANCH=master
+set PLATFORM=x64
+set OKIBA_BRANCH=develop
 
 if not defined INSTALLER_URL (
   set INSTALLER_URL=https://raw.githubusercontent.com/neguse11/cm3d2_plugins_okiba/%OKIBA_BRANCH%/scripts/installer.bat
