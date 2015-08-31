@@ -6,5 +6,7 @@ set SRCS=CM3D2.AddModsSlider.Plugin.cs
 set OPTS=/r:CM3D2.ExternalSaveData.Managed.dll
 
 call "%~dp0..\scripts\csc-compile.bat" || exit /b %ERRORLEVEL%
+
+mkdir "%UNITY_INJECTOR_DIR%\Config\" >nul 2>&1
 copy ModsParam.xml "%UNITY_INJECTOR_DIR%\Config\"
 popd
