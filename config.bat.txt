@@ -9,3 +9,6 @@ set CM3D2_PLATFORM=x64
 
 @rem ReiPatcher の ini ファイル名
 set REIPATCHER_INI=CM3D2%CM3D2_PLATFORM%.ini
+
+@rem cm3d2_plugins_okiba のブランチ名
+set OKIBA_BRANCH=master

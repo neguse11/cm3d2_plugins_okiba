@@ -255,6 +255,9 @@ echo set CM3D2_PLATFORM=%PLATFORM%>>"%TARGET%"
 echo.>>"%TARGET%"
 echo @rem ReiPatcher の ini ファイル名>>"%TARGET%"
 echo set REIPATCHER_INI=CM3D2%PLATFORM%.ini>>"%TARGET%"
+echo.>>"%TARGET%"
+echo @rem cm3d2_plugins_okiba のブランチ名>>"%TARGET%"
+echo set OKIBA_BRANCH=%OKIBA_BRANCH%>>"%TARGET%"
 
 
 echo.
