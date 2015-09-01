@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Mono.Cecil;
+using Mono.Cecil.Cil;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
+using UnityEngine;
 
 
 namespace CM3D2.ExternalSaveData.Managed
@@ -422,16 +425,6 @@ namespace CM3D2.ExternalSaveData.Managed
         {
             try
             {
-                List<string> guids = new List<string>();
-                CharacterMgr cm = GameMain.Instance.CharacterMgr;
-                for (int i = 0, n = cm.GetStockMaidCount(); i < n; i++)
-                {
-                    Maid maid = cm.GetStockMaid(i);
-                    SetMaid(maid);
-                    guids.Add(maid.Param.status.guid);
-                }
-                CleanupMaids(guids);
-
                 string path = GameMainMakeSavePathFileName(that, f_nSaveNo);
                 string xmlFilePath = makeXmlFilename(that, f_nSaveNo);
                 PluginSettings.Save(xmlFilePath, path);
