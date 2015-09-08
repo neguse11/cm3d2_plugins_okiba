@@ -17,6 +17,9 @@ xcopy /E バニラの配置場所 改造用の配置場所
 xcopy /E C:\KISS\CM3D2 C:\KISS\CM3D2_KAIZOU\
 ```
 
+ - https://github.com/neguse11/cm3d2_plugins_okiba/archive/master.zip をダウンロード、展開します
+ - 展開したアーカイブを、`C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-master\config.bat.txt` が存在するようにコピーします
+
 
 ## 前提
 
@@ -27,7 +30,7 @@ xcopy /E C:\KISS\CM3D2 C:\KISS\CM3D2_KAIZOU\
 
 ## コンパイルのための設定
 
- - `config.bat.txt` を `config.bat` にリネームします
+ - `C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-master\config.bat.txt` を `config.bat` にリネームします
  - `config.bat` の先頭にある以下の行を適宜変更してください
 
 ```
@@ -41,14 +44,14 @@ set CM3D2_MOD_DIR=C:\KISS\CM3D2_KAIZOU
 set CM3D2_PLATFORM=x64
 ```
 
-例えばバニラが `D:\KISS\CM3D2_VANILLA`、改造版が `D:\KISS\CM3D2_MODDED` にあり、64bit 版を使うなら、以下のようになります
+例えばバニラが `D:\KISS\CM3D2_VANILLA`、改造版が `X:\KISS\CM3D2_MODDED` にあり、64bit 版を使うなら、以下のようになります
 
 ```
 @rem バニラの CM3D2 の位置
 set CM3D2_VANILLA_DIR=D:\KISS\CM3D2_VANILLA
 
 @rem 改造版の CM3D2 の位置
-set CM3D2_MOD_DIR=D:\KISS\CM3D2_MODDED
+set CM3D2_MOD_DIR=X:\KISS\CM3D2_MODDED
 
 @rem 64bit/32bit の選択 (64bitなら「x64」、32bitなら「x86」)
 set CM3D2_PLATFORM=x64
@@ -57,22 +60,26 @@ set CM3D2_PLATFORM=x64
 
 ## コンパイル
 
+ - `C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-master\` に移動します
  - `compile.bat` を実行します
  - 実行すると、全てのパッチ、プラグインがコンパイルされ、適切なフォルダーへ DLL が生成されます
 
 
 ## パッチ
 
+ - `C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-master\` に移動します
  - `patch.bat` を実行します
  - 実行すると、バニラの DLL をベースに、ReiPatcherが実行されます
 
 
 ## 実行
 
+ - `C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-master\` に移動します
  - `run.bat` を実行します
  - 実行すると、ゲームが起動します
 
 
 ## 全部一度に
 
+ - `C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-master\` に移動します
  - `compile-patch-and-go.bat` を実行すると、コンパイル、パッチ、ゲームの実行を連続して行います
