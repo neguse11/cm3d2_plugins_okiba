@@ -86,6 +86,9 @@
 | HEAD_TRACK.below        |-90.0～90.0    | 15     | 〃下方向〃 |
 | HEAD_TRACK.behind       |  0.0～180.0   | 90     | 顔が追従をあきらめる角度 |
 | HEAD_TRACK.speed        |  0.0～1.0     |  0.04  | 顔の回転速度 |
+| HEAD_TRACK.ofsx         |-90.0～90.0    |  0     | 横回転オフセット (負で右、正で左を向く) |
+| HEAD_TRACK.ofsy         |-90.0～90.0    |  0     | 縦回転オフセット (負で下、正で上を向く) |
+| HEAD_TRACK.ofsz         |-90.0～90.0    |  0     | 回転オフセット (負で右、正で左にかしげる) |
 | EYE_TRACK.inside        |  0.0～90.0    | 35     | 目の内側可動角度 |
 | EYE_TRACK.outside       |  0.0～90.0    | 65     | 〃外側〃 |
 | EYE_TRACK.above         |-90.0～90.0    | 10     | 〃上方向〃 |
@@ -283,7 +286,7 @@
      - AddModsSlider 0.1.0.7 で LIPSYNC が正常に動作していなかったため、仕様を変更
      - EYE_ANG.angleで目の角度を変えた際、眼球の角度の補正を追加
    - 顔と目の動作改善を追加
-     - 顔の制御 HEAD_TRACK { .lateral, .above, .below, .behind, .speed }
+     - 顔の制御 HEAD_TRACK { .lateral, .above, .below, .behind, .speed, .ofsx, .ofsy }
        - HEAD_TRACK.lateral : 左右の角度制限
        - HEAD_TRACK.above : 上方の角度制限
        - HEAD_TRACK.below : 下方の角度制限
@@ -301,11 +304,14 @@
   - ModsParam.xml への追加例
 ```
 <mod id="HEAD_TRACK" description="顔の追従処理の改善">
-    <value prop_name="HEAD_TRACK.lateral" min="1" max="90"  label="横角"   type="num" />
-    <value prop_name="HEAD_TRACK.above"   min="1" max="90"  label="上角"   type="num" />
-    <value prop_name="HEAD_TRACK.below"   min="1" max="90"  label="下角"   type="num" />
-    <value prop_name="HEAD_TRACK.behind"  min="1" max="180" label="無視角" type="num" />
-    <value prop_name="HEAD_TRACK.speed"   min="0" max="0.3" label="速度"   type="num" />
+    <value prop_name="HEAD_TRACK.lateral" min="1"   max="90"  label="横角"   type="num" />
+    <value prop_name="HEAD_TRACK.above"   min="1"   max="90"  label="上角"   type="num" />
+    <value prop_name="HEAD_TRACK.below"   min="1"   max="90"  label="下角"   type="num" />
+    <value prop_name="HEAD_TRACK.behind"  min="1"   max="180" label="無視角" type="num" />
+    <value prop_name="HEAD_TRACK.speed"   min="0"   max="0.3" label="速度"   type="num" />
+    <value prop_name="HEAD_TRACK.ofsx"    min="-30" max="30"  label="横オ"   type="num" />
+    <value prop_name="HEAD_TRACK.ofsy"    min="-30" max="30"  label="縦オ"   type="num" />
+    <value prop_name="HEAD_TRACK.ofsz"    min="-30" max="30"  label="回オ"   type="num" />
 </mod>
 
 <mod id="EYE_TRACK" description="目の追従処理の改善">
