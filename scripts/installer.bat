@@ -278,16 +278,15 @@ echo.>>"%TARGET%"
 echo @rem cm3d2_plugins_okiba のブランチ名>>"%TARGET%"
 echo set OKIBA_BRANCH=%OKIBA_BRANCH%>>"%TARGET%"
 
-
 echo.
 echo あとは以下の操作をすることで、導入が完了します
 echo.
 if defined INSTALL_PATH (
-echo (1)「%ROOT%\%OKIBA_DIR%\config.bat」
+echo 1.「%ROOT%\%OKIBA_DIR%\config.bat」
 echo    内の「CM3D2_VANILLA_DIR」と「CM3D2_MOD_DIR」を確認し、
 echo    必要なら環境に合わせて書き換えてください
 ) else (
-echo (1) ＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+echo 1.  ＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
 echo     ＊　　インストール情報が見つかりませんでした　　＊
 echo     ＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
 echo.
@@ -299,6 +298,6 @@ echo    「set CM3D2_VANILLA_DIR=X:\FOO\KISS\CM3D2」を指定してください
 echo.
 )
 echo.
-echo (2)「%ROOT%\%OKIBA_DIR%\compile-patch-and-go.bat」
+echo 2. 「%ROOT%\%OKIBA_DIR%\compile-patch-and-go.bat」
 echo    を実行すると、コンパイル、パッチ操作が行われた後、ゲームが起動します
 echo.

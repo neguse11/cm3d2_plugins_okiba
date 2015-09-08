@@ -7,7 +7,12 @@ internal static class PluginHelper
 {
     static string[] mpnStrings;
 
+#if DEBUG
     public static bool bDebugEnable = true;
+#else
+    public static bool bDebugEnable = false;
+#endif
+
     public static List<string> debugLines = new List<string>();
     public static int debugLinesMax = 100;
     public static Vector2 debugScrollPosition = new Vector2(0f, 0f);
@@ -97,7 +102,7 @@ internal static class PluginHelper
 
     public static void DebugGui()
     {
-        if (debugLines != null)
+        if (bDebugEnable && debugLines != null)
         {
             debugWindowRect = GUILayout.Window(windowId, debugWindowRect, DebugGuiWindow, "Debug");
         }
@@ -106,7 +111,6 @@ internal static class PluginHelper
     public static void DebugGuiWindow(int windowId)
     {
         debugScrollPosition = GUILayout.BeginScrollView(debugScrollPosition);
-        //		GUILayout.Label(string.Format("TEST LINE debugLines.Count={0}", debugLines.Count));
         foreach (string line in debugLines)
         {
             GUILayout.Label(line);
