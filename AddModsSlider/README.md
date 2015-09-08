@@ -18,3 +18,10 @@ compile.bat
 MaidVoicePitch、ExternalSaveDataと関係が深く、また主に当リポジトリ管理者の動作テストが楽になるため、入れてあります。
 
 
+## 履歴
+
+ - 2015/09/09
+    - MaidVoicePitch の更新に合わせて ModsParam.xml のサンプルを更新
+       -  HEAD_TRACK (顔の追従) と EYE_TRACK (目の追従) を追加
+       - 「リップシンク強度」が動作していなかったので修正
+       - 「FACE_ANIME_SPEED」を削除

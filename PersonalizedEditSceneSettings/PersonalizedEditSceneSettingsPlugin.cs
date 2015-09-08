@@ -12,7 +12,7 @@ namespace CM3D2.PersonalizedEditSceneSettings.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("CM3D2 EyeToCamera Settings"),
-    PluginVersion("0.1.1.0")]
+    PluginVersion("0.1.2.0")]
     public class PersonalizedEditSceneSettings : PluginBase
     {
         const string PluginName = "CM3D2.PersonalizedEditSceneSettings";
@@ -128,10 +128,12 @@ namespace CM3D2.PersonalizedEditSceneSettings.Plugin
             string bgName = ExSaveData.Get(maid, PluginName, "BgName", "");
             string poseName = ExSaveData.Get(maid, PluginName, "PoseName", "");
 
+#if DEBUG
             Console.WriteLine(
                 "PersonalizedEditSceneSettings.LoadSettings : name={0}{1}, autoCam={2}, eyeToCam={3}, cloth={4}, bg={5}, pose={6}",
                 maid.Param.status.last_name, maid.Param.status.first_name,
                 autoCam, eyeToCam, clothMaskMode, bgName, poseName);
+#endif
 
             editViewReset.SetVisibleAutoCam(autoCam);
             editViewReset.SetVisibleEyeToCam(eyeToCam);
@@ -225,21 +227,12 @@ namespace CM3D2.PersonalizedEditSceneSettings.Plugin
             ExSaveData.SetFloat(maid, PluginName, "CameraRotation.w", lastCameraRotation.w);
             ExSaveData.SetFloat(maid, PluginName, "CameraFov", lastCameraFov);
 
+#if DEBUG
             Console.WriteLine(
                 "PersonalizedEditSceneSettings.StoreSettings : name={0}{1}, autoCam={2}, eyeToCam={3}, cloth={4}, bg={5}, pose={6}",
                 maid.Param.status.last_name, maid.Param.status.first_name,
                 bLastAutoCam, bLastEyeToCam, lastClothMaskMode, lastBgName, lastPoseName);
-        }
-    }
-
-    internal static class Helper
-    {
-        // http://stackoverflow.com/a/1082587/2132223
-        public static TEnum ToEnum<TEnum>(this string strEnumValue, TEnum defaultValue)
-        {
-            if (!Enum.IsDefined(typeof(TEnum), strEnumValue))
-                return defaultValue;
-            return (TEnum)Enum.Parse(typeof(TEnum), strEnumValue);
+#endif
         }
     }
 }

@@ -74,8 +74,8 @@
         <value prop_name="MABATAKI.value" min="0" max="1.0" label="数値" type="num" />
     </mod>
 
-    <mod id="FACE_ANIME_SPEED" description="表情変化速度(1.0で標準)">
-        <value prop_name="FACE_ANIME_SPEED.value" min="0" max="2" label="数値" type="num" />
+    <mod id="LIPSYNC_INTENISTY" description="リップシンク強度(1.0で標準)">
+        <value prop_name="LIPSYNC_INTENISTY.value" min="0"  max="1" label="数値" type="num" />
     </mod>
 
     <mod id="EYEBALL" description="瞳の大きさ">
@@ -143,5 +143,27 @@
         <value prop_name="S1ASCL.width"  min="0.1" max="3.0" label="横幅" type="num" />
         <value prop_name="S1ASCL.depth"  min="0.1" max="3.0" label="奥行" type="num" />
         <value prop_name="S1ASCL.height" min="0.1" max="3.0" label="高さ" type="num" />
+    </mod>
+
+    <mod id="HEAD_TRACK" description="顔の追従処理の改善">
+        <value prop_name="HEAD_TRACK.lateral" min="1" max="90" label="横角" type="num" />
+        <value prop_name="HEAD_TRACK.above"  min="1" max="90" label="上角" type="num" />
+        <value prop_name="HEAD_TRACK.below" min="1" max="90" label="下角" type="num" />
+        <value prop_name="HEAD_TRACK.behind" min="1" max="180" label="無視角" type="num" />
+        <value prop_name="HEAD_TRACK.speed" min="0" max="0.3" label="速度" type="num" />
+        <value prop_name="HEAD_TRACK.ofsx" min="-30" max="30" label="横オ" type="num" />
+        <value prop_name="HEAD_TRACK.ofsy" min="-30" max="30" label="縦オ" type="num" />
+        <value prop_name="HEAD_TRACK.ofsz" min="-30" max="30" label="回オ" type="num" />
+    </mod>
+
+    <mod id="EYE_TRACK" description="目の追従処理の改善">
+        <value prop_name="EYE_TRACK.outside" min="1" max="90" label="内角" type="num" />
+        <value prop_name="EYE_TRACK.inside" min="1" max="90" label="外角" type="num" />
+        <value prop_name="EYE_TRACK.above"  min="-10" max="90" label="上角" type="num" />
+        <value prop_name="EYE_TRACK.below" min="-10" max="90" label="下角" type="num" />
+        <value prop_name="EYE_TRACK.behind" min="1" max="180" label="無視角" type="num" />
+        <value prop_name="EYE_TRACK.speed" min="0" max="0.3" label="速度" type="num" />
+        <value prop_name="EYE_TRACK.ofsx" min="-10" max="10" label="横オ" type="num" />
+        <value prop_name="EYE_TRACK.ofsy" min="-5" max="5" label="縦オ" type="num" />
     </mod>
 </mods>

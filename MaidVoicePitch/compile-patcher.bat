@@ -1,8 +1,8 @@
 @echo off && setlocal ENABLEEXTENSIONS && pushd "%~dp0" && call "%~dp0..\scripts\base.bat" || exit /b %ERRORLEVEL%
 
 set TYPE=/t:library
-set OUT=%REIPATCHER_DIR%\Patches\CM3D2.ExternalSaveData.Patcher.dll
-set SRCS=ExternalSaveDataPatcher.cs %OKIBA_LIB%\PatcherHelper.cs
+set OUT=%REIPATCHER_DIR%\Patches\CM3D2.MaidVoicePitch.Patcher.dll
+set SRCS=MaidVoicePitchPatcher.cs %OKIBA_LIB%\PatcherHelper.cs %OKIBA_LIB%\Helper.cs
 set OPTS=
 
 call "%~dp0..\scripts\csc-compile.bat" || exit /b %ERRORLEVEL%

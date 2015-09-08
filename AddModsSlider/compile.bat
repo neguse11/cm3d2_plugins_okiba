@@ -8,5 +8,5 @@ set OPTS=/r:CM3D2.ExternalSaveData.Managed.dll
 call "%~dp0..\scripts\csc-compile.bat" || exit /b %ERRORLEVEL%
 
 mkdir "%UNITY_INJECTOR_DIR%\Config\" >nul 2>&1
-copy ModsParam.xml "%UNITY_INJECTOR_DIR%\Config\"
+copy ModsParam.xml "%UNITY_INJECTOR_DIR%\Config\" >nul 2>&1 || ( echo ファイルのコピーに失敗しました && exit /b %ERRORLEVEL% )
 popd

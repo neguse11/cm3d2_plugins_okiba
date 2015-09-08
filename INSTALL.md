@@ -7,18 +7,20 @@
  - ReiPatcher
  - UnityInjector
  - プラグイン
-    - ExternalSaveData (拡張セーブデータ)
-    - FastFade (フェードイン高速化)
-    - MaidVoicePitch (ボイスピッチ、身長制限等を変更)
-    - AddModSlider (上記 MaidVoicePitch のパラメーターを GUI から設定)
-    - SkillCommandShortCut (スキルをショートカットキーで選択)
-    - PersonalizedEditSceneSettings (エディットシーンの背景等の保存)
-    - ConsistentWindowPosition (ウィンドウ位置の保存)
+    - [ExternalSaveData](ExternalSaveData/README.md) (拡張セーブデータ)
+    - [FastFade](FastFade/README.md) (フェードイン高速化)
+    - [MaidVoicePitch](MaidVoicePitch/README.md) (ボイスピッチ、身長制限等を変更)
+    - [AddModSlider](AddModsSlider/README.md) (上記 MaidVoicePitch のパラメーターを GUI から設定)
+    - [SkillCommandShortCut](SkillCommandShortCut/README.md) (スキルをショートカットキーで選択)
+    - [PersonalizedEditSceneSettings](PersonalizedEditSceneSettings/README.md) (エディットシーンの背景等の保存)
+    - [ConsistentWindowPosition](ConsistentWindowPosition/README.md) (ウィンドウ位置の保存)
 
 
 ## 準備
 
- - 公式パッチを 1.05 まであてます
+ - ゲームに付属するインストーラーを使って、正規の方法でゲームをインストールしてください
+ - 公式パッチを 1.07 まで適用してください
+ - 一度ゲームを起動し、正常に動作することを確認してください
 
 
 ## 実行 (64bit, x64)
