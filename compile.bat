@@ -7,6 +7,7 @@ echo.& echo PersonalizedEditSceneSettings && call PersonalizedEditSceneSettings\
 echo.& echo SkillCommandShortCut && call SkillCommandShortCut\compile.bat || exit /b %ERRORLEVEL%
 echo.& echo ConsistentWindowPosition && call ConsistentWindowPosition\compile.bat || exit /b %ERRORLEVEL%
 echo.& echo AddModsSlider && call AddModsSlider\compile.bat || exit /b %ERRORLEVEL%
+echo.& echo VoiceNormalizer && call VoiceNormalizer\compile.bat || exit /b %ERRORLEVEL%
 
 echo.& echo 成功：全ファイルのコンパイルに成功しました
 
