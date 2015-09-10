@@ -18,5 +18,8 @@ compile.batでコンパイルを行ってください
 
 ## 履歴
 
+ - 0.1.1
+   - コード整形
+   - VoiceNormalizerTable.txtを生成するTableBuilderのコードを追加
  - 0.1.0
    - 最初の版
