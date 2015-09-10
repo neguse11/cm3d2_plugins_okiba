@@ -8,8 +8,8 @@ developブランチはテスター用の開発版です
 ## 既存環境へのインストール
 
  - https://github.com/neguse11/cm3d2_plugins_okiba/archive/develop.zip をダウンロード
- - 展開したアーカイブを、"C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-develop\config.bat.txt" が存在するようにコピーします
- - "config.bat.txt" を "config.bat" にリネームし、設定を行います
+ - 展開したアーカイブを、"C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-develop\config-develop.bat.txt" が存在するようにコピーします
+ - "config-develop.bat.txt" を "config.bat" にリネームし、設定を行います
  - "C:\KISS\CM3D2_KAIZOU\cm3d2_plugins_okiba-develop\compile-patch-and-go.bat" を実行します
 
 
