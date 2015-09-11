@@ -189,12 +189,12 @@ class TBodyMoveHeadAndEye
 
         // eulerAngles1：顔の正面向きのベクトルから見た、視線ターゲットまでの回転量
         Vector3 eulerAngles1;
+        Quaternion quaternion1 = new Quaternion();
         {
             // toDirection1：顔からターゲットを見た向き（顔の座標系）
             Vector3 toDirection1 = Quaternion.Inverse(that.trsNeck.rotation) * (eyeTargetWorldPos - that.trsNeck.position);
 
             // quaternion1：(0,1,0) (顔の正面向きのベクトル) から見たときの、toDirection1 までの回転量
-            Quaternion quaternion1 = new Quaternion();
             quaternion1.SetFromToRotation(Vector3.up, toDirection1);
 
             eulerAngles1 = PluginHelper.NormalizeEulerAngles(quaternion1.eulerAngles);
@@ -310,56 +310,7 @@ class TBodyMoveHeadAndEye
 
         that.boChkEye = false;
 
-        float paramSpeed = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.speed", 0.05f);
-        float paramLateral = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.lateral", 60.0f);
-        float paramAbove = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.above", 40.0f);
-        float paramBelow = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.below", 20.0f);
-        float paramBehind = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.behind", 170.0f);
-        float paramOfsX = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.ofsx", 0.0f);
-        float paramOfsY = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.ofsy", 0.0f);
-        float paramOfsZ = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.ofsz", 0.0f);
-
-        // モーションにしたがっている場合 (HeadToCamPer=0f) はオフセットをつけない
-        paramOfsX *= that.HeadToCamPer;
-        paramOfsY *= that.HeadToCamPer;
-        paramOfsZ *= that.HeadToCamPer;
-
-        Vector3 basePosition = that.trsNeck.position;
-        Quaternion baseRotation = that.trsNeck.rotation;
-        Vector3 target_local = Quaternion.Inverse(baseRotation) * (eyeTarget_world - basePosition);
-        target_local = Quaternion.Euler(paramOfsX, 0f, paramOfsY) * target_local;
-        Vector3 target_world = (baseRotation * target_local) + basePosition;
-
-        // 顔が向くべき方向を算出
-        Quaternion newHeadRotation_world = CalcNewHeadRotation(
-            paramLateral,
-            paramAbove,
-            paramBelow,
-            paramBehind,
-            baseRotation,
-            basePosition,
-            target_world);
-
-        newHeadRotation_world = newHeadRotation_world * Quaternion.Euler(0f, paramOfsZ, 0f);
-
-        // TBody.HeadToCamPer を「正面向き度合い」として加味する
-        newHeadRotation_world = Quaternion.Slerp(that.trsHead.rotation, newHeadRotation_world, that.HeadToCamPer);
-
-        float s = paramSpeed;
-
-        // 前回の回転よりも差が大きすぎる場合はリセットする
-        if (externalValues.bReset)
-        {
-            externalValues.bReset = false;
-            externalValues.prevQuat = that.trsHead.rotation;
-            s = 0f;
-        }
-
-        // モーションにしたがっている場合 (HeadToCamPer=0f) は補間しない
-        s = Mathf.Lerp(1f, s, that.HeadToCamPer);
-
-        // 実際の回転
-        that.trsHead.rotation = Quaternion.Slerp(externalValues.prevQuat, newHeadRotation_world, s);
+        newMoveHead(externalValues, tbody, ref thatHeadEulerAngle, ref thatHeadEulerAngleG, ref thatEyeEulerAngle, eyeTarget_world);
 
         externalValues.prevQuat = that.trsHead.rotation;
 
@@ -433,6 +384,63 @@ class TBodyMoveHeadAndEye
                 externalValues.prevRightEyeQuat = prevQuat;
             }
         }
+    }
+
+    void newMoveHead(ExternalValues externalValues, TBody tbody, ref Vector3 thatHeadEulerAngle, ref Vector3 thatHeadEulerAngleG, ref Vector3 thatEyeEulerAngle, Vector3 eyeTarget_world)
+    {
+        TBody that = tbody;
+        Maid maid = tbody.maid;
+
+        float paramSpeed = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.speed", 0.05f);
+        float paramLateral = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.lateral", 60.0f);
+        float paramAbove = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.above", 40.0f);
+        float paramBelow = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.below", 20.0f);
+        float paramBehind = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.behind", 170.0f);
+        float paramOfsX = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.ofsx", 0.0f);
+        float paramOfsY = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.ofsy", 0.0f);
+        float paramOfsZ = ExSaveData.GetFloat(maid, PluginName, "HEAD_TRACK.ofsz", 0.0f);
+
+        // モーションにしたがっている場合 (HeadToCamPer=0f) はオフセットをつけない
+        paramOfsX *= that.HeadToCamPer;
+        paramOfsY *= that.HeadToCamPer;
+        paramOfsZ *= that.HeadToCamPer;
+
+        Vector3 basePosition = that.trsNeck.position;
+        Quaternion baseRotation = that.trsNeck.rotation;
+        Vector3 target_local = Quaternion.Inverse(baseRotation) * (eyeTarget_world - basePosition);
+        target_local = Quaternion.Euler(paramOfsX, 0f, paramOfsY) * target_local;
+        Vector3 target_world = (baseRotation * target_local) + basePosition;
+
+        // 顔が向くべき方向を算出
+        Quaternion newHeadRotation_world = CalcNewHeadRotation(
+            paramLateral,
+            paramAbove,
+            paramBelow,
+            paramBehind,
+            baseRotation,
+            basePosition,
+            target_world);
+
+        newHeadRotation_world = newHeadRotation_world * Quaternion.Euler(0f, paramOfsZ, 0f);
+
+        // TBody.HeadToCamPer を「正面向き度合い」として加味する
+        newHeadRotation_world = Quaternion.Slerp(that.trsHead.rotation, newHeadRotation_world, that.HeadToCamPer);
+
+        float s = paramSpeed;
+
+        // 前回の回転よりも差が大きすぎる場合はリセットする
+        if (externalValues.bReset)
+        {
+            externalValues.bReset = false;
+            externalValues.prevQuat = that.trsHead.rotation;
+            s = 0f;
+        }
+
+        // モーションにしたがっている場合 (HeadToCamPer=0f) は補間しない
+        s = Mathf.Lerp(1f, s, that.HeadToCamPer);
+
+        // 実際の回転
+        that.trsHead.rotation = Quaternion.Slerp(externalValues.prevQuat, newHeadRotation_world, s);
     }
 
     static Quaternion CalcNewHeadRotation(float paramLateral, float paramAbove, float paramBelow, float paramBehind, Quaternion neckRotation, Vector3 headPosition, Vector3 targetPosition)
