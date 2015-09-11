@@ -191,7 +191,7 @@ if not exist "%UNITYINJECTOR_7Z%" (
       echo 「%UNITYINJECTOR_7Z%」のダウンロードに失敗しました
       exit /b 1
     )
-)a
+)
 
 
 @rem

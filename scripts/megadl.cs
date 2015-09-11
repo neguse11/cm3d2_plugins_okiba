@@ -59,7 +59,7 @@ class Program
         byte[] aesKey = new byte[16];
         byte[] aesIv = new byte[16];    // counter
         {
-            string b64Key = key.Replace("-", "+").Replace("_", "+").PadRight(((key.Length + 3) / 4) * 4, '=');
+            string b64Key = key.Replace("-", "+").Replace("_", "/").PadRight(((key.Length + 3) / 4) * 4, '=');
             Log("b64Key={0}", b64Key);
             byte[] binKey = Convert.FromBase64String(b64Key);
             if (binKey.Length != 32)
@@ -109,6 +109,9 @@ class Program
             return result;
         }
 
+#if DEBUG
+        File.WriteAllBytes("encfile.enc", encFile);
+#endif
         {
             byte[] paddedEncFile = new byte[((encFile.Length + 15) / 16) * 16];
             Log("encFile.Length={0}", encFile.Length);
