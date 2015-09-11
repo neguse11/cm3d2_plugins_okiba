@@ -2,12 +2,12 @@ set OKIBA_URL=https://github.com/neguse11/cm3d2_plugins_okiba/archive/%OKIBA_BRA
 set OKIBA_FILE=%OKIBA_BRANCH%.zip
 set OKIBA_DIR=cm3d2_plugins_okiba-%OKIBA_BRANCH%
 
-set REIPATCHER_URL=https://mega.co.nz/#!rsImja6D!Of4s5lsD7y9JylVZ7miWg63Mxt5MVKniLgWqBr0oJl8
+set REIPATCHER_URL=https://mega.nz/#!rsImja6D!Of4s5lsD7y9JylVZ7miWg63Mxt5MVKniLgWqBr0oJl8
 set REIPATCHER_7Z=ReiPatcher_0.9.0.7.7z
 set REIPATCHER_PASSWD=byreisen
 
-set UNITYINJECTOR_URL=https://mega.co.nz/#!m1YV1CpI!Knssx6-S1q2q6Qfuq8cFQQ6LKZeA-JiLRm4I7tkQxo8
-set UNITYINJECTOR_7Z=UnityInjector_1.0.1.1.7z
+set UNITYINJECTOR_URL=https://mega.nz/#!i5gW1YIS!M4W_o4La30IHC8sg0DaHJdZg-feqOqIg6YfmdzR_TgA
+set UNITYINJECTOR_7Z=UnityInjector_1.0.1.2.7z
 set UNITYINJECTOR_PASSWD=byreisen
 
 set _7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip
@@ -172,10 +172,12 @@ if not exist %MEGADL% (
 @rem %ROOT%\ 下に ReiPatcher をダウンロード
 @rem
 echo 「%REIPATCHER_URL%」をダウンロード中
-%MEGADL% %REIPATCHER_URL% %REIPATCHER_7Z%
-if not exist %REIPATCHER_7Z% (
-  echo 「%REIPATCHER_URL%」のダウンロードに失敗しました
-  exit /b 1
+if not exist "%REIPATCHER_7Z%" (
+    %MEGADL% %REIPATCHER_URL% "%REIPATCHER_7Z%"
+    if not exist "%REIPATCHER_7Z%" (
+      echo 「%REIPATCHER_URL%」のダウンロードに失敗しました
+      exit /b 1
+    )
 )
 
 
@@ -183,11 +185,13 @@ if not exist %REIPATCHER_7Z% (
 @rem %ROOT%\ 下に UnityInjector をダウンロード
 @rem
 echo 「%UNITYINJECTOR_URL%」をダウンロード中
-%MEGADL% %UNITYINJECTOR_URL% %UNITYINJECTOR_7Z%
-if not exist %UNITYINJECTOR_7Z% (
-  echo 「%UNITYINJECTOR_7Z%」のダウンロードに失敗しました
-  exit /b 1
-)
+if not exist "%UNITYINJECTOR_7Z%" (
+    %MEGADL% %UNITYINJECTOR_URL% "%UNITYINJECTOR_7Z%"
+    if not exist "%UNITYINJECTOR_7Z%" (
+      echo 「%UNITYINJECTOR_7Z%」のダウンロードに失敗しました
+      exit /b 1
+    )
+)a
 
 
 @rem
