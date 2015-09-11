@@ -1,3 +1,12 @@
+### 2015/09/11
+
+ - LogWindowを追加 (その３>>8)
+ - UnityInjector_1.0.1.2 の URL を変更
+ - megadl
+    - base64内の '_' への対応を追加
+ - MaidVoicePitch
+    - 顔がモーションに追従している場合はオフセット角度をつけないように修正 (その２>>41)
+
 ### 2015/09/10
 
  - developブランチの導入方法を修正 (その２>>25, >>28)
@@ -5,7 +14,6 @@
     - テーブル生成コードTableBuilderを追加 (VC++2015用)
  - [AddModsSlider](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin)
     - githubから Version.0.1.0.7 r1 のコードを取るように変更 ([その２>>17](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/commit/c26e907c9b9d0f0aa606e721586be8a90689a005))
-
 
 ### 2015/09/09 (2)
 
