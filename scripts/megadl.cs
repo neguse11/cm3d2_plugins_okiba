@@ -7,200 +7,166 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace megadl
+class Program
 {
-    class Program
+    static readonly int retryMax = 10;
+    static readonly int retrySleep = 10000; // in milliseconds
+
+#if DEBUG
+    static bool bLogEnable = true;
+#else
+    static bool bLogEnable = false;
+#endif
+
+    static void Main(string[] args)
     {
-        static readonly int retryMax = 10;
-        static readonly int retrySleep = 10000; // in milliseconds
-        static bool bLogEnable = false;
-
-        static void Main(string[] args)
+        if (args.Length != 2)
         {
-            string outFilePath = null;
-            string megaUrl = null;
-            foreach (string arg in args)
-            {
-                if (megaUrl == null)
-                {
-                    megaUrl = arg;
-                }
-                else
-                {
-                    outFilePath = arg;
-                }
-            }
-            if (megaUrl == null || outFilePath == null)
-            {
-                Console.WriteLine("megadl <mega.co.nz URL> <output filename>");
-                return;
-            }
+            Console.WriteLine("Usage: megadl <mega.nz URL> <output filename>");
+            return;
+        }
+        GetMegaFile(args[1], args[0]);
+    }
 
-            byte[] file = GetMegaFile(megaUrl);
-            if (file != null)
+    static byte[] GetMegaFile(string outFilePath, string megaUrl)
+    {
+        byte[] file = GetMegaFile(megaUrl);
+        if (file != null)
+        {
+            File.WriteAllBytes(outFilePath, file);
+        }
+        return file;
+    }
+
+    public static byte[] GetMegaFile(string megaUrl)
+    {
+        byte[] result = null;
+
+        string id;
+        string key;
+        {
+            string[] ss = megaUrl.Split('!');
+            if (ss.Length < 2)
             {
-                File.WriteAllBytes(outFilePath, file);
+                Console.WriteLine("Error : Bad URL (megaUrl={0})", megaUrl);
+                return result;
+            }
+            id = ss[1];
+            key = ss[2];
+        }
+        Log("megaUrl={0}, id={1}, key={2}", megaUrl, id, key);
+
+        byte[] aesKey = new byte[16];
+        byte[] aesIv = new byte[16];    // counter
+        {
+            string b64Key = key.Replace("-", "+").Replace("_", "+").PadRight(((key.Length + 3) / 4) * 4, '=');
+            Log("b64Key={0}", b64Key);
+            byte[] binKey = Convert.FromBase64String(b64Key);
+            if (binKey.Length != 32)
+            {
+                return result;
+            }
+            for (int i = 0; i < aesKey.Length; i++)
+            {
+                aesKey[i] = (byte)(binKey[i] ^ binKey[i + 16]);
+            }
+            for (int i = 0; i < aesIv.Length; i++)
+            {
+                aesIv[i] = i < 8 ? binKey[i + 16] : (byte)0;
             }
         }
+        Log("aesKey = {0}", ByteArrayToString(aesKey));
+        Log("aesIv  = {0}", ByteArrayToString(aesIv));
 
-        public static byte[] GetMegaFile(string megaUrl)
+        string encUrl = null;
         {
-            byte[] result = null;
-
-            string id;
-            string key;
+            string postResult = "";
+            string postUri = "https://eu.api.mega.co.nz/cs";
+            string postParams = string.Format(@"[{{""a"":""g"",""g"":1,""p"":""{0}""}}]", id);
+            WebClientWithRetry(retryMax, (webClient) =>
             {
-                string[] ss = megaUrl.Split('!');
-                if (ss.Length < 2)
-                {
-                    return result;
-                }
-                id = ss[1];
-                key = ss[2];
-            }
-            Log("megaUrl={0}, id={1}, key={2}", megaUrl, id, key);
-
-            byte[] aesKey = new byte[16];
-            byte[] aesIv = new byte[16];    // counter
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                postResult = webClient.UploadString(postUri, postParams);
+                return !string.IsNullOrEmpty(postResult);
+            });
+            Match match = Regex.Match(postResult, @"""g"":""([^""]*)""");
+            if (match.Groups.Count != 2)
             {
-                string b64Key = key.Replace("-", "+");
-                while (b64Key.Length % 4 != 0)
-                {
-                    b64Key += '=';
-                }
-                Log("b64Key={0}", b64Key);
-                byte[] binKey = Convert.FromBase64String(b64Key);
-                if (binKey.Length != 32)
-                {
-                    return result;
-                }
-                for (int i = 0; i < 16; i++)
-                {
-                    aesKey[i] = (byte)(binKey[i] ^ binKey[i + 16]);
-                }
-                for (int i = 0; i < 16; i++)
-                {
-                    if (i < 8)
-                    {
-                        aesIv[i] = binKey[i + 16];
-                    }
-                    else
-                    {
-                        aesIv[i] = 0;
-                    }
-                }
+                return result;
             }
-            Log("aesKey = {0}", ByteArrayToString(aesKey));
-            Log("aesIv  = {0}", ByteArrayToString(aesIv));
+            encUrl = match.Groups[1].Value;
+        }
+        Log("encUrl = {0}", encUrl);
 
-            string encUrl = null;
-            {
-                string postResult = "";
-                {
-                    string postUri = "https://eu.api.mega.co.nz/cs";
-                    string postParams = string.Format(@"[{{""a"":""g"",""g"":1,""p"":""{0}""}}]", id);
-                    using (WebClient wc = new WebClient())
-                    {
-                        for (int retryCount = 0; retryCount < retryMax; retryCount++)
-                        {
-                            if (retryCount != 0)
-                            {
-                                Console.WriteLine("Retrying...");
-                                Thread.Sleep(retrySleep);
-                            }
-                            wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                            try
-                            {
-                                postResult = wc.UploadString(postUri, postParams);
-                                if (!string.IsNullOrEmpty(postResult))
-                                {
-                                    break;
-                                }
-                            }
-                            catch (WebException)
-                            {
-                                Console.WriteLine("POST failed#{0}({1})", retryCount + 1, postUri);
-                            }
-                        }
-                    }
-                }
-
-                Match match = Regex.Match(postResult, @"""g"":""([^""]*)""");
-                if (match.Groups.Count != 2)
-                {
-                    return result;
-                }
-                encUrl = match.Groups[1].Value;
-            }
-            Log("encUrl  = {0}", encUrl);
-
-            byte[] encFile = null;
-            {
-                using (WebClient wc = new WebClient())
-                {
-                    for (int retryCount = 0; retryCount < retryMax; retryCount++)
-                    {
-                        if (retryCount != 0)
-                        {
-                            Console.WriteLine("Retrying...");
-                            Thread.Sleep(retrySleep);
-                        }
-                        try
-                        {
-                            encFile = wc.DownloadData(encUrl);
-                        }
-                        catch (WebException)
-                        {
-                            Console.WriteLine("GET failed#{0}({1})", retryCount + 1, encUrl);
-                        }
-                        if(encFile != null && encFile.Length > 0)
-                        {
-                            break;
-                        }
-                    }
-                }
-                if (encFile == null)
-                {
-                    return result;
-                }
-            }
-
-            byte[] decFile = null;
-            {
-                byte[] paddedEncFile = new byte[((encFile.Length + 15) / 16) * 16];
-                Log("encFile.Length={0}", encFile.Length);
-                Log("paddedEncFile.Length={0}", paddedEncFile.Length);
-                encFile.CopyTo(paddedEncFile, 0);
-                for (int i = encFile.Length; i < paddedEncFile.Length; i++)
-                {
-                    paddedEncFile[i] = 0;
-                }
-
-                var aes = new Aes128CounterMode(aesIv);
-                var dec = aes.CreateDecryptor(aesKey, null);
-
-                byte[] paddedDecFile = new byte[paddedEncFile.Length];
-                dec.TransformBlock(paddedEncFile, 0, paddedEncFile.Length, paddedDecFile, 0);
-                Array.Resize(ref paddedDecFile, encFile.Length);
-                decFile = paddedDecFile;
-            }
-            return decFile;
+        byte[] encFile = null;
+        WebClientWithRetry(retryMax, (webClient) =>
+        {
+            encFile = webClient.DownloadData(encUrl);
+            return encFile != null && encFile.Length > 0;
+        });
+        if (encFile == null)
+        {
+            return result;
         }
 
-        static public void Log(string format, params object[] args)
         {
-            if (bLogEnable)
+            byte[] paddedEncFile = new byte[((encFile.Length + 15) / 16) * 16];
+            Log("encFile.Length={0}", encFile.Length);
+            Log("paddedEncFile.Length={0}", paddedEncFile.Length);
+            encFile.CopyTo(paddedEncFile, 0);
+            for (int i = encFile.Length; i < paddedEncFile.Length; i++)
             {
-                string s = string.Format(format, args);
-                Console.WriteLine(s);
+                paddedEncFile[i] = 0;
+            }
+
+            var aes = new Aes128CounterMode(aesIv);
+            var dec = aes.CreateDecryptor(aesKey, null);
+
+            byte[] paddedDecFile = new byte[paddedEncFile.Length];
+            dec.TransformBlock(paddedEncFile, 0, paddedEncFile.Length, paddedDecFile, 0);
+            Array.Resize(ref paddedDecFile, encFile.Length);
+            result = paddedDecFile;
+        }
+        return result;
+    }
+
+    static void WebClientWithRetry(int maxRetryCount, Func<WebClient, bool> func)
+    {
+        using (WebClient webClient = new WebClient())
+        {
+            bool result = false;
+            for (int i = 0; !result && i < maxRetryCount; i++)
+            {
+                if (i != 0)
+                {
+                    Console.WriteLine("Retrying (#{0}/{1})...", i, maxRetryCount);
+                    Thread.Sleep(retrySleep);
+                }
+                try
+                {
+                    result = func(webClient);
+                }
+                catch (WebException)
+                {
+                    Console.WriteLine("Failed(#{0})", i + 1);
+                }
             }
         }
+    }
 
-        public static string ByteArrayToString(byte[] ba)
+    static void Log(string format, params object[] args)
+    {
+        if (bLogEnable)
         {
-            string hex = BitConverter.ToString(ba);
-            return hex.Replace("-", "");
+            string s = string.Format(format, args);
+            Console.WriteLine(s);
         }
+    }
+
+    static string ByteArrayToString(byte[] ba)
+    {
+        string hex = BitConverter.ToString(ba);
+        return hex.Replace("-", "");
     }
 }
 
