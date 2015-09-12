@@ -1,3 +1,11 @@
+### 2015/09/13
+
+ - バッチファイルのエラー処理を変更
+ - MaidVoicePitch
+    - AddModsSlider用のスライダー更新コールバックを追加
+ - AddModsSlider
+    - NGUI版へ更新
+
 ### 2015/09/11
 
  - LogWindowを追加 (その３>>8)
