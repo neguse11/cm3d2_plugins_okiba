@@ -4,7 +4,7 @@ if not exist "%~dp0\..\config.bat" (
   exit /b 1
 )
 
-call "%~dp0\..\config.bat" || exit /b %ERRORLEVEL%
+call "%~dp0\..\config.bat" || exit /b 1
 
 
 @rem
