@@ -2,8 +2,8 @@ set OKIBA_URL=https://github.com/neguse11/cm3d2_plugins_okiba/archive/%OKIBA_BRA
 set OKIBA_FILE=%OKIBA_BRANCH%.zip
 set OKIBA_DIR=cm3d2_plugins_okiba-%OKIBA_BRANCH%
 
-set REIPATCHER_URL=https://mega.nz/#!rsImja6D!Of4s5lsD7y9JylVZ7miWg63Mxt5MVKniLgWqBr0oJl8
-set REIPATCHER_7Z=ReiPatcher_0.9.0.7.7z
+set REIPATCHER_URL=https://mega.nz/#!21IV0YaS!R2vWnzeGXihjC3r7tRUe-m8rWtYoMPINa8UKJq7flmk
+set REIPATCHER_7Z=ReiPatcher_0.9.0.8.7z
 set REIPATCHER_PASSWD=byreisen
 
 set UNITYINJECTOR_URL=https://mega.nz/#!3sxVCISZ!_u74yowG7dP-M-xDQTJNBuBvfO84BMgFVp5mmPrnkfE
