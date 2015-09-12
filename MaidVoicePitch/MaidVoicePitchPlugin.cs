@@ -33,6 +33,11 @@ namespace CM3D2.MaidVoicePitch.Plugin
 
         TBodyMoveHeadAndEye tbodyMoveHeadAndEye = new TBodyMoveHeadAndEye();
 
+        public MaidVoicePitch()
+        {
+            this.name = "MaidVoicePitch";
+        }
+
         public void Awake()
         {
             UnityEngine.GameObject.DontDestroyOnLoad(this);
@@ -119,9 +124,7 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 CleanupExSave();
             }
 
-            // エディット画面にいる場合は毎フレームアップデートを行う
-            // todo  本来はAddModsSliderの値が変わったのを検出して呼び出せば良いものなので、
-            // スライダーのイベントが取れないかどうかを調べること
+            // エディット画面にいる場合は特別処理として毎フレームアップデートを行う
             if (Application.loadedLevel == 5)
             {
                 if (GameMain.Instance != null && GameMain.Instance.CharacterMgr != null)
@@ -199,6 +202,27 @@ namespace CM3D2.MaidVoicePitch.Plugin
         }
 
         /// <summary>
+        /// AddModsSlider等から呼び出されるコールバック
+        /// 呼び出し方法はvar go = GameObject.Find("MaidVoicePitch"); go.SendMessage("UpdateSliders");
+        /// </summary>
+        public void UpdateSliders() {
+            if (GameMain.Instance != null && GameMain.Instance.CharacterMgr != null)
+            {
+                CharacterMgr cm = GameMain.Instance.CharacterMgr;
+                for (int i = 0, n = cm.GetStockMaidCount(); i < n; i++)
+                {
+                    Maid maid = cm.GetStockMaid(i);
+                    if(maid != null)
+                    {
+                        // 同じ "sintyou" の値を入れて、強制的にモーフ再計算を行う
+                        float SCALE_Sintyou = maid.body0.bonemorph.SCALE_Sintyou;
+                        maid.body0.BoneMorph_FromProcItem("sintyou", SCALE_Sintyou);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// エディットシーン用の状態更新
         /// </summary>
         void EditSceneMaidUpdate(Maid maid)
@@ -220,15 +244,12 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 Helper.SetInstanceField(typeof(Maid), maid, "m_bFoceKuchipakuSelfUpdateTime", false);
             }
 
+            // AddModsSlider側へのPRが受領され次第削除予定
             // エディット中は毎フレーム強制的にモーフ再計算を行わせるため、
             // 同じ "sintyou" の値を入れる
             // todo  本来はAddModsSliderの値が変わったのを検出して呼び出せば良いものなので、
             // スライダーのイベントが取れないかどうかを調べること
-            if (maid.body0 != null)
-            {
-                float SCALE_Sintyou = maid.body0.bonemorph.SCALE_Sintyou;
-                maid.body0.BoneMorph_FromProcItem("sintyou", SCALE_Sintyou);
-            }
+            UpdateSliders();
         }
 
         // 目を常時カメラに向ける
