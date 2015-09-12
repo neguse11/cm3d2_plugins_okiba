@@ -5,6 +5,7 @@
     - AddModsSlider用のスライダー更新コールバックを追加
  - AddModsSlider
     - NGUI版へ更新
+ - ReiPatcher 0.9.0.8, UnityInjector 1.0.1.3 対応
 
 ### 2015/09/11
 
