@@ -365,7 +365,8 @@ namespace CM3D2.SkillCommandShortCut.Plugin
                 }
 
                 // 夜伽スキル実行中の「Next」ボタン
-                if (ClickGameObject("/UI Root/YotogiPlayPanel/CommonPanel/UnderButtonGroup/Next"))
+//              if (ClickGameObject("/UI Root/YotogiPlayPanel/CommonPanel/UnderButtonGroup/Next"))
+                if (ClickGameObject("/UI Root/YotogiPlayPanel/UndressingViewer/CommonPanel/UnderButtonGroup/Next"))
                 {
                     return true;
                 }
@@ -409,10 +410,8 @@ namespace CM3D2.SkillCommandShortCut.Plugin
                 UIButton uiButton = go.GetComponent<UIButton>();
                 if (uiButton != null)
                 {
-                    Console.WriteLine("{0} . isEnabled = {1}", name, uiButton.isEnabled);
                     if (uiButton.isEnabled)
                     {
-                        Console.WriteLine("{0} . OnClick", name);
                         uiButton.SendMessage("OnClick");
                         return true;
                     }
@@ -420,7 +419,9 @@ namespace CM3D2.SkillCommandShortCut.Plugin
             }
             else
             {
+#if DEBUG
                 Console.WriteLine("{0} is not found", name);
+#endif
             }
             return false;
         }
