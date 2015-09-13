@@ -80,7 +80,9 @@
         <value prop_name="MABATAKI" min="0" max="1.0" default="1.0" label="数値" type="num" />
     </mod>
 
-    <mod id="LIPSYNC_INTENISTY" description="リップシンク強度指定" >
+    <mod id="LIPSYNC_INTENISTY" description ="リップシンク強度指定有効" type="toggle" />
+
+    <mod id="LIPSYNC_INTENISTY.dummy" description="リップシンク強度指定" >
         <value prop_name="LIPSYNC_INTENISTY.value" min="0.0" max="1.0" default="1.0" label="数値" type="num" />
     </mod>
 
@@ -145,7 +147,9 @@
         <value prop_name="S1ASCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
-    <mod id="HEAD_TRACK" description="顔の追従処理の改善">
+    <mod id="HEAD_TRACK" description ="顔の追従処理の改善" type="toggle" />
+
+    <mod id="HEAD_TRACK.dummy" description="顔の追従処理の改善">
         <value prop_name="HEAD_TRACK.lateral" min="1" max="90" default="30" label="横角" type="num" />
         <value prop_name="HEAD_TRACK.above"  min="1" max="90" default="30" label="上角" type="num" />
         <value prop_name="HEAD_TRACK.below" min="1" max="90" default="15" label="下角" type="num" />
@@ -156,7 +160,9 @@
         <value prop_name="HEAD_TRACK.ofsz" min="-30" max="30" default="0" label="回オ" type="num" />
     </mod>
 
-    <mod id="EYE_TRACK" description="目の追従処理の改善">
+    <mod id="EYE_TRACK" description ="目の追従処理の改善" type="toggle" />
+
+    <mod id="EYE_TRACK.dummy" description="目の追従処理の改善">
         <value prop_name="EYE_TRACK.outside" min="1" max="90" default="35" label="内角" type="num" />
         <value prop_name="EYE_TRACK.inside" min="1" max="90" default="65" label="外角" type="num" />
         <value prop_name="EYE_TRACK.above"  min="-10" max="90" default="10" label="上角" type="num" />
