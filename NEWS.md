@@ -1,9 +1,16 @@
+### 2015/09/14
+
+ - MaidVoicePitch
+    - AddModsSlider用のスライダー更新コールバック名を変更
+ - [AddModsSlider](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin)
+    - 新しいコールバック名を用いるバージョン(Version 0.1.1.12)に更新
+
 ### 2015/09/13
 
  - バッチファイルのエラー処理を変更
  - MaidVoicePitch
     - AddModsSlider用のスライダー更新コールバックを追加
- - AddModsSlider
+ - [AddModsSlider](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin)
     - NGUI版へ更新
  - ReiPatcher 0.9.0.8, UnityInjector 1.0.1.3 対応
 

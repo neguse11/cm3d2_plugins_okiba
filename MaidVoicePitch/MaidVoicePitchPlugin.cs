@@ -11,7 +11,7 @@ namespace CM3D2.MaidVoicePitch.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("CM3D2 MaidVoicePitch"),
-    PluginVersion("0.2.4.0")]
+    PluginVersion("0.2.7.0")]
     public class MaidVoicePitch : PluginBase
     {
         public static string PluginName { get { return "CM3D2.MaidVoicePitch"; } }
@@ -32,11 +32,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
         }
 
         TBodyMoveHeadAndEye tbodyMoveHeadAndEye = new TBodyMoveHeadAndEye();
-
-        public MaidVoicePitch()
-        {
-            this.name = "MaidVoicePitch";
-        }
 
         public void Awake()
         {
@@ -203,9 +198,9 @@ namespace CM3D2.MaidVoicePitch.Plugin
 
         /// <summary>
         /// AddModsSlider等から呼び出されるコールバック
-        /// 呼び出し方法はvar go = GameObject.Find("MaidVoicePitch"); go.SendMessage("UpdateSliders");
+        /// 呼び出し方法は this.gameObject.SendMessage("MaidVoicePitch.TestUpdateSliders");
         /// </summary>
-        public void UpdateSliders() {
+        public void MaidVoicePitch_UpdateSliders() {
             if (GameMain.Instance != null && GameMain.Instance.CharacterMgr != null)
             {
                 CharacterMgr cm = GameMain.Instance.CharacterMgr;
@@ -243,13 +238,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 // エディットシーンではリップシンクを強制的に復活させる
                 Helper.SetInstanceField(typeof(Maid), maid, "m_bFoceKuchipakuSelfUpdateTime", false);
             }
-
-            // AddModsSlider側へのPRが受領され次第削除予定
-            // エディット中は毎フレーム強制的にモーフ再計算を行わせるため、
-            // 同じ "sintyou" の値を入れる
-            // todo  本来はAddModsSliderの値が変わったのを検出して呼び出せば良いものなので、
-            // スライダーのイベントが取れないかどうかを調べること
-            UpdateSliders();
         }
 
         // 目を常時カメラに向ける

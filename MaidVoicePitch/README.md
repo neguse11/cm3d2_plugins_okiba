@@ -275,6 +275,8 @@
 
 ## 履歴
 
+ - 0.2.7
+   - AddModsSlider用の[スライダーコールバック名をMaidVoicePitch_UpdateSlidersに変更](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/compare/decf77137a...37e285d14f)
  - 0.2.6
    - AddModsSlider用のスライダーコールバックUpdateSlidersを追加
  - 0.2.5

@@ -73,97 +73,97 @@
     </mod>
 
     <mod id="PITCH" description ="声のピッチ" >
-        <value prop_name="PITCH" min="-1" max="1" label="数値" type="num" />
+        <value prop_name="PITCH" min="-1" max="1" default="0" label="数値" type="num" />
     </mod>
 
     <mod id="MABATAKI" description ="目の開度" >
-        <value prop_name="MABATAKI" min="0" max="1.0" label="数値" type="num" />
+        <value prop_name="MABATAKI" min="0" max="1.0" default="1.0" label="数値" type="num" />
     </mod>
 
     <mod id="LIPSYNC_INTENISTY" description="リップシンク強度指定" >
-        <value prop_name="LIPSYNC_INTENISTY.value" min="0.0" max="1.0" label="数値" type="num" />
+        <value prop_name="LIPSYNC_INTENISTY.value" min="0.0" max="1.0" default="1.0" label="数値" type="num" />
     </mod>
 
     <mod id="EYEBALL" description="瞳の大きさ" >
-        <value prop_name="EYEBALL.width" min="0.1" max="2.0" label="横" type="scale" />
-        <value prop_name="EYEBALL.height" min="0.1" max="2.0" label="縦" type="scale" />
+        <value prop_name="EYEBALL.width" min="0.1" max="2.0" default="1.0" label="横" type="scale" />
+        <value prop_name="EYEBALL.height" min="0.1" max="2.0" default="1.0" label="縦" type="scale" />
     </mod>
 
     <mod id="EYE_RATIO" description="目の縦横比率" on_wideslider="true" >
-        <value prop_name="EYE_RATIO" min="0.1" max="2.0" label="比率" type="scale" />
+        <value prop_name="EYE_RATIO" min="0.1" max="2.0" default="1.0" label="比率" type="scale" />
     </mod>
 
     <mod id="EYE_ANG" description="目の角度" on_wideslider="true" >
-        <value prop_name="EYE_ANG.angle" min="-60" max="60" label="角度" type="num" />
-        <value prop_name="EYE_ANG.x" min="-200" max="200" label="縦補正" type="num" />
-        <value prop_name="EYE_ANG.y" min="-200" max="200" label="横補正" type="num" />
+        <value prop_name="EYE_ANG.angle" min="-60" max="60" default="0" label="角度" type="num" />
+        <value prop_name="EYE_ANG.x" min="-200" max="200" default="0" label="縦補正" type="num" />
+        <value prop_name="EYE_ANG.y" min="-200" max="200" default="0" label="横補正" type="num" />
     </mod>
 
     <mod id="PELSCL" description="骨盤スケーリング" on_wideslider="true" >
-        <value prop_name="PELSCL.width" min="0.1" max="2.0" label="横幅" type="scale" />
-        <value prop_name="PELSCL.depth" min="0.1" max="2.0" label="奥行" type="scale" />
-        <value prop_name="PELSCL.height" min="0.1" max="2.0" label="高さ" type="scale" />
+        <value prop_name="PELSCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="PELSCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="PELSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="THISCL" description="足全体のスケーリング"  on_wideslider="true" >
-        <value prop_name="THISCL.width" min="0.1" max="2.0" label="横幅" type="scale" />
-        <value prop_name="THISCL.depth" min="0.1" max="2.0" label="奥行" type="scale" />
+        <value prop_name="THISCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="THISCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
     </mod>
 
     <mod id="THIPOS" description="足の位置"  on_wideslider="true" >
-        <value prop_name="THIPOS.x" min="-100" max="200" label="左右" type="num" />
-        <value prop_name="THIPOS.z" min="-100" max="200" label="前後" type="num" />
+        <value prop_name="THIPOS.x" min="-100" max="200" default="0" label="左右" type="num" />
+        <value prop_name="THIPOS.z" min="-100" max="200" default="0" label="前後" type="num" />
     </mod>
 
     <mod id="SKTSCL" description="スカート周辺スケーリング" on_wideslider="true">
-        <value prop_name="SKTSCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="SKTSCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="SKTSCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="SKTSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="SKTSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="SKTSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="SPISCL" description="胴(下腹部)スケーリング" on_wideslider="true">
-        <value prop_name="SPISCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="SPISCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="SPISCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="SPISCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="SPISCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="SPISCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="S0ASCL" description="胴(腹部)スケーリング" on_wideslider="true">
-        <value prop_name="S0ASCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="S0ASCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="S0ASCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="S0ASCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="S0ASCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="S0ASCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="S1_SCL" description="胴(みぞおち)スケーリング" on_wideslider="true">
-        <value prop_name="S1_SCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="S1_SCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="S1_SCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="S1_SCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="S1_SCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="S1_SCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="S1ASCL" description="胴(肋骨)スケーリング" on_wideslider="true">
-        <value prop_name="S1ASCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="S1ASCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="S1ASCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="S1ASCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="S1ASCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="S1ASCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="HEAD_TRACK" description="顔の追従処理の改善">
-        <value prop_name="HEAD_TRACK.lateral" min="1" max="90" label="横角" type="num" />
-        <value prop_name="HEAD_TRACK.above"  min="1" max="90" label="上角" type="num" />
-        <value prop_name="HEAD_TRACK.below" min="1" max="90" label="下角" type="num" />
-        <value prop_name="HEAD_TRACK.behind" min="1" max="180" label="無視角" type="num" />
-        <value prop_name="HEAD_TRACK.speed" min="0" max="0.3" label="速度" type="num" />
-        <value prop_name="HEAD_TRACK.ofsx" min="-30" max="30" label="横オ" type="num" />
-        <value prop_name="HEAD_TRACK.ofsy" min="-30" max="30" label="縦オ" type="num" />
-        <value prop_name="HEAD_TRACK.ofsz" min="-30" max="30" label="回オ" type="num" />
+        <value prop_name="HEAD_TRACK.lateral" min="1" max="90" default="30" label="横角" type="num" />
+        <value prop_name="HEAD_TRACK.above"  min="1" max="90" default="30" label="上角" type="num" />
+        <value prop_name="HEAD_TRACK.below" min="1" max="90" default="15" label="下角" type="num" />
+        <value prop_name="HEAD_TRACK.behind" min="1" max="180" default="90" label="無視角" type="num" />
+        <value prop_name="HEAD_TRACK.speed" min="0" max="0.3" default="0.04" label="速度" type="num" />
+        <value prop_name="HEAD_TRACK.ofsx" min="-30" max="30" default="0" label="横オ" type="num" />
+        <value prop_name="HEAD_TRACK.ofsy" min="-30" max="30" default="0" label="縦オ" type="num" />
+        <value prop_name="HEAD_TRACK.ofsz" min="-30" max="30" default="0" label="回オ" type="num" />
     </mod>
 
     <mod id="EYE_TRACK" description="目の追従処理の改善">
-        <value prop_name="EYE_TRACK.outside" min="1" max="90" label="内角" type="num" />
-        <value prop_name="EYE_TRACK.inside" min="1" max="90" label="外角" type="num" />
-        <value prop_name="EYE_TRACK.above"  min="-10" max="90" label="上角" type="num" />
-        <value prop_name="EYE_TRACK.below" min="-10" max="90" label="下角" type="num" />
-        <value prop_name="EYE_TRACK.behind" min="1" max="180" label="無視角" type="num" />
-        <value prop_name="EYE_TRACK.speed" min="0" max="0.3" label="速度" type="num" />
-        <value prop_name="EYE_TRACK.ofsx" min="-10" max="10" label="横オ" type="num" />
-        <value prop_name="EYE_TRACK.ofsy" min="-5" max="5" label="縦オ" type="num" />
+        <value prop_name="EYE_TRACK.outside" min="1" max="90" default="35" label="内角" type="num" />
+        <value prop_name="EYE_TRACK.inside" min="1" max="90" default="65" label="外角" type="num" />
+        <value prop_name="EYE_TRACK.above"  min="-10" max="90" default="10" label="上角" type="num" />
+        <value prop_name="EYE_TRACK.below" min="-10" max="90" default="20" label="下角" type="num" />
+        <value prop_name="EYE_TRACK.behind" min="1" max="180" default="90" label="無視角" type="num" />
+        <value prop_name="EYE_TRACK.speed" min="0" max="0.3" default="0.07" label="速度" type="num" />
+        <value prop_name="EYE_TRACK.ofsx" min="-10" max="10" default="0" label="横オ" type="num" />
+        <value prop_name="EYE_TRACK.ofsy" min="-5" max="5" default="0" label="縦オ" type="num" />
     </mod>
 </mods>
