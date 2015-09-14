@@ -1,3 +1,10 @@
+### 2015/09/14 (3)
+
+ - MaidVoicePitch
+    - デフォルトのスライダーテンプレートファイル "UnityInjector/Config/MaidVoicePitchSlider.xml" を追加
+       - スライダーテンプレートが指定されていない場合、このファイルを用いるようになります
+    - FARMFIX等トグル操作がその場で反映されないのを修正
+
 ### 2015/09/14 (2)
 
  - [ConsoleCodePage](https://gist.github.com/asm256/9bfb88336a1433e2328a) 2015.9.3.3 を追加

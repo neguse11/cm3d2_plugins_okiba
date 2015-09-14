@@ -130,6 +130,12 @@ namespace CM3D2.MaidVoicePitch.Plugin
                         EditSceneMaidUpdate(cm.GetStockMaid(i));
                     }
                 }
+
+				// todo	以下を直すこと：
+				//		FARMFIX等のスライダーではないトグル操作等を行った場合にコールバックが
+				//		呼ばれていない。これを回避するため、とりあえず毎フレーム呼びだすことにする
+				//
+				MaidVoicePitch_UpdateSliders();
             }
         }
 

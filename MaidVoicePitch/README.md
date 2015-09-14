@@ -283,6 +283,8 @@ config.batの設定を行った後、このディレクトリの compile.bat を
 
  - 0.2.7
    - AddModsSlider用の[スライダーコールバック名をMaidVoicePitch_UpdateSlidersに変更](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/compare/decf77137a...37e285d14f)
+   - デフォルトのスライダーテンプレートを追加 (その３>>223, >>226)
+   - FARMFIX等のトグル操作がその場で反映されないのを修正 (その３>>228)
  - 0.2.6
    - AddModsSlider用のスライダーコールバックUpdateSlidersを追加
  - 0.2.5
@@ -337,6 +339,9 @@ config.batの設定を行った後、このディレクトリの compile.bat を
     <value prop_name="EYE_TRACK.ofsy"    min="-5"  max="5"   label="縦オ"   type="num" />
 </mod>
 ```
+ - 0.2.7
+   - デフォルトのスライダーテンプレートファイル "UnityInjector/Config/MaidVoicePitchSlider.xml" を追加
+      - スライダーテンプレートが指定されていない場合、このファイルを用いるようになります
  - 0.2.3
    - 使用しなくなった拡張セーブデータを削除する処理を追加
  - 0.2.2
