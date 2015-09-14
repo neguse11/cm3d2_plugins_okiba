@@ -25,10 +25,15 @@ C:\KISS\CM3D2_KAIZOU\CM3D2x64.exe を起動して、動作を確認してくだ�
 
 ```
 cd /d C:\KISS\CM3D2
-.\CM3D2.exe -popupwindow
+.\CM3D2x64.exe -popupwindow
 ```
 
-この機能はバニラの CM3D2.exe の標準機能です (参考：[Unity Standalone Player command line arguments](http://docs.unity3d.com/Manual/CommandLineArguments.html))
+この機能はバニラの CM3D2x64.exe の標準機能です (参考：[Unity Standalone Player command line arguments](http://docs.unity3d.com/Manual/CommandLineArguments.html))
+
+
+## コンパイル方法
+
+config.batの設定を行った後、このディレクトリの compile.bat を実行することでコンパイルができます
 
 
 ## 履歴

@@ -8,6 +8,7 @@ obj/
 *.zip
 
 cm3d2_plugins_okiba-master/
+cm3d2_plugins_okiba-master-binary/
 lib/*/
 *.rsp
 config.bat

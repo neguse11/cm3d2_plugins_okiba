@@ -2,12 +2,12 @@ set OKIBA_URL=https://github.com/neguse11/cm3d2_plugins_okiba/archive/%OKIBA_BRA
 set OKIBA_FILE=%OKIBA_BRANCH%.zip
 set OKIBA_DIR=cm3d2_plugins_okiba-%OKIBA_BRANCH%
 
-set REIPATCHER_URL=https://mega.co.nz/#!rsImja6D!Of4s5lsD7y9JylVZ7miWg63Mxt5MVKniLgWqBr0oJl8
-set REIPATCHER_7Z=ReiPatcher_0.9.0.7.7z
+set REIPATCHER_URL=https://mega.nz/#!21IV0YaS!R2vWnzeGXihjC3r7tRUe-m8rWtYoMPINa8UKJq7flmk
+set REIPATCHER_7Z=ReiPatcher_0.9.0.8.7z
 set REIPATCHER_PASSWD=byreisen
 
-set UNITYINJECTOR_URL=https://mega.co.nz/#!m1YV1CpI!Knssx6-S1q2q6Qfuq8cFQQ6LKZeA-JiLRm4I7tkQxo8
-set UNITYINJECTOR_7Z=UnityInjector_1.0.1.1.7z
+set UNITYINJECTOR_URL=https://mega.nz/#!3sxVCISZ!_u74yowG7dP-M-xDQTJNBuBvfO84BMgFVp5mmPrnkfE
+set UNITYINJECTOR_7Z=UnityInjector_1.0.1.3.7z
 set UNITYINJECTOR_PASSWD=byreisen
 
 set _7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip
@@ -15,7 +15,6 @@ set _7Z_FILE=7za920.zip
 
 set REIPATCHER_INI=%ROOT%\ReiPatcher\CM3D2%PLATFORM%.ini
 set _7z="%ROOT%\_7z\7za.exe"
-set CSC=C:\Windows\Microsoft.NET\Framework\v3.5\csc.exe
 set MEGADL="%ROOT%\%OKIBA_DIR%\scripts\megadl.exe"
 
 set INSTALL_PATH=
@@ -24,10 +23,30 @@ set SAME_PATH=
 
 
 @rem
+@rem CSCにcsc.exeのパスを入れる
+@rem
+@rem https://gist.github.com/asm256/8f5472657c1675bdc77a
+@rem https://support.microsoft.com/en-us/kb/318785
+set CSC_REG_KEY="HKLM\SoftWare\Microsoft\NET Framework Setup\NDP\v3.5"
+set CSC_REG_VALUE=InstallPath
+for /F "usebackq skip=2 tokens=1-2*" %%A in (`REG QUERY %CSC_REG_KEY% /v %CSC_REG_VALUE% 2^>nul`) do (
+    set CSC_PATH=%%C
+)
+set CSC=%CSC_PATH%\csc.exe
+
+
+if not exist "%CSC%" (
+  echo .NET Framework 3.5 が見つかりません
+  echo インストール後に実行してください
+  exit /b 1
+)
+
+@rem
 @rem INSTALL_PATHにレジストリ内のインストールパスを入れる
 @rem
 set INSTALL_PATH_REG_KEY="HKCU\Software\KISS\カスタムメイド3D2"
 set INSTALL_PATH_REG_VALUE=InstallPath
+set INSTALL_PATH=
 
 @rem http://stackoverflow.com/questions/445167/
 for /F "usebackq skip=2 tokens=1-2*" %%A in (`REG QUERY %INSTALL_PATH_REG_KEY% /v %INSTALL_PATH_REG_VALUE% 2^>nul`) do (
@@ -54,11 +73,11 @@ set MOD_PATH=%ROOT%
 @rem
 if defined INSTALL_PATH (
   if defined MOD_PATH (
-    echo.>"%INSTALL_PATH%\__dummy__test__file__"
-    if exist "%ROOT%\__dummy__test__file__" (
+    echo.>"%INSTALL_PATH%\__cm3d2_okiba_dummy__file__"
+    if exist "%ROOT%\__cm3d2_okiba_dummy__file__" (
       set SAME_PATH=True
     )
-    del "%INSTALL_PATH%\__dummy__test__file__"
+    del "%INSTALL_PATH%\__cm3d2_okiba_dummy__file__"
   )
 )
 
@@ -153,10 +172,12 @@ if not exist %MEGADL% (
 @rem %ROOT%\ 下に ReiPatcher をダウンロード
 @rem
 echo 「%REIPATCHER_URL%」をダウンロード中
-%MEGADL% %REIPATCHER_URL% %REIPATCHER_7Z%
-if not exist %REIPATCHER_7Z% (
-  echo 「%REIPATCHER_URL%」のダウンロードに失敗しました
-  exit /b 1
+if not exist "%REIPATCHER_7Z%" (
+    %MEGADL% %REIPATCHER_URL% "%REIPATCHER_7Z%"
+    if not exist "%REIPATCHER_7Z%" (
+      echo 「%REIPATCHER_URL%」のダウンロードに失敗しました
+      exit /b 1
+    )
 )
 
 
@@ -164,10 +185,12 @@ if not exist %REIPATCHER_7Z% (
 @rem %ROOT%\ 下に UnityInjector をダウンロード
 @rem
 echo 「%UNITYINJECTOR_URL%」をダウンロード中
-%MEGADL% %UNITYINJECTOR_URL% %UNITYINJECTOR_7Z%
-if not exist %UNITYINJECTOR_7Z% (
-  echo 「%UNITYINJECTOR_7Z%」のダウンロードに失敗しました
-  exit /b 1
+if not exist "%UNITYINJECTOR_7Z%" (
+    %MEGADL% %UNITYINJECTOR_URL% "%UNITYINJECTOR_7Z%"
+    if not exist "%UNITYINJECTOR_7Z%" (
+      echo 「%UNITYINJECTOR_7Z%」のダウンロードに失敗しました
+      exit /b 1
+    )
 )
 
 
@@ -240,7 +263,7 @@ echo @rem バニラの CM3D2 の位置>>"%TARGET%"
 if defined INSTALL_PATH (
   echo set CM3D2_VANILLA_DIR=%INSTALL_PATH%>>"%TARGET%"
 ) else (
-  echo set CM3D2_VANILLA_DIR=C:\KISS\CM3D2>>"%TARGET%"
+  echo set CM3D2_VANILLA_DIR=>>"%TARGET%"
 )
 echo.>>"%TARGET%"
 echo @rem 改造版の CM3D2 の位置>>"%TARGET%"
@@ -259,14 +282,26 @@ echo.>>"%TARGET%"
 echo @rem cm3d2_plugins_okiba のブランチ名>>"%TARGET%"
 echo set OKIBA_BRANCH=%OKIBA_BRANCH%>>"%TARGET%"
 
-
 echo.
 echo あとは以下の操作をすることで、導入が完了します
 echo.
-echo (1)「%ROOT%\%OKIBA_DIR%\config.bat」
+if defined INSTALL_PATH (
+echo 1.「%ROOT%\%OKIBA_DIR%\config.bat」
 echo    内の「CM3D2_VANILLA_DIR」と「CM3D2_MOD_DIR」を確認し、
 echo    必要なら環境に合わせて書き換えてください
+) else (
+echo 1.  ＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+echo     ＊　　インストール情報が見つかりませんでした　　＊
+echo     ＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
 echo.
-echo (2)「%ROOT%\%OKIBA_DIR%\compile-patch-and-go.bat」
+echo    「%ROOT%\%OKIBA_DIR%\config.bat」
+echo    内の「CM3D2_VANILLA_DIR」と「CM3D2_MOD_DIR」を設定してください
+echo.
+echo    例えば、「X:\FOO\KISS\CM3D2」下にインストールしている場合、
+echo    「set CM3D2_VANILLA_DIR=X:\FOO\KISS\CM3D2」を指定してください
+echo.
+)
+echo.
+echo 2. 「%ROOT%\%OKIBA_DIR%\compile-patch-and-go.bat」
 echo    を実行すると、コンパイル、パッチ操作が行われた後、ゲームが起動します
 echo.

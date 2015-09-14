@@ -1,14 +1,9 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
-using UnityEngine;
-
 
 namespace CM3D2.ExternalSaveData.Managed
 {
@@ -26,7 +21,7 @@ namespace CM3D2.ExternalSaveData.Managed
         /// <summary>
         /// 拡張セーブデータ内の設定を得る(文字列)
         /// <para>指定した設定が存在しない場合はdefaultValueを返す</para>
-		/// <seealso cref="GetBool"/>
+        /// <seealso cref="GetBool"/>
         /// <seealso cref="GetInt"/>
         /// <seealso cref="GetFloat"/>
         /// </summary>
@@ -65,7 +60,7 @@ namespace CM3D2.ExternalSaveData.Managed
 
         /// <summary>
         /// 拡張セーブデータへ設定を書き込む
-		/// <seealso cref="SetBool"/>
+        /// <seealso cref="SetBool"/>
         /// <seealso cref="SetInt"/>
         /// <seealso cref="SetFloat"/>
         /// </summary>
@@ -213,10 +208,22 @@ namespace CM3D2.ExternalSaveData.Managed
             PluginSettings.Cleanup(guids);
         }
 
+        public static void CleanupMaids()
+        {
+            List<string> guids = new List<string>();
+            CharacterMgr cm = GameMain.Instance.CharacterMgr;
+            for (int i = 0, n = cm.GetStockMaidCount(); i < n; i++)
+            {
+                Maid maid = cm.GetStockMaid(i);
+                guids.Add(maid.Param.status.guid);
+            }
+            CleanupMaids(guids);
+        }
+
         /// <summary>
         /// 拡張セーブデータ内のグローバル設定を得る(文字列)
         /// <para>指定した設定が存在しない場合はdefaultValueを返す</para>
-		/// <seealso cref="GlobalGetBool"/>
+        /// <seealso cref="GlobalGetBool"/>
         /// <seealso cref="GlobalGetInt"/>
         /// <seealso cref="GlobalGetFloat"/>
         /// </summary>
@@ -250,7 +257,7 @@ namespace CM3D2.ExternalSaveData.Managed
 
         /// <summary>
         /// 拡張セーブデータへグローバル設定を書き込む
-		/// <seealso cref="GlobalSetBool"/>
+        /// <seealso cref="GlobalSetBool"/>
         /// <seealso cref="GlobalSetInt"/>
         /// <seealso cref="GlobalSetFloat"/>
         /// </summary>
@@ -292,7 +299,7 @@ namespace CM3D2.ExternalSaveData.Managed
 
         /// <summary>
         /// 拡張セーブデータへグローバル設定を書き込む(常に上書き)
-		/// <seealso cref="GlobalSetBool"/>
+        /// <seealso cref="GlobalSetBool"/>
         /// <seealso cref="GlobalSetInt"/>
         /// <seealso cref="GlobalSetFloat"/>
         /// </summary>
@@ -328,7 +335,6 @@ namespace CM3D2.ExternalSaveData.Managed
         /// <returns>true:削除に成功(設定が存在し、それを削除した)。false:失敗(設定が存在しないか、何らかのエラー)</returns>
         public static bool GlobalRemove(string pluginName, string propName)
         {
-            Console.WriteLine("ExSaveData.GlobalRemove({0},{1})", pluginName, propName);
             if (pluginName == null || propName == null)
             {
                 return false;
@@ -381,6 +387,16 @@ namespace CM3D2.ExternalSaveData.Managed
             return (string)(methodInfo.Invoke(that, new object[] { f_nSaveNo }));
         }
 
+        static bool SetMaidName(Maid maid)
+        {
+            if (maid == null)
+            {
+                return false;
+            }
+            var s = maid.Param.status;
+            return PluginSettings.SetMaidName(s.guid, s.last_name, s.first_name, s.create_time);
+        }
+
         //
         static ExSaveData()
         {
@@ -425,6 +441,13 @@ namespace CM3D2.ExternalSaveData.Managed
         {
             try
             {
+                CharacterMgr cm = GameMain.Instance.CharacterMgr;
+                for (int i = 0, n = cm.GetStockMaidCount(); i < n; i++)
+                {
+                    Maid maid = cm.GetStockMaid(i);
+                    SetMaidName(maid);
+                }
+                CleanupMaids();
                 string path = GameMainMakeSavePathFileName(that, f_nSaveNo);
                 string xmlFilePath = makeXmlFilename(that, f_nSaveNo);
                 PluginSettings.Save(xmlFilePath, path);
@@ -450,74 +473,6 @@ namespace CM3D2.ExternalSaveData.Managed
                 Helper.ShowException(e);
             }
         }
-    }
-
-    namespace GameMainCallbacks
-    {
-        public static class Deserialize
-        {
-            public delegate void Callback(GameMain that, int f_nSaveNo);
-            public static Callbacks<Callback> Callbacks = new Callbacks<Callback>();
-
-            public static void Invoke(GameMain that, int f_nSaveNo)
-            {
-                try
-                {
-                    foreach (Callback callback in Callbacks.Values)
-                    {
-                        callback(that, f_nSaveNo);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Helper.ShowException(e);
-                }
-            }
-        }
-
-        public static class Serialize
-        {
-            public delegate void Callback(GameMain that, int f_nSaveNo, string f_strComment);
-            public static Callbacks<Callback> Callbacks = new Callbacks<Callback>();
-
-            public static void Invoke(GameMain that, int f_nSaveNo, string f_strComment)
-            {
-                try
-                {
-                    foreach (Callback callback in Callbacks.Values)
-                    {
-                        callback(that, f_nSaveNo, f_strComment);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Helper.ShowException(e);
-                }
-            }
-        }
-
-        public static class DeleteSerializeData
-        {
-            public delegate void Callback(GameMain that, int f_nSaveNo);
-            public static Callbacks<Callback> Callbacks = new Callbacks<Callback>();
-
-            public static void Invoke(GameMain that, int f_nSaveNo)
-            {
-                try
-                {
-                    foreach (Callback cb in Callbacks.Values)
-                    {
-                        cb(that, f_nSaveNo);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Helper.ShowException(e);
-                }
-            }
-        }
-
-        public class Callbacks<T> : SortedDictionary<string, T> { }
     }
 
     internal class SaveDataPluginSettings
@@ -570,6 +525,11 @@ namespace CM3D2.ExternalSaveData.Managed
         public void SetMaid(string guid, string lastName, string firstName, string createTime)
         {
             saveData.SetMaid(guid, lastName, firstName, createTime);
+        }
+
+        public bool SetMaidName(string guid, string lastName, string firstName, string createTime)
+        {
+            return saveData.SetMaidName(guid, lastName, firstName, createTime);
         }
 
         public void Cleanup(List<string> guids)
@@ -662,6 +622,16 @@ namespace CM3D2.ExternalSaveData.Managed
                     maids[guid] = maid;
                 }
                 maid.SetMaid(guid, lastName, firstName, createTime);
+            }
+
+            public bool SetMaidName(string guid, string lastName, string firstName, string createTime)
+            {
+                Maid maid = TryGetValue(guid);
+                if (maid == null)
+                {
+                    return false;
+                }
+                return maid.SetMaidName(lastName, firstName, createTime);
             }
 
             public bool ContainsMaid(string guid)
@@ -768,6 +738,14 @@ namespace CM3D2.ExternalSaveData.Managed
                 this.createtime = createTime;
                 this.guid = guid;
                 this.plugins = new Dictionary<string, Plugin>();
+            }
+
+            public bool SetMaidName(string lastName, string firstName, string createTime)
+            {
+                this.lastname = lastName;
+                this.firstname = firstName;
+                this.createtime = createTime;
+                return true;
             }
 
             Plugin TryGetValue(string pluginName)
@@ -923,96 +901,6 @@ namespace CM3D2.ExternalSaveData.Managed
         static void SetAttribute(XmlNode xmlNode, string name, string value)
         {
             ((XmlElement)xmlNode).SetAttribute(name, value);
-        }
-
-        static void ShowException(Exception ex)
-        {
-            Helper.ShowException(ex);
-        }
-    }
-
-    internal static class Helper
-    {
-        public static bool StringToBool(string s, bool defaultValue)
-        {
-            bool v;
-            if (s == null)
-            {
-                return defaultValue;
-            }
-            if (bool.TryParse(s, out v))
-            {
-                return v;
-            }
-            float f;
-            if (float.TryParse(s, out f))
-            {
-                return f > 0.5f;
-            }
-            int i;
-            if (int.TryParse(s, out i))
-            {
-                return i > 0;
-            }
-            return defaultValue;
-        }
-
-        public static int StringToInt(string s, int defaultValue)
-        {
-            int v;
-            if (s == null || !int.TryParse(s, out v))
-            {
-                v = defaultValue;
-            }
-            return v;
-        }
-
-        public static float StringToFloat(string s, float defaultValue)
-        {
-            float v;
-            if (s == null || !float.TryParse(s, out v))
-            {
-                v = defaultValue;
-            }
-            return v;
-        }
-
-        public static XmlDocument LoadXmlDocument(string xmlFilePath)
-        {
-            XmlDocument xml = new XmlDocument();
-            try
-            {
-                if (File.Exists(xmlFilePath))
-                {
-                    xml.Load(xmlFilePath);
-                }
-            }
-            catch (Exception e)
-            {
-                ShowException(e);
-            }
-            return xml;
-        }
-
-        static public void Log(string format, params object[] args)
-        {
-            string s = string.Format(format, args);
-            Console.WriteLine(s);
-            //	UnityEngine.Debug.Log(s);
-        }
-
-        static public void ShowException(Exception ex)
-        {
-            Log("{0}", ex.Message);
-            StackTrace st = new StackTrace(ex, true);
-            foreach (StackFrame f in st.GetFrames())
-            {
-                Log(
-                    "{0}({1}.{2}) : {3}.{4}",
-                    f.GetFileName(), f.GetFileLineNumber(), f.GetFileColumnNumber(),
-                    f.GetMethod().DeclaringType, f.GetMethod()
-                );
-            }
         }
     }
 }
