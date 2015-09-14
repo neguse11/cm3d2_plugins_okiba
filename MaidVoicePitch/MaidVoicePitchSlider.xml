@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- その１>>804、その２>>12 さんの値 -->
+<slidertemplate>
+  <sliders>
+   <slider name="EyeScl"     min="-100" max="200"/>
+   <slider name="EyePosX"    min="-100" max="130"/>
+   <slider name="EyePosY"    min="-100" max="200"/>
+   <slider name="DouPer"     min="-100" max="150"/>
+   <slider name="sintyou"    min="-200" max="100"/>
+   <slider name="MuneL"      min="0"    max="195"/>
+   <slider name="MuneUpDown" min="-50"  max="300"/>
+   <slider name="MuneYori"   min="-50"  max="200"/>
+   <slider name="West"       min="-30"  max="100"/>
+   <slider name="Hara"       min="0"    max="200"/>
+   <slider name="kata"       min="-200" max="100"/>
+   <slider name="KubiScl"    min="0"    max="200"/>
+   <slider name="koshi"      min="-160" max="200"/>
+  </sliders>
+</slidertemplate>
