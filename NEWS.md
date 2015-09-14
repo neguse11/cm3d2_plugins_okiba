@@ -1,3 +1,7 @@
+### 2015/09/15
+
+   - AddModsSlider を [0.1.1.14](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/tree/281b142d3443a503a68b86bb513c898d04298f17) に更新
+ 
 ### 2015/09/14 (4)
 
  - AddModsSlider を 0.1.1.13 に更新
