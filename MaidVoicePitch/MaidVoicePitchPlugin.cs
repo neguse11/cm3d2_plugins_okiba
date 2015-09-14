@@ -727,6 +727,14 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 {
                     ExSaveData.Remove(maid, PluginName, s);
                 }
+
+                {
+                    string fname = ExSaveData.Get(maid, PluginName, "SLIDER_TEMPLATE", null);
+                    if(string.IsNullOrEmpty(fname))
+                    {
+                        ExSaveData.Set(maid, PluginName, "SLIDER_TEMPLATE", "UnityInjector/Config/MaidVoicePitchSlider.xml", true);
+                    }
+                }
             }
 
             string[] obsoleteGlobalSettings = {
