@@ -1,6 +1,6 @@
 @echo off && setlocal ENABLEEXTENSIONS && pushd "%~dp0" && call "%~dp0..\scripts\base.bat" || exit /b 1
 
-set URL_PREFIX=https://raw.githubusercontent.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/37e285d14f5bc1eb30772975ff7bc4bb51008200
+set URL_PREFIX=https://raw.githubusercontent.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/6f866ce493daae03a3e07abe44b608be21749af3
 
 set SRC_URL=%URL_PREFIX%/CM3D2.AddModsSlider.Plugin.cs
 set SRC_FILE=CM3D2.AddModsSlider.Plugin.cs
