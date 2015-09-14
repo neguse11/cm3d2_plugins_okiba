@@ -20,9 +20,9 @@
 | Collision               | True/False    | False         | Falseならマウスクリック等がウィンドウを貫通してゲーム本体に伝わります |
 
 
-## コンパイル
+## コンパイル方法
 
- - compile.bat を実行してください
+config.batの設定を行った後、このディレクトリの compile.bat を実行することでコンパイルができます
 
 
 ## 動作確認

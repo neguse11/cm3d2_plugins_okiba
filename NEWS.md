@@ -1,3 +1,7 @@
+### 2015/09/14 (2)
+
+ - [ConsoleCodePage](https://gist.github.com/asm256/9bfb88336a1433e2328a) 2015.9.3.3 を追加
+
 ### 2015/09/14
 
  - MaidVoicePitch
