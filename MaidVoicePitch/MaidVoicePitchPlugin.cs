@@ -11,7 +11,7 @@ namespace CM3D2.MaidVoicePitch.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("CM3D2 MaidVoicePitch"),
-    PluginVersion("0.2.7.0")]
+    PluginVersion("0.2.8.0")]
     public class MaidVoicePitch : PluginBase
     {
         public static string PluginName { get { return "CM3D2.MaidVoicePitch"; } }
@@ -131,11 +131,11 @@ namespace CM3D2.MaidVoicePitch.Plugin
                     }
                 }
 
-				// todo	以下を直すこと：
-				//		FARMFIX等のスライダーではないトグル操作等を行った場合にコールバックが
-				//		呼ばれていない。これを回避するため、とりあえず毎フレーム呼びだすことにする
-				//
-				MaidVoicePitch_UpdateSliders();
+                // todo 以下を直すこと：
+                //      FARMFIX等のスライダーではないトグル操作等を行った場合にコールバックが
+                //      呼ばれていない。これを回避するため、とりあえず毎フレーム呼びだすことにする
+                //
+                MaidVoicePitch_UpdateSliders();
             }
         }
 
@@ -206,18 +206,49 @@ namespace CM3D2.MaidVoicePitch.Plugin
         /// AddModsSlider等から呼び出されるコールバック
         /// 呼び出し方法は this.gameObject.SendMessage("MaidVoicePitch.TestUpdateSliders");
         /// </summary>
-        public void MaidVoicePitch_UpdateSliders() {
+        public void MaidVoicePitch_UpdateSliders()
+        {
             if (GameMain.Instance != null && GameMain.Instance.CharacterMgr != null)
             {
                 CharacterMgr cm = GameMain.Instance.CharacterMgr;
                 for (int i = 0, n = cm.GetStockMaidCount(); i < n; i++)
                 {
                     Maid maid = cm.GetStockMaid(i);
-                    if(maid != null)
+                    if (maid != null && maid.body0 != null && maid.body0.bonemorph != null)
                     {
-                        // 同じ "sintyou" の値を入れて、強制的にモーフ再計算を行う
-                        float SCALE_Sintyou = maid.body0.bonemorph.SCALE_Sintyou;
-                        maid.body0.BoneMorph_FromProcItem("sintyou", SCALE_Sintyou);
+                        //
+                        //	todo	本当にこの方法しかないのか調べること
+                        //
+                        //	１人目のメイドをエディットし、管理画面に戻り、
+                        //	続けて２人目をエディットしようとすると、１人目のメイドの
+                        //	boneMorphLocal.linkT が null になっていて例外がおきるので
+                        //	あらかじめ linkT を調べる
+                        //
+                        bool safe = true;
+                        foreach (BoneMorphLocal boneMorphLocal in maid.body0.bonemorph.bones)
+                        {
+                            if (boneMorphLocal.linkT == null)
+                            {
+                                safe = false;
+                            }
+                        }
+                        if (safe)
+                        {
+                            try
+                            {
+                                // 同じ "sintyou" の値を入れて、強制的にモーフ再計算を行う
+                                float SCALE_Sintyou = maid.body0.bonemorph.SCALE_Sintyou;
+                                maid.body0.BoneMorph_FromProcItem("sintyou", SCALE_Sintyou);
+                            }
+                            catch (Exception ex)
+                            {
+#if !DEBUG
+                                ; // 最低だ…
+#else
+                                Helper.ShowException(ex);
+#endif
+                            }
+                        }
                     }
                 }
             }
@@ -736,7 +767,7 @@ namespace CM3D2.MaidVoicePitch.Plugin
 
                 {
                     string fname = ExSaveData.Get(maid, PluginName, "SLIDER_TEMPLATE", null);
-                    if(string.IsNullOrEmpty(fname))
+                    if (string.IsNullOrEmpty(fname))
                     {
                         ExSaveData.Set(maid, PluginName, "SLIDER_TEMPLATE", "UnityInjector/Config/MaidVoicePitchSlider.xml", true);
                     }

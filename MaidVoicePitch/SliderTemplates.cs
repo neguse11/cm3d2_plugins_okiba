@@ -1,4 +1,4 @@
-﻿// スライダー範囲拡大を指定するテンプレートファイル
+// スライダー範囲拡大を指定するテンプレートファイル
 using CM3D2.ExternalSaveData.Managed;
 using System;
 using System.Collections.Generic;
@@ -36,12 +36,13 @@ internal static class SliderTemplates
         {
             return;
         }
-        string fname = ExSaveData.Get(maid, PluginName, "SLIDER_TEMPLATE", null);
+        string fname = ExSaveData.Get(maid, PluginName, "SLIDER_TEMPLATE", "UnityInjector/Config/MaidVoicePitchSlider.xml");
         SliderTemplate sliderTemplate = sliderTemplates.Get(fname);
-        if (sliderTemplate != null && !sliderTemplate.IsLoaded)
+        string guid = maid.Param.status.guid;
+        if (sliderTemplate != null && !sliderTemplate.LoadedMaidGuids.Contains(guid))
         {
             sliderTemplate.WriteProps(maid);
-            sliderTemplate.IsLoaded = true;
+            sliderTemplate.LoadedMaidGuids.Add(guid);
         }
     }
 
@@ -54,7 +55,7 @@ internal static class SliderTemplates
         }
 
         public Dictionary<string, Slider> Sliders { get; set; }
-        public bool IsLoaded = false;
+        public HashSet<string> LoadedMaidGuids = new HashSet<string>();
 
         public SliderTemplate()
         {
@@ -75,6 +76,9 @@ internal static class SliderTemplates
             {
                 if (File.Exists(fname))
                 {
+#if DEBUG
+                    Helper.Log("SliderTemplates.SliderTemplate.Load({0})", fname);
+#endif
                     xd.Load(fname);
                     foreach (XmlNode e in xd.SelectNodes("/slidertemplate/sliders/slider"))
                     {
@@ -83,6 +87,13 @@ internal static class SliderTemplates
                             min = Helper.StringToFloat(e.Attributes["min"].Value, 0f),
                             max = Helper.StringToFloat(e.Attributes["max"].Value, 100f)
                         };
+#if DEBUG
+                        {
+                            var name = e.Attributes["name"].Value;
+                            var s = Sliders[name];
+                            Helper.Log("  {0} .min={1:F6}, .max={2:F6}", name, s.min, s.max);
+                        }
+#endif
                     }
                     // Helper.Log("SliderTemplates.SliderTemplate.Load({0}) -> ok", fname);
                     result = true;

@@ -281,6 +281,9 @@ config.batの設定を行った後、このディレクトリの compile.bat を
 
 ## 履歴
 
+ - 0.2.8
+   - ２人目以降のメイドに対してWIDESLIDERが正常に動作していなかったのを修正 (その３>>263, >>274, >>276, >>277)
+   - 同、スライダーテンプレートが正常に設定されていなかったのを修正
  - 0.2.7
    - AddModsSlider用の[スライダーコールバック名をMaidVoicePitch_UpdateSlidersに変更](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/compare/decf77137a...37e285d14f)
    - デフォルトのスライダーテンプレートを追加 (その３>>223, >>226)
