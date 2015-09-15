@@ -209,24 +209,24 @@ mkdir ReiPatcher >nul 2>&1
 pushd ReiPatcher
 %_7z% -y x ..\%REIPATCHER_7Z% -p%REIPATCHER_PASSWD% >nul 2>&1
 mkdir Patches >nul 2>&1
-echo ;Configuration file for ReiPatcher>%REIPATCHER_INI%
-echo.>>%REIPATCHER_INI%
-echo [ReiPatcher]>>%REIPATCHER_INI%
-echo PatchesDir=Patches>>%REIPATCHER_INI%
-echo ;@cm3d=%ROOT%>>%REIPATCHER_INI%
-echo AssembliesDir=%%cm3d%%\CM3D2%PLATFORM%_Data\Managed>>%REIPATCHER_INI%
-echo.>>%REIPATCHER_INI%
-echo [Assemblies]>>%REIPATCHER_INI%
-echo Assembly-CSharp=Assembly-CSharp.dll>>%REIPATCHER_INI%
-echo.>>%REIPATCHER_INI%
-echo [Launch]>>%REIPATCHER_INI%
-echo Executable=>>%REIPATCHER_INI%
-echo Arguments=>>%REIPATCHER_INI%
-echo Directory=>>%REIPATCHER_INI%
-echo.>>%REIPATCHER_INI%
-echo [UnityInjector]>>%REIPATCHER_INI%
-echo Class=SceneLogo>>%REIPATCHER_INI%
-echo Method=Start>>%REIPATCHER_INI%
+echo ;Configuration file for ReiPatcher>"%REIPATCHER_INI%"
+echo.>>"%REIPATCHER_INI%"
+echo [ReiPatcher]>>"%REIPATCHER_INI%"
+echo PatchesDir=Patches>>"%REIPATCHER_INI%"
+echo ;@cm3d=%ROOT%>>"%REIPATCHER_INI%"
+echo AssembliesDir=%%cm3d%%\CM3D2%PLATFORM%_Data\Managed>>"%REIPATCHER_INI%"
+echo.>>"%REIPATCHER_INI%"
+echo [Assemblies]>>"%REIPATCHER_INI%"
+echo Assembly-CSharp=Assembly-CSharp.dll>>"%REIPATCHER_INI%"
+echo.>>"%REIPATCHER_INI%"
+echo [Launch]>>"%REIPATCHER_INI%"
+echo Executable=>>"%REIPATCHER_INI%"
+echo Arguments=>>"%REIPATCHER_INI%"
+echo Directory=>>"%REIPATCHER_INI%"
+echo.>>"%REIPATCHER_INI%"
+echo [UnityInjector]>>"%REIPATCHER_INI%"
+echo Class=SceneLogo>>"%REIPATCHER_INI%"
+echo Method=Start>>"%REIPATCHER_INI%"
 popd
 echo ReiPatcher‚Ì“WŠJŠ®—¹
 

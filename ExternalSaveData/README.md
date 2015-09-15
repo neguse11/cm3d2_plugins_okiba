@@ -18,6 +18,11 @@ C:\KISS\CM3D2_KAIZOU\CM3D2x64.exe を起動して、セーブデータのロー�
 セーブデータ名が「SaveData\SaveData085.save」であれば、「SaveData\SaveData085.save.exsave.xml」というファイルに拡張セーブデータを保存します
 
 
+## コンパイル方法
+
+config.batの設定を行った後、このディレクトリの compile.bat を実行することでコンパイルができます
+
+
 ## 開発者用：コードの使い方
 
  - 参照先アセンブリに「C:\KISS\CM3D2_KAIZOU\CM3D2x64_Data\Managed\CM3D2.ExternalSaveData.Managed.dll」を追加

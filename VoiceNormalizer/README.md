@@ -5,9 +5,8 @@
 
 ## インストール方法
 
-compile.batでコンパイルを行ってください
-
- - コンパイル後、自動的に「VoiceNormalizerTable.txt」が「C:\KISS\CM3D2_KAIZOU\UnityInjector\Config\」下へコピーされます
+config.batの設定を行った後、このディレクトリの compile.bat を実行することでコンパイルができます。
+同時に「VoiceNormalizerTable.txt」が「C:\KISS\CM3D2_KAIZOU\UnityInjector\Config\」下へコピーされます
 
 
 ## 動作確認と操作方法

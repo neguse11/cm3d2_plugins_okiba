@@ -1,9 +1,47 @@
+### 2015/09/15 (4)
+
+   - 1.09 対応を確認 (master, develop / x64, x86 全ての組み合わせで動作を確認)
+ 
+### 2015/09/15 (3)
+
+   - パス名にスペースが含まれている場合に対応 (その３>>265)
+ 
+### 2015/09/15 (2)
+
+   - AddModsSlider を [0.1.1.15](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/tree/8b615573d728c7a8517f48f001df6bc1d4d41e10) に更新
+ 
+### 2015/09/15
+
+   - AddModsSlider を [0.1.1.14](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/tree/281b142d3443a503a68b86bb513c898d04298f17) に更新
+ 
+### 2015/09/14 (4)
+
+ - AddModsSlider を 0.1.1.13 に更新
+
+### 2015/09/14 (3)
+
+ - MaidVoicePitch
+    - デフォルトのスライダーテンプレートファイル "UnityInjector/Config/MaidVoicePitchSlider.xml" を追加
+       - スライダーテンプレートが指定されていない場合、このファイルを用いるようになります
+    - FARMFIX等トグル操作がその場で反映されないのを修正
+
+### 2015/09/14 (2)
+
+ - [ConsoleCodePage](https://gist.github.com/asm256/9bfb88336a1433e2328a) 2015.9.3.3 を追加
+
+### 2015/09/14
+
+ - MaidVoicePitch
+    - AddModsSlider用のスライダー更新コールバック名を変更
+ - [AddModsSlider](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin)
+    - 新しいコールバック名を用いるバージョン(Version 0.1.1.12)に更新
+
 ### 2015/09/13
 
  - バッチファイルのエラー処理を変更
  - MaidVoicePitch
     - AddModsSlider用のスライダー更新コールバックを追加
- - AddModsSlider
+ - [AddModsSlider](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin)
     - NGUI版へ更新
  - ReiPatcher 0.9.0.8, UnityInjector 1.0.1.3 対応
 
