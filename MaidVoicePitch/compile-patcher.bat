@@ -2,7 +2,7 @@
 
 set TYPE=/t:library
 set OUT=%REIPATCHER_DIR%\Patches\CM3D2.MaidVoicePitch.Patcher.dll
-set SRCS=MaidVoicePitchPatcher.cs %OKIBA_LIB%\PatcherHelper.cs %OKIBA_LIB%\Helper.cs
+set SRCS="MaidVoicePitchPatcher.cs" "%OKIBA_LIB%\PatcherHelper.cs" "%OKIBA_LIB%\Helper.cs"
 set OPTS=
 
 call "%~dp0..\scripts\csc-compile.bat" || exit /b 1

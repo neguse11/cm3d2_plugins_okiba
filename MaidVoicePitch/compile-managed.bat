@@ -2,7 +2,7 @@
 
 set TYPE=/t:library
 set OUT=%CM3D2_MOD_MANAGED_DIR%\CM3D2.MaidVoicePitch.Managed.dll
-set SRCS=MaidVoicePitchManaged.cs %OKIBA_LIB%\Helper.cs
+set SRCS="MaidVoicePitchManaged.cs" "%OKIBA_LIB%\Helper.cs"
 set OPTS=
 
 call "%~dp0..\scripts\csc-compile.bat" || exit /b 1
