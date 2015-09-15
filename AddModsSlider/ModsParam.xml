@@ -149,7 +149,7 @@
         <value prop_name="HEAD_TRACK.lateral" min="0"   max="90"  default="30"   label="顔の横方向可動角度" type="num" />
         <value prop_name="HEAD_TRACK.above"   min="-90" max="90"  default="30"   label="顔の上方向可動角度" type="num" />
         <value prop_name="HEAD_TRACK.below"   min="-90" max="90"  default="15"   label="顔の下方向可動角度" type="num" />
-        <value prop_name="HEAD_TRACK.behind"  min="0"   max="180" defalut="90"   label="顔が追従をあきらめる角度" type="num" />
+        <value prop_name="HEAD_TRACK.behind"  min="0"   max="180" default="90"   label="顔が追従をあきらめる角度" type="num" />
         <value prop_name="HEAD_TRACK.speed"   min="0"   max="1.0" default="0.04" label="顔の回転速度" type="scale" />
         <value prop_name="HEAD_TRACK.ofsx"    min="-90" max="90"  default="0"    label="横回転オフセット (負で右、正で左を向く)" type="num" />
         <value prop_name="HEAD_TRACK.ofsy"    min="-90" max="90"  default="0"    label="縦回転オフセット (負で下、正で上を向く) " type="num" />
@@ -159,7 +159,7 @@
         <value prop_name="EYE_TRACK.outside"  min="0"   max="90"  default="65"   label="目の外側可動角度" type="num" />
         <value prop_name="EYE_TRACK.above"    min="-90" max="90"  default="10"   label="目の上方向可動角度" type="num" />
         <value prop_name="EYE_TRACK.below"    min="-90" max="90"  default="20"   label="目の下方向可動角度" type="num" />
-        <value prop_name="EYE_TRACK.behind"   min="0"   max="180" default="0.04" label="目が追従をあきらめる角度" type="scale" />
+        <value prop_name="EYE_TRACK.behind"   min="0"   max="180" default="90"   label="目が追従をあきらめる角度" type="scale" />
         <value prop_name="EYE_TRACK.speed"    min="0"   max="1.0" default="0.07" label="目の回転速度" type="num" />
         <value prop_name="EYE_TRACK.ofsx"     min="-90" max="90"  default="0"    label="横オフセット (負で寄り目、正で離れ目)" type="num" />
         <value prop_name="EYE_TRACK.ofsy"     min="-90" max="90"  default="0"    label="縦オフセット (負で下、正で上)" type="num" />
