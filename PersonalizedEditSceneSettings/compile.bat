@@ -8,7 +8,7 @@ if not exist "%CM3D2_MOD_MANAGED_DIR%\CM3D2.ExternalSaveData.Managed.dll" (
 
 set TYPE=/t:library
 set OUT=%UNITY_INJECTOR_DIR%\CM3D2.PersonalizedEditSceneSettings.Plugin.dll
-set SRCS=PersonalizedEditSceneSettingsPlugin.cs %OKIBA_LIB%\Helper.cs
+set SRCS="PersonalizedEditSceneSettingsPlugin.cs" "%OKIBA_LIB%\Helper.cs"
 set OPTS=/r:CM3D2.ExternalSaveData.Managed.dll
 
 call "%~dp0..\scripts\csc-compile.bat" || exit /b 1

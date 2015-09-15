@@ -2,7 +2,7 @@
 
 set TYPE=/t:library
 set OUT=%REIPATCHER_DIR%\Patches\CM3D2.FastFade.Patcher.dll
-set SRCS=FastFadePatch.cs
+set SRCS="FastFadePatch.cs"
 set OPTS=
 
 call "%~dp0..\scripts\csc-compile.bat" || exit /b 1

@@ -1,3 +1,7 @@
+### 2015/09/15 (3)
+
+   - パス名にスペースが含まれている場合に対応 (その３>>265)
+ 
 ### 2015/09/15 (2)
 
    - AddModsSlider を [0.1.1.15](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/tree/8b615573d728c7a8517f48f001df6bc1d4d41e10) に更新
