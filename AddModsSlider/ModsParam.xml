@@ -115,10 +115,34 @@
         <value prop_name="THIPOS.z" min="-100" max="200" default="0" label="前後" type="num" />
     </mod>
 
+    <mod id="THISCL2" description="膝のスケーリング"  on_wideslider="true" >
+        <value prop_name="THISCL2.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="THISCL2.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="THISCL2.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
+    </mod>
+
+    <mod id="CALFSCL" description="膝下のスケーリング"  on_wideslider="true" >
+        <value prop_name="CALFSCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="CALFSCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="CALFSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
+    </mod>
+
+    <mod id="FOOTSCL" description="足首より下のスケーリング"  on_wideslider="true" >
+        <value prop_name="CALFSCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="CALFSCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="CALFSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
+    </mod>
+
     <mod id="SKTSCL" description="スカート周辺スケーリング" on_wideslider="true">
         <value prop_name="SKTSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
         <value prop_name="SKTSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
         <value prop_name="SKTSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
+    </mod>
+
+    <mod id="SKTPOS" description="スカート位置"  on_wideslider="true" >
+        <value prop_name="SKTPOS.x" min="-1" max="1" default="0" label="左右" type="num" visible="false" />
+        <value prop_name="SKTPOS.y" min="-1" max="1" default="0" label="前後" type="num" visible="false" />
+        <value prop_name="SKTPOS.z" min="-1" max="1" default="0" label="高さ" type="num" />
     </mod>
 
     <mod id="SPISCL" description="胴(下腹部)スケーリング" on_wideslider="true">
@@ -139,10 +163,70 @@
         <value prop_name="S1_SCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
+    <mod id="S1ABASESCL" description="胴(肋骨から上)スケーリング" on_wideslider="true">
+        <value prop_name="S1ABASESCL.width"  min="0.1" max="1.01" default="1.0" label="横幅" type="scale" />
+        <value prop_name="S1ABASESCL.depth"  min="0.1" max="1.01" default="1.0" label="奥行" type="scale" />
+        <value prop_name="S1ABASESCL.height" min="0.1" max="1.01" default="1.0" label="高さ" type="scale" visible="false" />
+    </mod>
+
     <mod id="S1ASCL" description="胴(肋骨)スケーリング" on_wideslider="true">
         <value prop_name="S1ASCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
         <value prop_name="S1ASCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
         <value prop_name="S1ASCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
+    </mod>
+
+    <mod id="MUNESCL" description="胸スケーリング" on_wideslider="true">
+        <value prop_name="MUNESCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="MUNESCL.depth"  min="0.1" max="3.0" default="1.0" label="縦幅" type="scale" />
+        <value prop_name="MUNESCL.height" min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+    </mod>
+
+    <mod id="MUNEPOS" description="胸ポジション" on_wideslider="true">
+        <value prop_name="MUNEPOS.x" min="-1" max="1" default="0" label="左右" type="num" />
+        <value prop_name="MUNEPOS.z" min="-1" max="1" default="0" label="高さ" type="num" />
+        <value prop_name="MUNEPOS.y" min="-1" max="1" default="0" label="前後" type="num" />
+    </mod>
+
+    <mod id="MUNESUBSCL" description="胸サブスケーリング" on_wideslider="true">
+        <value prop_name="MUNESUBSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="MUNESUBSCL.depth"  min="0.1" max="3.0" default="1.0" label="縦幅" type="scale" />
+        <value prop_name="MUNESUBSCL.height" min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+    </mod>
+
+    <mod id="MUNESUBPOS" description="胸サブポジション" on_wideslider="true">
+        <value prop_name="MUNESUBPOS.x" min="-1" max="1" default="0" label="左右" type="num" />
+        <value prop_name="MUNESUBPOS.z" min="-1" max="1" default="0" label="高さ" type="num" />
+        <value prop_name="MUNESUBPOS.y" min="-1" max="1" default="0" label="前後" type="num" />
+    </mod>
+
+    <mod id="NECKSCL" description="首スケーリング" on_wideslider="true">
+        <value prop_name="NECKSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="NECKSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="NECKSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
+    </mod>
+
+    <mod id="KATASCL" description="肩スケーリング" on_wideslider="true">
+        <value prop_name="KATASCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="KATASCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="KATASCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
+    </mod>
+
+    <mod id="UPARMSCL" description="上腕スケーリング" on_wideslider="true">
+        <value prop_name="UPARMSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="UPARMSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="UPARMSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
+    </mod>
+
+    <mod id="FARMSCL" description="前腕スケーリング(FARMFIXと排他)" on_wideslider="true">
+        <value prop_name="FARMSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="FARMSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="FARMSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
+    </mod>
+
+    <mod id="HANDSCL" description="手スケーリング" on_wideslider="true">
+        <value prop_name="HANDSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="HANDSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="HANDSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="HEAD_TRACK" description="顔と目の可動・追従範囲" type="toggle,slider">
