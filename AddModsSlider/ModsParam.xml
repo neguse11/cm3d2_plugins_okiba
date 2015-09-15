@@ -28,7 +28,7 @@
 
     <mod id="EYEBALL"                    : 必須。modの識別名。拡張セーブデータを参照。
          description="..."               : 省略可。規定値は空白。modの説明。
-         type="slider"                   : 省略可。規定値は"slider"。"toggle"で<value />タグ不要のトグルボタンに。
+         type="slider"                   : 省略可。規定値は"slider"。"toggle"でOn/Offボタン(<value />タグ不要)、"toggle,slider"でOn/Offボタン付きスライダー。
          on_wideslider="false"           : 省略可。規定値は"false"。"true"指定するとWIDESLIDER無効時に非表示になる。WIDESLIDER前提のmod用。
          visible="true"                  : 省略可。規定値は"true"。"false"指定でこのmodのスライダーを表示させない。
     >
@@ -80,10 +80,8 @@
         <value prop_name="MABATAKI" min="0" max="1.0" default="1.0" label="数値" type="num" />
     </mod>
 
-    <mod id="LIPSYNC_INTENISTY" description ="リップシンク強度指定有効" type="toggle" />
-
-    <mod id="LIPSYNC_INTENISTY.dummy" description="リップシンク強度指定" >
-        <value prop_name="LIPSYNC_INTENISTY.value" min="0.0" max="1.0" default="1.0" label="数値" type="num" />
+    <mod id="LIPSYNC_INTENISTY" description="リップシンク強度指定" type="toggle,slider" >
+        <value prop_name="LIPSYNC_INTENISTY.value" min="0.0" max="1.0" label="数値" type="num" />
     </mod>
 
     <mod id="EYEBALL" description="瞳の大きさ" >
@@ -147,29 +145,24 @@
         <value prop_name="S1ASCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
-    <mod id="HEAD_TRACK" description ="顔の追従処理の改善" type="toggle" />
+    <mod id="HEAD_TRACK" description="顔と目の可動・追従範囲" type="toggle,slider">
+        <value prop_name="HEAD_TRACK.lateral" min="0"   max="90"  default="30"   label="顔の横方向可動角度" type="num" />
+        <value prop_name="HEAD_TRACK.above"   min="-90" max="90"  default="30"   label="顔の上方向可動角度" type="num" />
+        <value prop_name="HEAD_TRACK.below"   min="-90" max="90"  default="15"   label="顔の下方向可動角度" type="num" />
+        <value prop_name="HEAD_TRACK.behind"  min="0"   max="180" defalut="90"   label="顔が追従をあきらめる角度" type="num" />
+        <value prop_name="HEAD_TRACK.speed"   min="0"   max="1.0" default="0.04" label="顔の回転速度" type="scale" />
+        <value prop_name="HEAD_TRACK.ofsx"    min="-90" max="90"  default="0"    label="横回転オフセット (負で右、正で左を向く)" type="num" />
+        <value prop_name="HEAD_TRACK.ofsy"    min="-90" max="90"  default="0"    label="縦回転オフセット (負で下、正で上を向く) " type="num" />
+        <value prop_name="HEAD_TRACK.ofsz"    min="-90" max="90"  default="0"    label="回転オフセット (負で右、正で左にかしげる)" type="num" />
 
-    <mod id="HEAD_TRACK.dummy" description="顔の追従処理の改善">
-        <value prop_name="HEAD_TRACK.lateral" min="1" max="90" default="30" label="横角" type="num" />
-        <value prop_name="HEAD_TRACK.above"  min="1" max="90" default="30" label="上角" type="num" />
-        <value prop_name="HEAD_TRACK.below" min="1" max="90" default="15" label="下角" type="num" />
-        <value prop_name="HEAD_TRACK.behind" min="1" max="180" default="90" label="無視角" type="num" />
-        <value prop_name="HEAD_TRACK.speed" min="0" max="0.3" default="0.04" label="速度" type="num" />
-        <value prop_name="HEAD_TRACK.ofsx" min="-30" max="30" default="0" label="横オ" type="num" />
-        <value prop_name="HEAD_TRACK.ofsy" min="-30" max="30" default="0" label="縦オ" type="num" />
-        <value prop_name="HEAD_TRACK.ofsz" min="-30" max="30" default="0" label="回オ" type="num" />
+        <value prop_name="EYE_TRACK.inside"   min="0"   max="90"  default="35"   label="目の内側可動角度" type="num" />
+        <value prop_name="EYE_TRACK.outside"  min="0"   max="90"  default="65"   label="目の外側可動角度" type="num" />
+        <value prop_name="EYE_TRACK.above"    min="-90" max="90"  default="10"   label="目の上方向可動角度" type="num" />
+        <value prop_name="EYE_TRACK.below"    min="-90" max="90"  default="20"   label="目の下方向可動角度" type="num" />
+        <value prop_name="EYE_TRACK.behind"   min="0"   max="180" default="0.04" label="目が追従をあきらめる角度" type="scale" />
+        <value prop_name="EYE_TRACK.speed"    min="0"   max="1.0" default="0.07" label="目の回転速度" type="num" />
+        <value prop_name="EYE_TRACK.ofsx"     min="-90" max="90"  default="0"    label="横オフセット (負で寄り目、正で離れ目)" type="num" />
+        <value prop_name="EYE_TRACK.ofsy"     min="-90" max="90"  default="0"    label="縦オフセット (負で下、正で上)" type="num" />
     </mod>
 
-    <mod id="EYE_TRACK" description ="目の追従処理の改善" type="toggle" />
-
-    <mod id="EYE_TRACK.dummy" description="目の追従処理の改善">
-        <value prop_name="EYE_TRACK.outside" min="1" max="90" default="35" label="内角" type="num" />
-        <value prop_name="EYE_TRACK.inside" min="1" max="90" default="65" label="外角" type="num" />
-        <value prop_name="EYE_TRACK.above"  min="-10" max="90" default="10" label="上角" type="num" />
-        <value prop_name="EYE_TRACK.below" min="-10" max="90" default="20" label="下角" type="num" />
-        <value prop_name="EYE_TRACK.behind" min="1" max="180" default="90" label="無視角" type="num" />
-        <value prop_name="EYE_TRACK.speed" min="0" max="0.3" default="0.07" label="速度" type="num" />
-        <value prop_name="EYE_TRACK.ofsx" min="-10" max="10" default="0" label="横オ" type="num" />
-        <value prop_name="EYE_TRACK.ofsy" min="-5" max="5" default="0" label="縦オ" type="num" />
-    </mod>
 </mods>
