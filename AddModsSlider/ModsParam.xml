@@ -128,9 +128,9 @@
     </mod>
 
     <mod id="FOOTSCL" description="足首より下のスケーリング"  on_wideslider="true" >
-        <value prop_name="CALFSCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
-        <value prop_name="CALFSCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
-        <value prop_name="CALFSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
+        <value prop_name="FOOTSCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="FOOTSCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="FOOTSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
     </mod>
 
     <mod id="SKTSCL" description="スカート周辺スケーリング" on_wideslider="true">
@@ -164,9 +164,9 @@
     </mod>
 
     <mod id="S1ABASESCL" description="胴(肋骨から上)スケーリング" on_wideslider="true">
-        <value prop_name="S1ABASESCL.width"  min="0.1" max="1.01" default="1.0" label="横幅" type="scale" />
-        <value prop_name="S1ABASESCL.depth"  min="0.1" max="1.01" default="1.0" label="奥行" type="scale" />
-        <value prop_name="S1ABASESCL.height" min="0.1" max="1.01" default="1.0" label="高さ" type="scale" visible="false" />
+        <value prop_name="S1ABASESCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="S1ABASESCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="S1ABASESCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" visible="false" />
     </mod>
 
     <mod id="S1ASCL" description="胴(肋骨)スケーリング" on_wideslider="true">
@@ -217,7 +217,7 @@
         <value prop_name="UPARMSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
-    <mod id="FARMSCL" description="前腕スケーリング(FARMFIXと排他)" on_wideslider="true">
+    <mod id="FARMSCL" description="前腕スケーリング(FARMFIX=OFF時のみ有効)" on_wideslider="true">
         <value prop_name="FARMSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
         <value prop_name="FARMSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
         <value prop_name="FARMSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
