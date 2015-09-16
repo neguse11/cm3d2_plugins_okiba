@@ -6,8 +6,8 @@ set REIPATCHER_URL=https://mega.nz/#!21IV0YaS!R2vWnzeGXihjC3r7tRUe-m8rWtYoMPINa8
 set REIPATCHER_7Z=ReiPatcher_0.9.0.8.7z
 set REIPATCHER_PASSWD=byreisen
 
-set UNITYINJECTOR_URL=https://mega.nz/#!3sxVCISZ!_u74yowG7dP-M-xDQTJNBuBvfO84BMgFVp5mmPrnkfE
-set UNITYINJECTOR_7Z=UnityInjector_1.0.1.3.7z
+set UNITYINJECTOR_URL=https://mega.nz/#!u1JiSAgb!HAUIavD1T3rC6pv3jUjavyFfTDVYMzs_yg0IzPNL0iw
+set UNITYINJECTOR_7Z=UnityInjector_1.0.2.0.7z
 set UNITYINJECTOR_PASSWD=byreisen
 
 set _7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip
