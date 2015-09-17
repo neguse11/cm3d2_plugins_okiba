@@ -2,8 +2,8 @@
 
 実行を行うと、以下の要素を自動設定します
 
- - ReiPatcher
- - UnityInjector
+ - [ReiPatcher](http://www.hongfire.com/forum/showthread.php/444566) (usagirei氏作の.NETアセンブリパッチャー)
+ - [UnityInjector](http://www.hongfire.com/forum/showthread.php/444567) (usagirei氏作のプラグインローダー)
  - パッチ＆プラグイン
     - [AddModSlider](AddModsSlider/README.md) ([CM3D2-01氏作](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin)。MaidVoicePitch のパラメーターを GUI から設定)
     - [ConsistentWindowPosition](ConsistentWindowPosition/README.md) (ウィンドウ位置の保存)
@@ -32,7 +32,7 @@
 
 ## 新規インストール (64bit, x64)
 
-新規に x64 用の改造版をセットアップしたい場合は、以下を実行してください
+新規に x64 用の改造版をセットアップしたい場合は、コマンドプロンプト内で以下を実行してください
 
 ```
 mkdir C:\KISS\CM3D2_KAIZOU
@@ -44,7 +44,7 @@ powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.g
 
 ## 新規インストール (32bit, x86)
 
-新規に x86 用の改造版をセットアップしたい場合は、以下を実行してください
+新規に x86 用の改造版をセットアップしたい場合は、コマンドプロンプト内で以下を実行してください
 
 ```
 mkdir C:\KISS\CM3D2_KAIZOU
@@ -67,7 +67,7 @@ ReiPatcher, UnityInjector をセットアップ済みの場合は以下を実行
 
 ## 更新
 
-どのようにインストールした場合でも、以下を実行することで最新版に更新ができます
+どのようにインストールした場合でも、コマンドプロンプト内で以下を実行することで最新版に更新ができます
 
 ```
 cd /d C:\KISS\CM3D2_KAIZOU

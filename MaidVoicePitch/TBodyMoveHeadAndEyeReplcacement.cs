@@ -1,4 +1,4 @@
-﻿using CM3D2.ExternalSaveData.Managed;
+using CM3D2.ExternalSaveData.Managed;
 using System;
 using UnityEngine;
 
@@ -320,7 +320,6 @@ class TBodyMoveHeadAndEye
         }
 
         that.boChkEye = false;
-        if (that.boEyeToCam)
         {
             float paramEyeAng = ExSaveData.GetFloat(maid, PluginName, "EYE_ANG.angle", 0f);
             paramEyeAng = Mathf.Clamp(paramEyeAng, -180f, 180f);
@@ -334,6 +333,13 @@ class TBodyMoveHeadAndEye
             float paramOfsX = ExSaveData.GetFloat(maid, PluginName, "EYE_TRACK.ofsx", 0f);
             float paramOfsY = ExSaveData.GetFloat(maid, PluginName, "EYE_TRACK.ofsy", 0f);
             Vector3 targetPosition = eyeTarget_world;
+
+            if (!that.boEyeToCam)
+            {
+                // 視線を正面に戻す
+                eyeTarget_world = that.trsHead.TransformPoint(Vector3.up * 1000.0f);
+            }
+
             {
                 Transform trsEye = that.trsEyeL;
                 Quaternion defQuat = that.quaDefEyeL * Quaternion.Euler(paramEyeAng, -paramOfsX, -paramOfsY);
