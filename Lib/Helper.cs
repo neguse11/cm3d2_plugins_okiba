@@ -8,7 +8,12 @@ internal static class Helper
 {
     static StreamWriter logStreamWriter = null;
     public static readonly DateTime now = DateTime.Now;
+
+#if DEBUG
+    public static bool bLogEnable = true;
+#else
     public static bool bLogEnable = false;
+#endif
 
     public static void Log(string s)
     {

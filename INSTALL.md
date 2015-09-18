@@ -80,3 +80,18 @@ cd cm3d2_plugins_okiba-master
 ## 動作の確認
 
 セーブデータのロード後、「メイド管理」→「エディット」へ移動し、「F5」キーを押して画面右側にスライダーが出ることを確認してください
+
+
+## 上級者向け：個別コンパイル
+
+config.bat が設定済みであれば、コマンドプロンプト内で以下を実行することで、個別にコンパイルすることが可能です
+
+```
+cd /d C:\KISS\CM3D2_KAIZOU
+cd cm3d2_plugins_okiba-master
+cd コンパイルしたいパッチ・プラグインのディレクトリ名
+.\compile.bat
+cd ..
+.\patch.bat
+.\run.bat
+```

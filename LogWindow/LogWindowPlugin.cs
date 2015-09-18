@@ -11,7 +11,7 @@ namespace CM3D2.LogWindow.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("CM3D2 LogWindow"),
-    PluginVersion("0.1.2.0")]
+    PluginVersion("0.1.3.0")]
     public class LogWindow : UnityInjector.PluginBase
     {
         ConsoleMirror consoleMirror;
@@ -287,8 +287,6 @@ public class GuiWindow
     public Rect TitleBarRect = new Rect(0, 0, Screen.width, handleSize);
     public float MinWidth = 128f;
     public float MinHeight = margin * 4f + handleSize;
-    public float MaxWidth = Screen.width - margin * 2f;
-    public float MaxHeight = Screen.height - margin * 2f;
     public float HandleSize = handleSize;
     public bool Collision = true;
 
@@ -380,6 +378,9 @@ public class GuiWindow
         }
         else if (handleClicked)
         {
+            // 解像度変更に対応するためにここで計算すること
+            float MaxWidth = Screen.width - margin * 2f;
+            float MaxHeight = Screen.height - margin * 2f;
             WindowRect.width = Mathf.Clamp(originalWindow.width + (mousePos.x - clickedPosition.x), MinWidth, MaxWidth);
             WindowRect.height = Mathf.Clamp(originalWindow.height + (mousePos.y - clickedPosition.y), MinHeight, MaxHeight);
         }
