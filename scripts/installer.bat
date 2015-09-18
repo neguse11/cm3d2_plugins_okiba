@@ -6,8 +6,8 @@ set REIPATCHER_URL=https://mega.nz/#!21IV0YaS!R2vWnzeGXihjC3r7tRUe-m8rWtYoMPINa8
 set REIPATCHER_7Z=ReiPatcher_0.9.0.8.7z
 set REIPATCHER_PASSWD=byreisen
 
-set UNITYINJECTOR_URL=https://mega.nz/#!u1JiSAgb!HAUIavD1T3rC6pv3jUjavyFfTDVYMzs_yg0IzPNL0iw
-set UNITYINJECTOR_7Z=UnityInjector_1.0.2.0.7z
+set UNITYINJECTOR_URL=https://mega.nz/#!StgWWKCJ!MbaNhXkgCUS4X356FdVyOOTL4ETX-WF_320j2kmlQSE
+set UNITYINJECTOR_7Z=UnityInjector_1.0.3.0.7z
 set UNITYINJECTOR_PASSWD=byreisen
 
 set _7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip
@@ -247,6 +247,15 @@ pushd UnityInjector
 %_7z% -y x ..\%UNITYINJECTOR_7Z% -p%UNITYINJECTOR_PASSWD% >nul 2>&1
 copy /y Managed\*.dll ..\CM3D2%PLATFORM%_Data\Managed\ >nul 2>&1
 copy /y ReiPatcher\*.dll ..\ReiPatcher\Patches\ >nul 2>&1
+mkdir Config >nul 2>&1
+set DebugPluginIni=Config\DebugPlugin.ini
+echo [Config]>%DebugPluginIni%
+echo ;Enables Debug Plugin>>%DebugPluginIni%
+echo Enabled=True>>%DebugPluginIni%
+echo ;Enables Mirroring to debug.log>>%DebugPluginIni%
+echo Mirror=False>>%DebugPluginIni%
+echo ;CodePage, -1 for System Default>>%DebugPluginIni%
+echo CodePage=932>>%DebugPluginIni%
 popd
 echo UnityInjector‚Ì“WŠJŠ®—¹
 
