@@ -102,7 +102,7 @@ internal static class PluginHelper
 
     public static void DebugGui()
     {
-        if (bDebugEnable && debugLines != null)
+        if (bDebugEnable && debugLines != null && debugLines.Count > 0)
         {
             debugWindowRect = GUILayout.Window(windowId, debugWindowRect, DebugGuiWindow, "Debug");
         }
