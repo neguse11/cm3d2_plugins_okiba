@@ -1,3 +1,7 @@
+### 2015/09/19
+ - [UnityInjector 1.0.3.0](http://www.hongfire.com/forum/showthread.php/444567) 対応
+    - このバージョンで ConsoleCodePage 相当のコードが UnityInjector 内に取り込まれたので、ConsoleCodePage を自動コンパイル対象から除外
+
 ### 2015/09/16 (2)
  - UnityInjector 1.0.2.0 対応
 
