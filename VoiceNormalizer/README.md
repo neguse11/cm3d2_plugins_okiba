@@ -1,12 +1,19 @@
 ﻿# VoiceNormalizer
 
+## 「カスタムメイド3D2攻略wiki」から来た方へ
+
+[導入の説明](../INSTALL.md)を読んでください。このページに、あなたの欲しいものは無いです
+
+
+## 概要
+
 声の音量をそろえます
 
 
 ## インストール方法
 
-config.batの設定を行った後、このディレクトリの compile.bat を実行することでコンパイルができます。
-同時に「VoiceNormalizerTable.txt」が「C:\KISS\CM3D2_KAIZOU\UnityInjector\Config\」下へコピーされます
+[config.batの設定](../INSTALL.md)を行った後、このディレクトリの compile.bat を実行することでコンパイルができます。
+コンパイルを行った際、同時に「VoiceNormalizerTable.txt」が「C:\KISS\CM3D2_KAIZOU\UnityInjector\Config\」下へコピーされます
 
 
 ## 動作確認と操作方法
