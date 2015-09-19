@@ -36,8 +36,11 @@
 
 ```
 mkdir C:\KISS\CM3D2_KAIZOU
+
 cd /d C:\KISS\CM3D2_KAIZOU
+
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/64','.bat')"&&.bat
+
 .\cm3d2_plugins_okiba-master\compile-patch-and-go.bat
 ```
 
@@ -48,8 +51,11 @@ powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.g
 
 ```
 mkdir C:\KISS\CM3D2_KAIZOU
+
 cd /d C:\KISS\CM3D2_KAIZOU
+
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/86','.bat')"&&.bat
+
 .\cm3d2_plugins_okiba-master\compile-patch-and-go.bat
 ```
 
@@ -71,8 +77,11 @@ ReiPatcher, UnityInjector をセットアップ済みの場合は以下を実行
 
 ```
 cd /d C:\KISS\CM3D2_KAIZOU
+
 cd cm3d2_plugins_okiba-master
+
 .\update.bat
+
 .\compile-patch-and-go.bat
 ```
 
