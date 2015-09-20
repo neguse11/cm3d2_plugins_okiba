@@ -1,3 +1,11 @@
+### 2015/09/20
+
+ - 半角括弧つきのディレクトリ名に対応 (質問その３>>37)
+ - 記号付きディレクトリ名にそこそこ対応。ただし以下は使えない
+    - 「%」（パーセント記号）。バッチファイルおよび ReiPatcher, ExIni の制約
+    - 「'」（アポストロフィ記号）。UnityPlayer の制約
+    - 「^」（サーカムフレックス記号）。バッチファイルの制約
+
 ### 2015/09/19
  - [UnityInjector 1.0.3.0](http://www.hongfire.com/forum/showthread.php/444567) 対応
     - このバージョンで ConsoleCodePage 相当のコードが UnityInjector 内に取り込まれたので、ConsoleCodePage を自動コンパイル対象から除外

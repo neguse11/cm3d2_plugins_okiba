@@ -1,4 +1,4 @@
-@echo off && setlocal ENABLEEXTENSIONS && pushd "%~dp0" && call "%~dp0scripts\base.bat" || exit /b 1
+@echo off && setlocal ENABLEEXTENSIONS && pushd "%~dp0" && call "scripts\base.bat" || exit /b 1
 
 echo.& echo AddModsSlider && call AddModsSlider\download.bat || goto error
 

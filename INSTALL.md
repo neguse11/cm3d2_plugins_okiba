@@ -26,8 +26,14 @@
 
 ## 注意
 
-以下の説明では `C:\KISS\CM3D2_KAIZOU` にインストールするものとして話を進めますが、これは例です。
+以下の説明では例として `C:\KISS\CM3D2_KAIZOU` にインストールするものとして話を進めます。
 他の場所にインストールしたい場合は `C:\KISS\CM3D2_KAIZOU` をインストールしたい場所に読み替えてください
+
+ - インストール先のフォルダー名にはバニラ（未改造のCM3D2）と同様の制限があります。詳しくはゲームのマニュアルを参照してください
+ - また、バニラの制限に加えて以下の文字はフォルダー名に使用できません
+    - 「%」（パーセント記号）
+    - 「'」（アポストロフィ記号）
+    - 「^」（サーカムフレックス記号）
 
 
 ## 新規インストール (64bit, x64)
@@ -36,8 +42,11 @@
 
 ```
 mkdir C:\KISS\CM3D2_KAIZOU
+
 cd /d C:\KISS\CM3D2_KAIZOU
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/64','.bat')"&&.bat
+
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/64','.bat')"&.bat
+
 .\cm3d2_plugins_okiba-master\compile-patch-and-go.bat
 ```
 
@@ -48,8 +57,11 @@ powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.g
 
 ```
 mkdir C:\KISS\CM3D2_KAIZOU
+
 cd /d C:\KISS\CM3D2_KAIZOU
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/86','.bat')"&&.bat
+
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/86','.bat')"&.bat
+
 .\cm3d2_plugins_okiba-master\compile-patch-and-go.bat
 ```
 
@@ -71,8 +83,11 @@ ReiPatcher, UnityInjector をセットアップ済みの場合は以下を実行
 
 ```
 cd /d C:\KISS\CM3D2_KAIZOU
+
 cd cm3d2_plugins_okiba-master
+
 .\update.bat
+
 .\compile-patch-and-go.bat
 ```
 

@@ -23,7 +23,7 @@ developブランチはテスター用の開発版です
 ```
 mkdir C:\KISS\CM3D2_KAIZOU_DEV
 cd /d C:\KISS\CM3D2_KAIZOU_DEV
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/64-dev','.bat')"&&.bat
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/64-dev','.bat')"&.bat
 ```
 
 
@@ -34,7 +34,7 @@ powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.g
 ```
 mkdir C:\KISS\CM3D2_KAIZOU_DEV
 cd /d C:\KISS\CM3D2_KAIZOU_DEV
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/86-dev','.bat')"&&.bat
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/86-dev','.bat')"&.bat
 ```
 
 
