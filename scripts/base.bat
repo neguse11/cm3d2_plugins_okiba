@@ -1,11 +1,12 @@
-if not exist "%~dp0\..\config.bat" (
+if not exist "%~dp0..\config.bat" (
   echo エラー：config.bat が未設定のため、処理を終了します。
   echo 詳しくは README.md を参照してください
   exit /b 1
 )
 
-call "%~dp0\..\config.bat" || exit /b 1
-
+pushd "%~dp0"
+call "..\config.bat" || exit /b 1
+popd
 
 @rem
 @rem INSTALL_PATHにレジストリ内のインストールパスを入れる
@@ -59,9 +60,9 @@ set "CM3D2_MOD_MANAGED_DIR=%CM3D2_MOD_DATA_DIR%\Managed"
 set "REIPATCHER_DIR=%CM3D2_MOD_DIR%\ReiPatcher"
 set "UNITY_INJECTOR_DIR=%CM3D2_MOD_DIR%\UnityInjector"
 
-set "OKIBA_LIB=%~dp0..\Lib"
+set "OKIBA_LIB=..\Lib"
 
-set "RF=temp.rsp"
+set "RF=%TEMP%\temp.rsp"
 
 @rem
 @rem CSCにcsc.exeのパスを入れる

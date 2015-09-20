@@ -1,4 +1,4 @@
-@echo off && setlocal ENABLEEXTENSIONS && pushd "%~dp0" && call "%~dp0..\scripts\base.bat" || exit /b 1
+@echo off && setlocal ENABLEEXTENSIONS && pushd "%~dp0" && call "..\scripts\base.bat" || exit /b 1
 
 call compile-patcher.bat || exit /b 1
 call compile-managed.bat || exit /b 1

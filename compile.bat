@@ -1,4 +1,4 @@
-@echo off && setlocal ENABLEEXTENSIONS && pushd "%~dp0" && call "%~dp0scripts\base.bat" || exit /b 1
+@echo off && setlocal ENABLEEXTENSIONS && pushd "%~dp0" && call "scripts\base.bat" || exit /b 1
 
 echo.& echo ExternalSaveData && call ExternalSaveData\compile.bat || goto error
 echo.& echo FastFade && call FastFade\compile.bat || goto error

@@ -1,4 +1,6 @@
-call "%~dp0csc-basic-options.bat" > "%RF%"
+pushd "%~dp0"
+call "csc-basic-options.bat" > "%RF%"
+popd
 del "%OUT%" >nul 2>&1
 "%csc%" "@%RF%" || exit /b 1
 del "%RF%" >nul 2>&1
