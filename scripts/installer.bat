@@ -112,6 +112,20 @@ if exist "%ROOT%\UnityInjector" (
 
 
 @rem
+@rem 安全なディレクトリ名かどうかを確認
+@rem
+cd|findstr /R "[\^'%%]">"%TEMP%\cm3d2_okiba_bad_dir"
+for /f %%i in ("%TEMP%\cm3d2_okiba_bad_dir") do set size=%%~zi
+if %size% gtr 0 (
+  echo "フォルダー名が不適切です"
+  echo "フォルダーに不適切な文字が含まれているため、処理を中止します"
+  echo.
+  echo "フォルダー名には「^」「'」「%%」を含めることはできません"
+  exit /b 1
+)
+
+
+@rem
 @rem 新規ディレクトリの場合、xcopyを行う
 @rem
 if not exist "%ROOT%\CM3D2%PLATFORM%_Data" (
