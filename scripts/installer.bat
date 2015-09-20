@@ -11,10 +11,10 @@ set "UNITYINJECTOR_7Z=UnityInjector_1.0.3.0.7z"
 set "UNITYINJECTOR_PASSWD=byreisen"
 
 set "_7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip"
-set "_7Z_FILE=7za920.zip"
+set "_7Z_FILE=%TEMP%\7za920.zip"
 
-set "REIPATCHER_INI=%ROOT%\ReiPatcher\CM3D2%PLATFORM%.ini"
-set "_7z=%ROOT%\_7z\7za.exe"
+set "REIPATCHER_INI=CM3D2%PLATFORM%.ini"
+set "_7z=%TEMP%\_7z\7za.exe"
 set "MEGADL=%ROOT%\%OKIBA_DIR%\scripts\megadl.exe"
 
 set "INSTALL_PATH="
@@ -95,7 +95,7 @@ if defined SAME_PATH (
 if exist "%ROOT%\ReiPatcher" (
   echo "ReiPatcher が既に存在しています"
   echo "フォルダー「%ROOT%\ReiPatcher」が存在するため、処理を中止します" 
-  echo 
+  echo.
   echo "このインストーラーは新規インストール用です"
   echo "このフォルダーを移動、リネームするか、削除してから実行してください"
   exit /b 1
@@ -104,7 +104,7 @@ if exist "%ROOT%\ReiPatcher" (
 if exist "%ROOT%\UnityInjector" (
   echo "UnityInjector が既に存在しています"
   echo "フォルダー「%ROOT%\UnityInjector」が存在するため、処理を中止します"
-  echo 
+  echo.
   echo "このインストーラーは新規インストール用です"
   echo "このフォルダーを移動、リネームするか、削除してから実行してください"
   exit /b 1
@@ -125,6 +125,7 @@ if not exist "%ROOT%\CM3D2%PLATFORM%_Data" (
 @rem
 
 mkdir _7z >nul 2>&1
+mkdir "%TEMP%\_7z" >nul 2>&1
 pushd _7z
 if not exist "%_7Z_FILE%" (
   echo "7zのアーカイブ「%_7Z_URL%」のダウンロード、展開中"
@@ -134,15 +135,17 @@ if not exist "%_7Z_FILE%" (
     exit /b 1
   )
 )
-powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%ROOT%\_7z\%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%ROOT%\_7z').copyhere($i,0x14)}"
+@rem powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%ROOT%\_7z\%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%ROOT%\_7z').copyhere($i,0x14)}"
+powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%TEMP%\_7z').copyhere($i,0x14)}"
+copy /y "%TEMP%\_7z\*.*" . >nul 2>&1
 echo "7zのアーカイブの展開完了"
 popd
 
 
-@rem:
-@rem:cm3d2_plugins_okibaのアーカイブをダウンロードし、
-@rem:%ROOT%\cm3d2_plugins_okiba\ 下に展開する
-@rem:
+@rem
+@rem cm3d2_plugins_okibaのアーカイブをダウンロードし、
+@rem ROOT\cm3d2_plugins_okiba\ 下に展開する
+@rem
 
 echo "「%OKIBA_URL%」から「%OKIBA_FILE%」のダウンロード中"
 
@@ -155,8 +158,8 @@ if not exist "%OKIBA_FILE%" (
 
 rmdir /s /q "%OKIBA_DIR%" >nul 2>&1
 
-@rem:http://www.howtogeek.com/tips/how-to-extract-zip-files-using-powershell/
-@rem:http://stackoverflow.com/questions/2359372/
+@rem http://www.howtogeek.com/tips/how-to-extract-zip-files-using-powershell/
+@rem http://stackoverflow.com/questions/2359372/
 "%_7z%" -y x "%OKIBA_FILE%" >nul 2>&1
 if not exist "%OKIBA_DIR%\config.bat.txt" (
   echo "「%OKIBA_FILE%」の展開に失敗しました"
@@ -167,9 +170,9 @@ del "%OKIBA_FILE%" >nul 2>&1
 echo "「%OKIBA_FILE%」をフォルダー「%ROOT%\%OKIBA_DIR%」に展開しました"
 
 
-@rem:
-@rem: megadl のコンパイル
-@rem:
+@rem
+@rem megadl のコンパイル
+@rem
 del "%MEGADL%" >nul 2>&1
 pushd "%ROOT%\%OKIBA_DIR%\scripts\"
 "%CSC%" /nologo megadl.cs
@@ -180,9 +183,9 @@ if not exist "%MEGADL%" (
 )
 
 
-@rem:
-@rem: %ROOT%\ 下に ReiPatcher をダウンロード
-@rem:
+@rem
+@rem ROOT\ 下に ReiPatcher をダウンロード
+@rem
 echo "「%REIPATCHER_URL%」をダウンロード中"
 if not exist "%REIPATCHER_7Z%" (
     "%MEGADL%" %REIPATCHER_URL% "%REIPATCHER_7Z%"
@@ -193,9 +196,9 @@ if not exist "%REIPATCHER_7Z%" (
 )
 
 
-@rem:
-@rem: %ROOT%\ 下に UnityInjector をダウンロード
-@rem:
+@rem
+@rem ROOT\ 下に UnityInjector をダウンロード
+@rem
 echo "「%UNITYINJECTOR_URL%」をダウンロード中"
 if not exist "%UNITYINJECTOR_7Z%" (
     "%MEGADL%" %UNITYINJECTOR_URL% "%UNITYINJECTOR_7Z%"
@@ -206,9 +209,9 @@ if not exist "%UNITYINJECTOR_7Z%" (
 )
 
 
-@rem:
-@rem: %ROOT%\ReiPatcher\ 下に ReiPatcher を展開する
-@rem:
+@rem
+@rem ROOT\ReiPatcher\ 下に ReiPatcher を展開する
+@rem
 if not exist "%REIPATCHER_7Z%" (
   echo "ReiPatcherのアーカイブファイル「%REIPATCHER_7Z%」がありません"
   echo "アーカイブをダウンロードして、「%ROOT%」に配置してください"
@@ -225,7 +228,10 @@ echo ;Configuration file for ReiPatcher>"%REIPATCHER_INI%"
 echo.>>"%REIPATCHER_INI%"
 echo [ReiPatcher]>>"%REIPATCHER_INI%"
 echo PatchesDir=Patches>>"%REIPATCHER_INI%"
-echo ;@cm3d=%ROOT%>>"%REIPATCHER_INI%"
+<nul set /p=;@cm3d=>>"%REIPATCHER_INI%"
+pushd ..
+cd>>"ReiPatcher\%REIPATCHER_INI%"
+popd
 echo AssembliesDir=%%cm3d%%\CM3D2%PLATFORM%_Data\Managed>>"%REIPATCHER_INI%"
 echo.>>"%REIPATCHER_INI%"
 echo [Assemblies]>>"%REIPATCHER_INI%"
@@ -243,9 +249,9 @@ popd
 echo "ReiPatcherの展開完了"
 
 
-@rem:
-@rem: %ROOT%\UnityInjector\ 下に UnityInjector を展開する
-@rem:
+@rem
+@rem ROOT\UnityInjector\ 下に UnityInjector を展開する
+@rem
 if not exist "%UNITYINJECTOR_7Z%" (
   echo "UnityInjectorのアーカイブファイル「%UNITYINJECTOR_7Z%」がありません"
   echo "アーカイブをダウンロードして、「%ROOT%」に配置してください"
@@ -326,4 +332,3 @@ echo.
 echo "2. 「%ROOT%\%OKIBA_DIR%\compile-patch-and-go.bat」"
 echo "   を実行すると、コンパイル、パッチ操作が行われた後、ゲームが起動します"
 echo.
-
