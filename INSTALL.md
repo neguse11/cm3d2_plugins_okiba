@@ -45,7 +45,7 @@ mkdir C:\KISS\CM3D2_KAIZOU
 
 cd /d C:\KISS\CM3D2_KAIZOU
 
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/64','.bat')"&&.bat
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/64','.bat')"&.bat
 
 .\cm3d2_plugins_okiba-master\compile-patch-and-go.bat
 ```
@@ -60,7 +60,7 @@ mkdir C:\KISS\CM3D2_KAIZOU
 
 cd /d C:\KISS\CM3D2_KAIZOU
 
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/86','.bat')"&&.bat
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://neguse11.github.io/i/86','.bat')"&.bat
 
 .\cm3d2_plugins_okiba-master\compile-patch-and-go.bat
 ```
