@@ -150,7 +150,7 @@
         <value prop_name="HEAD_TRACK.above"   min="-90" max="90"  default="30"   label="顔の上方向可動角度" type="num" />
         <value prop_name="HEAD_TRACK.below"   min="-90" max="90"  default="15"   label="顔の下方向可動角度" type="num" />
         <value prop_name="HEAD_TRACK.behind"  min="0"   max="180" default="90"   label="顔が追従をあきらめる角度" type="num" />
-        <value prop_name="HEAD_TRACK.speed"   min="0"   max="1.0" default="0.04" label="顔の回転速度" type="scale" />
+        <value prop_name="HEAD_TRACK.speed"   min="0"   max="1.0" default="0.04" label="顔の回転速度" type="num" />
         <value prop_name="HEAD_TRACK.ofsx"    min="-90" max="90"  default="0"    label="横回転オフセット (負で右、正で左を向く)" type="num" />
         <value prop_name="HEAD_TRACK.ofsy"    min="-90" max="90"  default="0"    label="縦回転オフセット (負で下、正で上を向く) " type="num" />
         <value prop_name="HEAD_TRACK.ofsz"    min="-90" max="90"  default="0"    label="回転オフセット (負で右、正で左にかしげる)" type="num" />
