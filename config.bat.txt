@@ -1,4 +1,4 @@
-@rem バニラの CM3D2 の位置
+@rem バニラ (未改造) の CM3D2 の位置
 set CM3D2_VANILLA_DIR=C:\KISS\CM3D2
 
 @rem 改造版の CM3D2 の位置
