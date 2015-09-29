@@ -6,8 +6,8 @@ set "REIPATCHER_URL=https://mega.nz/#!21IV0YaS!R2vWnzeGXihjC3r7tRUe-m8rWtYoMPINa
 set "REIPATCHER_7Z=ReiPatcher_0.9.0.8.7z"
 set "REIPATCHER_PASSWD=byreisen"
 
-set "UNITYINJECTOR_URL=https://mega.nz/#!StgWWKCJ!MbaNhXkgCUS4X356FdVyOOTL4ETX-WF_320j2kmlQSE"
-set "UNITYINJECTOR_7Z=UnityInjector_1.0.3.0.7z"
+set "UNITYINJECTOR_URL=https://mega.nz/#!K4YRmJ6R!h1HDkHBlsEqHWAzQWsbvuoowTn0wyuRJZ9ze36x72ww"
+set "UNITYINJECTOR_7Z=UnityInjector_1.0.3.4.7z"
 set "UNITYINJECTOR_PASSWD=byreisen"
 
 set "_7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip"
@@ -60,11 +60,30 @@ if not exist "%INSTALL_PATH%\GameData\csv.arc" (
 if defined INSTALL_PATH (
     @rem http://stackoverflow.com/a/19923522/2132223
     for %%a in ("%INSTALL_PATH%\.") do set "INSTALL_PATH=%%~fa"
-    @rem if %INSTALL_PATH:~-1%==\ (
-    @rem     set INSTALL_PATH=%INSTALL_PATH:~0,-1%
-    @rem )
 )
 
+
+@rem
+@rem バージョンチェック
+@rem
+@rem 更新時の注意：バージョンチェックは「対応していないバージョン」を検出すること
+@rem 更新時の注意：未来のバージョンについてはユーザーがチャレンジする余地を残すこと
+@rem
+set "BAD_VERSION="
+if defined INSTALL_PATH (
+  pushd "%INSTALL_PATH%"
+  findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll,10[0-9]" Update.lst && set "BAD_VERSION=True"
+  findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll,110" Update.lst && set "BAD_VERSION=True"
+  if defined BAD_VERSION (
+    echo "インストールされているバージョン："
+    findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll" Update.lst
+    echo "上記のバージョンには対応していません"
+    echo "以下のURLを参照して、対応しているバージョンを確認してください"
+    echo "https://github.com/neguse11/cm3d2_plugins_okiba/blob/%OKIBA_BRANCH%/INSTALL.md"
+    exit /b 1
+  )
+  popd
+)
 
 @rem
 @rem MOD_PATHに改造版のパスを入れる

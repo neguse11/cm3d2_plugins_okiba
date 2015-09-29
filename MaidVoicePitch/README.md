@@ -122,7 +122,8 @@
 <!-- その１>>804、その２>>12 さんの値 -->
 <slidertemplate>
   <sliders>
-   <slider name="EyeScl"     min="-100" max="200"/>
+   <slider name="EyeSclX"    min="-400" max="300"/>
+   <slider name="EyeSclY"    min="-400" max="300"/>
    <slider name="EyePosX"    min="-100" max="130"/>
    <slider name="EyePosY"    min="-100" max="200"/>
    <slider name="DouPer"     min="-100" max="150"/>
@@ -293,6 +294,10 @@
 
 ## 履歴
 
+ - 0.2.9
+   - 1.11対応。目の縦横サイズ指定が入ったので以下を修正
+     - BoneMorph_およびバニラセーブデータ内のEyeSclX, EyeSclYに対応
+     - EYE_RATIOは削除予定
  - 0.2.8
    - ２人目以降のメイドに対してWIDESLIDERが正常に動作していなかったのを修正 (その３>>263, >>274, >>276, >>277)
    - 同、スライダーテンプレートが正常に設定されていなかったのを修正
