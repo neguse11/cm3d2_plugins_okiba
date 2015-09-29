@@ -67,7 +67,10 @@ internal static class KagHooks
             string str = tag_data.GetTagProperty("category").AsString();
             if (Array.IndexOf(PluginHelper.MpnStrings, str) >= 0)
             {
-                // Helper.Log("PROPSET_OFF(category={0}) -> match", str);
+#if DEBUG
+				Console.WriteLine("PROPSET_OFF(category={0}) -> match", str);
+				Helper.Log("PROPSET_OFF(category={0}) -> match", str);
+#endif
                 return false;
             }
         }
