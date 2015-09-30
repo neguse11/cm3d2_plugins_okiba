@@ -1,3 +1,18 @@
+### 2015/09/30
+
+ - 公式パッチ 1.11 に対応
+    - インストーラーにバージョンチェックを追加
+
+ - MaidVoicePitch
+    - MaidVoicePitchは1.11以降のみで動作するように変更 (1.00～1.10では動作しません)
+    - 「目の縦横比(EYE_RATIO)」機能を削除
+    - セーブデータに追加された「目のサイズ(横)」(EyeSclX)および「目のサイズ(縦)」(EyeSclY)に対応
+
+ - AddModsSlider
+    - ModsParam.xml修正 (EYE_RATIO削除)
+
+ - UnityInjectorを 1.0.3.4 に更新
+
 ### 2015/09/21
 
  - AddModsSlider

@@ -2,7 +2,8 @@
 <!-- その１>>804、その２>>12 さんの値 -->
 <slidertemplate>
   <sliders>
-   <slider name="EyeScl"     min="-100" max="200"/>
+   <slider name="EyeSclX"    min="-400" max="300"/>
+   <slider name="EyeSclY"    min="-400" max="300"/>
    <slider name="EyePosX"    min="-100" max="130"/>
    <slider name="EyePosY"    min="-100" max="200"/>
    <slider name="DouPer"     min="-100" max="150"/>

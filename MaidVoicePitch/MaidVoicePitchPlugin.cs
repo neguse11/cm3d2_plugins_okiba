@@ -11,7 +11,7 @@ namespace CM3D2.MaidVoicePitch.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("CM3D2 MaidVoicePitch"),
-    PluginVersion("0.2.8.0")]
+    PluginVersion("0.2.9.0")]
     public class MaidVoicePitch : PluginBase
     {
         public static string PluginName { get { return "CM3D2.MaidVoicePitch"; } }
@@ -563,37 +563,40 @@ namespace CM3D2.MaidVoicePitch.Plugin
                             s = boneMorph_.SCALE_Ude;
                             break;
                         case 2:
-                            s = boneMorph_.SCALE_Eye;
+                            s = boneMorph_.SCALE_EyeX;
                             break;
                         case 3:
-                            s = boneMorph_.Postion_EyeX * (0.5f + boneMorph_.Postion_EyeY * 0.5f);
+                            s = boneMorph_.SCALE_EyeY;
                             break;
                         case 4:
-                            s = boneMorph_.Postion_EyeY;
+                            s = boneMorph_.Postion_EyeX * (0.5f + boneMorph_.Postion_EyeY * 0.5f);
                             break;
                         case 5:
-                            s = boneMorph_.SCALE_HeadX;
+                            s = boneMorph_.Postion_EyeY;
                             break;
                         case 6:
-                            s = boneMorph_.SCALE_HeadY;
+                            s = boneMorph_.SCALE_HeadX;
                             break;
                         case 7:
+                            s = boneMorph_.SCALE_HeadY;
+                            break;
+                        case 8:
                             s = boneMorph_.SCALE_DouPer;
                             if (boneMorphLocal.Kahanshin == 0f)
                             {
                                 s = 1f - s;
                             }
                             break;
-                        case 8:
+                        case 9:
                             s = boneMorph_.SCALE_Sintyou;
                             break;
-                        case 9:
+                        case 10:
                             s = boneMorph_.SCALE_Koshi;
                             break;
-                        case 10:
+                        case 11:
                             s = boneMorph_.SCALE_Kata;
                             break;
-                        case 11:
+                        case 12:
                             s = boneMorph_.SCALE_West;
                             break;
                         default:
