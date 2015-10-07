@@ -23,6 +23,24 @@ set "SAME_PATH="
 
 
 @rem
+@rem
+if not defined ROOT (
+  echo "インストーラーから実行してください （環境変数 ROOT が未設定）"
+  exit /b 1
+)
+
+if not defined PLATFORM (
+  echo "インストーラーから実行してください （環境変数 PLATFORM が未設定）"
+  exit /b 1
+)
+
+if not defined OKIBA_BRANCH (
+  echo "インストーラーから実行してください （環境変数 OKIBA_BRANCH が未設定）"
+  exit /b 1
+)
+
+
+@rem
 @rem CSCにcsc.exeのパスを入れる
 @rem
 @rem https://gist.github.com/asm256/8f5472657c1675bdc77a
@@ -74,15 +92,21 @@ if defined INSTALL_PATH (
   pushd "%INSTALL_PATH%"
   findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll,10[0-9]" Update.lst && set "BAD_VERSION=True"
   findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll,110" Update.lst && set "BAD_VERSION=True"
+  popd
   if defined BAD_VERSION (
+    echo.
     echo "インストールされているバージョン："
+    pushd "%INSTALL_PATH%"
     findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll" Update.lst
+    popd
+    echo.
     echo "上記のバージョンには対応していません"
+    echo.
     echo "以下のURLを参照して、対応しているバージョンを確認してください"
     echo "https://github.com/neguse11/cm3d2_plugins_okiba/blob/%OKIBA_BRANCH%/INSTALL.md"
+    echo.
     exit /b 1
   )
-  popd
 )
 
 @rem

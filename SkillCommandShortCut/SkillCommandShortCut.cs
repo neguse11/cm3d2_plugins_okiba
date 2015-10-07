@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -61,6 +61,11 @@ namespace CM3D2.SkillCommandShortCut.Plugin
 
         public void OnGUI()
         {
+            if (!IsGuiVisible())
+            {
+                return;
+            }
+
             if (labels == null)
             {
                 return;
@@ -87,6 +92,11 @@ namespace CM3D2.SkillCommandShortCut.Plugin
         public void Update2()
         {
             labels = null;
+
+            if (!IsGuiVisible())
+            {
+                return;
+            }
 
             if (UpdateDialogClick())
             {
@@ -365,7 +375,7 @@ namespace CM3D2.SkillCommandShortCut.Plugin
                 }
 
                 // 夜伽スキル実行中の「Next」ボタン
-//              if (ClickGameObject("/UI Root/YotogiPlayPanel/CommonPanel/UnderButtonGroup/Next"))
+                //              if (ClickGameObject("/UI Root/YotogiPlayPanel/CommonPanel/UnderButtonGroup/Next"))
                 if (ClickGameObject("/UI Root/YotogiPlayPanel/UndressingViewer/CommonPanel/UnderButtonGroup/Next"))
                 {
                     return true;
@@ -400,6 +410,12 @@ namespace CM3D2.SkillCommandShortCut.Plugin
             }
 
             return false;
+        }
+
+        bool IsGuiVisible()
+        {
+            Camera camera = UICamera.currentCamera;
+            return camera != null && camera.enabled;
         }
 
         static bool ClickGameObject(string name)
