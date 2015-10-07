@@ -1,6 +1,8 @@
 ### 2015/10/08
 
  - 公式パッチ 1.13 で動作を確認
+ - AddModsSlider
+    - 0.1.1.16 へ更新
  - SkillCommandShortCut
     - イシュー #24 を解消
  - MaidVoicePitch
