@@ -20,6 +20,8 @@ MaidVoicePitchAExternalSaveData‚ÆŠÖŒW‚ª[‚­A‚Ü‚½Žå‚É“–ƒŠƒ|ƒWƒgƒŠŠÇ—ŽÒ‚Ì“®ìƒe
 
 ## —š—ð
 
+ - 2015/10/08
+    - [0.1.1.16](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/tree/e99bd8ae2fdf4e2c3b0f24cd810184244584074b)‚ÖXV
  - 2015/09/21
     - ModsParam.xmlC³ (‚»‚Ì‚R>>438, >>439, >>440, >>441)
  - 2015/09/15 (2)
