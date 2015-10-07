@@ -25,17 +25,17 @@ set "SAME_PATH="
 @rem
 @rem
 if not defined ROOT (
-  echo インストーラーから実行してください (環境変数 ROOT が未設定)
+  echo "インストーラーから実行してください （環境変数 ROOT が未設定）"
   exit /b 1
 )
 
 if not defined PLATFORM (
-  echo インストーラーから実行してください (環境変数 PLATFORM が未設定)
+  echo "インストーラーから実行してください （環境変数 PLATFORM が未設定）"
   exit /b 1
 )
 
 if not defined OKIBA_BRANCH (
-  echo インストーラーから実行してください (環境変数 OKIBA_BRANCH が未設定)
+  echo "インストーラーから実行してください （環境変数 OKIBA_BRANCH が未設定）"
   exit /b 1
 )
 
@@ -389,4 +389,3 @@ echo.
 echo "2. 「%ROOT%\%OKIBA_DIR%\compile-patch-and-go.bat」"
 echo "   を実行すると、コンパイル、パッチ操作が行われた後、ゲームが起動します"
 echo.
-
