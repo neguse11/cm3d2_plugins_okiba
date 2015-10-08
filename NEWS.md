@@ -1,3 +1,8 @@
+### 2015/10/08 (2)
+
+ - DynamicPluginLoader を追加
+ - EditSceneUndo を追加
+
 ### 2015/10/08
 
  - 公式パッチ 1.13 で動作を確認
