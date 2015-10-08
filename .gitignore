@@ -5,6 +5,7 @@ obj/
 
 *.user
 *.exe
+*.dll
 *.zip
 
 cm3d2_plugins_okiba-master/
