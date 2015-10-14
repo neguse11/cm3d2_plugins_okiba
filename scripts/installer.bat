@@ -343,6 +343,7 @@ echo.>>"%REIPATCHER_INI%"
 echo [UnityInjector]>>"%REIPATCHER_INI%"
 echo Class=SceneLogo>>"%REIPATCHER_INI%"
 echo Method=Start>>"%REIPATCHER_INI%"
+echo Assembly=Assembly-CSharp>>"%REIPATCHER_INI%"
 popd
 echo "ReiPatcher‚Ì“WŠJŠ®—¹"
 
