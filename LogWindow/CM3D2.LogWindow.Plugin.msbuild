@@ -1,0 +1,24 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Source Include="*.cs" />
+    <Source Include="..\Lib\GearMenu.cs" />
+
+    <LibPath Include="$(CM3D2_MOD_MANAGED_DIR)" />
+    <LibPath Include="$(REIPATCHER_DIR)" />
+    <LibPath Include="$(UNITY_INJECTOR_DIR)" />
+
+    <Reference Include="Assembly-CSharp.dll" />
+    <Reference Include="Assembly-CSharp-firstpass.dll" />
+    <Reference Include="ExIni.dll" />
+    <Reference Include="UnityEngine.dll" />
+    <Reference Include="UnityInjector.dll" />
+  </ItemGroup>
+
+  <Target Name="Build">
+    <Csc TargetType="library" OutputAssembly="$(MSBuildProjectName).dll"
+      Sources="@(Source)" AdditionalLibPaths="@(LibPath)" References="@(Reference)" />
+  </Target>
+
+  <Target Name="Clean" />
+  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
+</Project>

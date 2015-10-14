@@ -6,11 +6,7 @@ using UnityInjector.Attributes;
 
 namespace CM3D2.VoiceNormalizer.Plugin
 {
-    [PluginFilter("CM3D2x64"),
-    PluginFilter("CM3D2x86"),
-    PluginFilter("CM3D2VRx64"),
-    PluginName("CM3D2 VoiceNormalizer"),
-    PluginVersion("0.1.0.0")]
+    [PluginName("CM3D2 VoiceNormalizer"), PluginVersion("0.1.2.0")]
     public class VoiceNormalizer : PluginBase
     {
         public static string PluginName { get { return "CM3D2.VoiceNormalizer"; } }

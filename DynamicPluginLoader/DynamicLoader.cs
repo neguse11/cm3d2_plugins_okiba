@@ -4,12 +4,7 @@ using UnityInjector.Attributes;
 
 namespace CM3D2.DynamicLoader.Plugin
 {
-    [PluginFilter("CM3D2x64"), PluginFilter("CM3D2x86"),
-    PluginFilter("CM3D2VRx64"), PluginFilter("CM3D2VRx86"),
-    PluginFilter("CM3D2OHx64"), PluginFilter("CM3D2OHx86"),
-    PluginFilter("CM3D2OHVRx64"), PluginFilter("CM3D2OHVRx86"),
-    PluginName("CM3D2 DynamicLoader"),
-    PluginVersion("0.1.0.0")]
+    [PluginName("CM3D2 DynamicLoader"), PluginVersion("0.1.1.0")]
     public class DynamicLoaderPlugin : PluginBase
     {
         void Awake()

@@ -24,6 +24,8 @@
 
 ## 履歴
 
+ - 0.1.2
+   - プラグインフィルタを削除
  - 0.1.1
    - コード整形
    - VoiceNormalizerTable.txtを生成するTableBuilderのコードを追加

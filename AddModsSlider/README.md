@@ -20,6 +20,8 @@ MaidVoicePitch、ExternalSaveDataと関係が深く、また主に当リポジトリ管理者の動作テ
 
 ## 履歴
 
+ - 2015/10/14
+    - ModsParam.xmlからEYE_RATIOを削除
  - 2015/10/08
     - [0.1.1.16](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/tree/e99bd8ae2fdf4e2c3b0f24cd810184244584074b)へ更新
  - 2015/09/21

@@ -8,11 +8,7 @@ using UnityInjector.Attributes;
 
 namespace CM3D2.PersonalizedEditSceneSettings.Plugin
 {
-    [PluginFilter("CM3D2x64"),
-    PluginFilter("CM3D2x86"),
-    PluginFilter("CM3D2VRx64"),
-    PluginName("CM3D2 EyeToCamera Settings"),
-    PluginVersion("0.1.2.0")]
+    [PluginName("CM3D2 PersonalizedEditSceneSettings"), PluginVersion("0.1.3.0")]
     public class PersonalizedEditSceneSettings : PluginBase
     {
         const string PluginName = "CM3D2.PersonalizedEditSceneSettings";

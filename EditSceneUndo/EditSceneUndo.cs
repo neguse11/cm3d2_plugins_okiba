@@ -16,12 +16,7 @@ using System.Reflection;
 
 namespace CM3D2.EditSceneUndo.Plugin
 {
-    [PluginFilter("CM3D2x64"), PluginFilter("CM3D2x86"),
-    PluginFilter("CM3D2VRx64"), PluginFilter("CM3D2VRx86"),
-    PluginFilter("CM3D2OHx64"), PluginFilter("CM3D2OHx86"),
-    PluginFilter("CM3D2OHVRx64"), PluginFilter("CM3D2OHVRx86"),
-    PluginName("CM3D2 EdieSceneUndo"),
-    PluginVersion("0.1.0.0")]
+    [PluginName("CM3D2 EdieSceneUndo"), PluginVersion("0.1.1.0")]
 #if DYNAMIC_PLUGIN
     class EdieSceneUndoPlugin : DynamicPluginBase
 #else
@@ -61,6 +56,7 @@ namespace CM3D2.EditSceneUndo.Plugin
 #endif
         public void OnLevelWasLoaded(int level)
         {
+            ClearHistory();
         }
 
 #if DYNAMIC_PLUGIN
@@ -115,6 +111,11 @@ namespace CM3D2.EditSceneUndo.Plugin
             outputs.Add(string.Format("historyCursor = {0}", history.historyCursor));
             outputs.Add(string.Format("changeCount = {0}", changeCount));
         }
+
+		void ClearHistory()
+		{
+			history.Clear();
+		}
 
         void RecordHistory()
         {

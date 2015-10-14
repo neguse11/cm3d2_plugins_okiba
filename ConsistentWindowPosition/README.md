@@ -1,12 +1,5 @@
 ﻿# ウィンドウ位置を保存するプラグイン
 
-## 「カスタムメイド3D2攻略wiki」から来た方へ
-
-[導入の説明](../INSTALL.md)を読んでください。このページに、あなたの欲しいものは無いです
-
-
-## 概要
-
 ゲームのウィンドウ位置を保存し、次回起動時に復元します
 
 
@@ -14,7 +7,7 @@
 
 C:\KISS\CM3D2_KAIZOU\CM3D2x64.exe を起動して、動作を確認してください
 
- - ゲームのウィンドウの位置を大きさを調整します
+ - ゲームのウィンドウの位置と大きさを調整します
  - 調整が終わったらゲームを終了します
  - 再びゲームを起動し、位置と大きさが復元されていることを確認します
 
@@ -28,10 +21,11 @@ C:\KISS\CM3D2_KAIZOU\CM3D2x64.exe を起動して、動作を確認してくだ�
 
 ## ボーダーレスフルスクリーンウィンドウにするには？
 
-起動オプションに、`-popupwindow` を指定します
+「UnityInjector\Config\ConsistentWindowPositionPlugin.ini」を削除したあと、起動オプションに、`-popupwindow` を指定します
 
 ```
-cd /d C:\KISS\CM3D2
+cd /d C:\KISS\CM3D2_KAIZOU
+del .\UnityInjector\Config\DebugPlugin.ini
 .\CM3D2x64.exe -popupwindow
 ```
 
@@ -40,10 +34,14 @@ cd /d C:\KISS\CM3D2
 
 ## コンパイル方法
 
-[config.batの設定](../INSTALL.md)を行った後、このディレクトリの compile.bat を実行することでコンパイルができます
+config.batの設定を行った後、このディレクトリの compile.bat を実行することでコンパイルができます
 
 
 ## 履歴
+
+ - 0.1.1
+   - x86 で GetWindowLongPtr, SetWindowLongPtr が正常に動作していなかったのを修正
+   - プラグインフィルタを削除
 
  - 0.1.0
    - 最初の版

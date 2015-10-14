@@ -57,5 +57,7 @@ var str = string.Format("HOGE {0} : counter={1}", GetType().Name, counter);
 
 ## 履歴
 
+ - 0.1.1
+    - プラグインフィルタを削除
  - 0.1.0
     - 最初の版

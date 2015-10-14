@@ -7,11 +7,7 @@ using UnityInjector.Attributes;
 
 namespace CM3D2.MaidVoicePitch.Plugin
 {
-    [PluginFilter("CM3D2x64"),
-    PluginFilter("CM3D2x86"),
-    PluginFilter("CM3D2VRx64"),
-    PluginName("CM3D2 MaidVoicePitch"),
-    PluginVersion("0.2.9.0")]
+    [PluginName("CM3D2 MaidVoicePitch"), PluginVersion("0.2.11.0")]
     public class MaidVoicePitch : PluginBase
     {
         public static string PluginName { get { return "CM3D2.MaidVoicePitch"; } }
@@ -90,7 +86,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
             {
                 bDeserialized = false;
                 ExSaveData.CleanupMaids();
-                FreeComment.FreeCommentToSetting(PluginName, false);
                 CleanupExSave();
             }
         }
@@ -111,13 +106,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 SliderTemplates.Clear();
             }
             SliderTemplates.Update(PluginName);
-
-            // フリーコメントから設定を読み込む
-            if (Input.GetKey(KeyCode.F4))
-            {
-                FreeComment.FreeCommentToSetting(PluginName, true);
-                CleanupExSave();
-            }
 
             // エディット画面にいる場合は特別処理として毎フレームアップデートを行う
             if (Application.loadedLevel == 5)
@@ -240,13 +228,9 @@ namespace CM3D2.MaidVoicePitch.Plugin
                                 float SCALE_Sintyou = maid.body0.bonemorph.SCALE_Sintyou;
                                 maid.body0.BoneMorph_FromProcItem("sintyou", SCALE_Sintyou);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
-#if !DEBUG
                                 ; // 最低だ…
-#else
-                                Helper.ShowException(ex);
-#endif
                             }
                         }
                     }
@@ -448,30 +432,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
             }
             BoneMorph_ boneMorph_ = tbody.bonemorph;
 
-            Vector3 eyeScl;
-            {
-                float aspectRatioMin = 0.1f;
-                float aspectRatioMax = 10f;
-                float aspectRatio = Mathf.Clamp(ExSaveData.GetFloat(maid, PluginName, "EYE_RATIO", 1f), aspectRatioMin, aspectRatioMax);
-
-                float aspectW = 1f;
-                float aspectH = 1f;
-                if (aspectRatio >= 1f)
-                {
-                    // 1以上の場合、横幅は固定で、高さを小さくする
-                    aspectW = 1f;
-                    aspectH = 1f / aspectRatio;
-                }
-                else
-                {
-                    // 1未満の場合、高さは固定で、横幅を小さくする
-                    aspectW = 1f * aspectRatio;
-                    aspectH = 1f;
-                }
-
-                eyeScl = new Vector3(1.00f, aspectH, aspectW);
-            }
-
             float eyeAngAngle;
             float eyeAngX;
             float eyeAngY;
@@ -646,11 +606,11 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 }
                 else if (name == "Eyepos_L")
                 {
-                    scl = Vector3.Scale(scl, eyeScl);
+                    // 何もしない
                 }
                 else if (name == "Eyepos_R")
                 {
-                    scl = Vector3.Scale(scl, eyeScl);
+                    // 何もしない
                 }
                 else if (name == "Hip_L")
                 {

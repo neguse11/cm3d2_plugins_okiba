@@ -1,3 +1,22 @@
+### 2015/10/14
+
+ - 公式パッチ 1.14 で動作を確認
+ - プラグインのコードからプラグインフィルタをできるだけ削除
+    - 現状では制限がつくだけで、あまり積極的な意味がないので全廃
+ - AddModsSlider
+    - サンプルの ModsParam.xml から EYE_RATIO を削除
+ - ConsistentWindowPosition
+    - x86 で例外を出して落ちていたのを修正
+ - LogWindow
+    - 歯車メニューアイコンを追加
+ - MaidVoicePitch
+    - フリーコメント機能を全廃
+    - EYE_RATIO を削除
+ - SkillCommandShortCut
+    - UnityInjctor\Config\SkillCommandShortCut.ini にキー定義を追加
+    - 歯車メニューアイコンを追加
+    - レイアウトの変更に少し対応
+
 ### 2015/10/08 (2)
 
  - DynamicPluginLoader を追加
