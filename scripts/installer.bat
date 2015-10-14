@@ -6,8 +6,8 @@ set "REIPATCHER_URL=https://mega.nz/#!21IV0YaS!R2vWnzeGXihjC3r7tRUe-m8rWtYoMPINa
 set "REIPATCHER_7Z=ReiPatcher_0.9.0.8.7z"
 set "REIPATCHER_PASSWD=byreisen"
 
-set "UNITYINJECTOR_URL=https://mega.nz/#!K4YRmJ6R!h1HDkHBlsEqHWAzQWsbvuoowTn0wyuRJZ9ze36x72ww"
-set "UNITYINJECTOR_7Z=UnityInjector_1.0.3.4.7z"
+set "UNITYINJECTOR_URL=https://mega.nz/#!jxBWXBpA!hzTpIK6OVjifmANK1N-E_NDFFbG48i363igcyaEc_XI"
+set "UNITYINJECTOR_7Z=UnityInjector_1.0.4.0.7z"
 set "UNITYINJECTOR_PASSWD=byreisen"
 
 set "_7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip"
@@ -225,13 +225,13 @@ if not exist "%_7Z_FILE%" (
 )
 @rem powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%ROOT%\_7z\%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%ROOT%\_7z').copyhere($i,0x14)}"
 powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%TEMP7Z%').copyhere($i,0x14)}"
-if not exit "%TEMP7Z%\7za.exe" (
+if not exist "%TEMP7Z%\7za.exe" (
   echo "7zのアーカイブの展開に失敗しました。"
   exit /b 1
 )
 
 copy /y "%TEMP7Z%\*.*" . >nul 2>&1
-if not exit ".\7za.exe" (
+if not exist ".\7za.exe" (
   echo "7zのアーカイブの展開後のコピーに失敗しました。"
   exit /b 1
 )
@@ -430,3 +430,4 @@ echo.
 echo "2. 「%ROOT%\%OKIBA_DIR%\compile-patch-and-go.bat」"
 echo "   を実行すると、コンパイル、パッチ操作が行われた後、ゲームが起動します"
 echo.
+
