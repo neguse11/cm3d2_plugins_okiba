@@ -14,7 +14,7 @@ set "_7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zi
 set "_7Z_FILE=%TEMP%\7za920.zip"
 
 set "REIPATCHER_INI=CM3D2%PLATFORM%.ini"
-set "_7z=%TEMP%\_7z\7za.exe"
+set "_7z=%ROOT%\_7z\7za.exe"
 set "MEGADL=%ROOT%\%OKIBA_DIR%\scripts\megadl.exe"
 
 set "INSTALL_PATH="
@@ -190,10 +190,16 @@ if %size% gtr 0 (
 @rem
 @rem 新規ディレクトリの場合、xcopyを行う
 @rem
-if not exist "%ROOT%\CM3D2%PLATFORM%_Data" (
-  echo "バニラからのコピーを行います"
-  xcopy /e /y "%INSTALL_PATH%" "%ROOT%"
-)
+if exist "%ROOT%\CM3D2%PLATFORM%_Data" goto VANILLA_XCOPY_OK
+echo "バニラからのコピーを行います"
+xcopy /e /y "%INSTALL_PATH%" "%ROOT%" || goto VANILLA_XCOPY_ERROR1
+goto VANILLA_XCOPY_OK
+
+:VANILLA_XCOPY_ERROR1
+echo "エラー：バニラからのコピーに失敗しました。"
+exit /b 1
+
+:VANILLA_XCOPY_OK
 
 
 @rem
