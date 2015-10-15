@@ -8,6 +8,7 @@ echo.& echo SkillCommandShortCut && call SkillCommandShortCut\compile.bat || got
 echo.& echo ConsistentWindowPosition && call ConsistentWindowPosition\compile.bat || goto error
 echo.& echo AddModsSlider && call AddModsSlider\compile.bat || goto error
 echo.& echo VoiceNormalizer && call VoiceNormalizer\compile.bat || goto error
+rem echo.& echo EditSceneUndo && call EditSceneUndo\compile.bat || goto error
 rem echo.& echo ConsoleCodePage && call ConsoleCodePage\compile.bat || goto error
 
 echo.& echo 成功：全ファイルのコンパイルに成功しました

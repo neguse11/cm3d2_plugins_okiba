@@ -6,8 +6,8 @@ set "REIPATCHER_URL=https://mega.nz/#!21IV0YaS!R2vWnzeGXihjC3r7tRUe-m8rWtYoMPINa
 set "REIPATCHER_7Z=ReiPatcher_0.9.0.8.7z"
 set "REIPATCHER_PASSWD=byreisen"
 
-set "UNITYINJECTOR_URL=https://mega.nz/#!K4YRmJ6R!h1HDkHBlsEqHWAzQWsbvuoowTn0wyuRJZ9ze36x72ww"
-set "UNITYINJECTOR_7Z=UnityInjector_1.0.3.4.7z"
+set "UNITYINJECTOR_URL=https://mega.nz/#!jxBWXBpA!hzTpIK6OVjifmANK1N-E_NDFFbG48i363igcyaEc_XI"
+set "UNITYINJECTOR_7Z=UnityInjector_1.0.4.0.7z"
 set "UNITYINJECTOR_PASSWD=byreisen"
 
 set "_7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip"
@@ -20,6 +20,14 @@ set "MEGADL=%ROOT%\%OKIBA_DIR%\scripts\megadl.exe"
 set "INSTALL_PATH="
 set "MOD_PATH="
 set "SAME_PATH="
+
+
+@rem
+@rem テンポラリ用の乱数を生成
+@rem
+for /f "tokens=* USEBACKQ" %%F in (`powershell -Command "Get-Random;"`) do (
+  set TEMP_RAND=%%F
+)
 
 
 @rem
@@ -82,32 +90,43 @@ if defined INSTALL_PATH (
 
 
 @rem
-@rem バージョンチェック
+@rem バニラのバージョンチェック
 @rem
+@rem 更新時の注意：x64, x86 版のみバージョンチェックを行う。
+@rem 更新時の注意：上記以外のプラットフォームはバージョン命名規則が違うためチェック対象にしないこと
 @rem 更新時の注意：バージョンチェックは「対応していないバージョン」を検出すること
 @rem 更新時の注意：未来のバージョンについてはユーザーがチャレンジする余地を残すこと
+@rem 更新時の注意：base.bat内のバージョンチェックも更新すること
 @rem
+set "VERSION_CHECK="
+if "%PLATFORM%" == "x64" set VERSION_CHECK=1
+if "%PLATFORM%" == "x86" set VERSION_CHECK=1
+
 set "BAD_VERSION="
-if defined INSTALL_PATH (
-  pushd "%INSTALL_PATH%"
-  findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll,10[0-9]" Update.lst && set "BAD_VERSION=True"
-  findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll,110" Update.lst && set "BAD_VERSION=True"
-  popd
-  if defined BAD_VERSION (
-    echo.
-    echo "インストールされているバージョン："
-    pushd "%INSTALL_PATH%"
-    findstr /i "CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp.dll" Update.lst
-    popd
-    echo.
-    echo "上記のバージョンには対応していません"
-    echo.
-    echo "以下のURLを参照して、対応しているバージョンを確認してください"
-    echo "https://github.com/neguse11/cm3d2_plugins_okiba/blob/%OKIBA_BRANCH%/INSTALL.md"
-    echo.
-    exit /b 1
+if defined VERSION_CHECK (
+  if defined INSTALL_PATH (
+    if exist "%INSTALL_PATH%" (
+      pushd "%INSTALL_PATH%"
+      findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,10[0-9]$" Update.lst && set "BAD_VERSION=True"
+      findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,110$" Update.lst && set "BAD_VERSION=True"
+      popd
+      if defined BAD_VERSION (
+        echo "非対応のバージョンの CM3D2 がインストールされています。"
+        echo.
+        echo "現在インストールされているバージョン："
+        pushd "%INSTALL_PATH%"
+        findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll" Update.lst
+        popd
+        echo.
+        echo "以下のURLを参照して、対応しているバージョンを確認してください"
+        echo "https://github.com/neguse11/cm3d2_plugins_okiba/blob/%OKIBA_BRANCH%/INSTALL.md"
+        echo.
+        exit /b 1
+      )
+    )
   )
 )
+
 
 @rem
 @rem MOD_PATHに改造版のパスを入れる
@@ -178,14 +197,26 @@ if not exist "%ROOT%\CM3D2%PLATFORM%_Data" (
 
 
 @rem
-@rem %ROOT%\_7z\ 下に 7zip を展開する
+@rem %TEMP%\_7z\ 下に 7zip を展開する
 @rem
+set "TEMP7Z=%TEMP%\cm3d2_okiba_7z_%TEMP_RAND%"
+rmdir /s /q _7z >nul 2>&1
+mkdir _7z >nul 2>&1 || goto _7Z_DIR_ERROR1
+rmdir /s /q "%TEMP7Z%" >nul 2>&1
+mkdir "%TEMP7Z%" >nul 2>&1 || goto _7Z_DIR_ERROR2
+goto _7Z_DIR_OK
 
-mkdir _7z >nul 2>&1
-mkdir "%TEMP%\_7z" >nul 2>&1
+:_7Z_DIR_ERROR1
+echo "ディレクトリ「_7z」の生成に失敗しました。" && exit /b 1
+
+:_7Z_DIR_ERROR2
+echo "ディレクトリ「%TEMP7Z%」の生成に失敗しました。" && exit /b 1
+
+:_7Z_DIR_OK
+
 pushd _7z
 if not exist "%_7Z_FILE%" (
-  echo "7zのアーカイブ「%_7Z_URL%」のダウンロード、展開中"
+  echo "7zのアーカイブ「%_7Z_URL%」のダウンロード中"
   powershell -Command "(New-Object Net.WebClient).DownloadFile('%_7Z_URL%', '%_7Z_FILE%')"
   if not exist "%_7Z_FILE%" (
     echo "7zのアーカイブ「%_7Z_URL%」のダウンロードに失敗しました。"
@@ -193,8 +224,18 @@ if not exist "%_7Z_FILE%" (
   )
 )
 @rem powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%ROOT%\_7z\%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%ROOT%\_7z').copyhere($i,0x14)}"
-powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%TEMP%\_7z').copyhere($i,0x14)}"
-copy /y "%TEMP%\_7z\*.*" . >nul 2>&1
+powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%TEMP7Z%').copyhere($i,0x14)}"
+if not exist "%TEMP7Z%\7za.exe" (
+  echo "7zのアーカイブの展開に失敗しました。"
+  exit /b 1
+)
+
+copy /y "%TEMP7Z%\*.*" . >nul 2>&1
+if not exist ".\7za.exe" (
+  echo "7zのアーカイブの展開後のコピーに失敗しました。"
+  exit /b 1
+)
+
 echo "7zのアーカイブの展開完了"
 popd
 
@@ -302,6 +343,7 @@ echo.>>"%REIPATCHER_INI%"
 echo [UnityInjector]>>"%REIPATCHER_INI%"
 echo Class=SceneLogo>>"%REIPATCHER_INI%"
 echo Method=Start>>"%REIPATCHER_INI%"
+echo Assembly=Assembly-CSharp>>"%REIPATCHER_INI%"
 popd
 echo "ReiPatcherの展開完了"
 
@@ -389,3 +431,4 @@ echo.
 echo "2. 「%ROOT%\%OKIBA_DIR%\compile-patch-and-go.bat」"
 echo "   を実行すると、コンパイル、パッチ操作が行われた後、ゲームが起動します"
 echo.
+

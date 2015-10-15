@@ -7,11 +7,7 @@ using UnityInjector.Attributes;
 
 namespace CM3D2.ConsistentWindowPosition.Plugin
 {
-    [PluginFilter("CM3D2x64"),
-    PluginFilter("CM3D2x86"),
-    //  PluginFilter("CM3D2VRx64"),
-    PluginName("CM3D2 Consistent Window Position"),
-    PluginVersion("0.1.0.0")]
+    [PluginName("CM3D2 Consistent Window Position"), PluginVersion("0.1.1.0")]
     public class ConsistentWindowPositionPlugin : PluginBase
     {
         static readonly string windowTitle = "CUSTOM MAID 3D 2";
@@ -128,11 +124,17 @@ namespace CM3D2.ConsistentWindowPosition.Plugin
         [DllImport("user32.dll")]
         static extern bool MoveWindow(IntPtr hWnd, int x, int y, int cx, int cy, bool bRepaint);
 
-        [DllImport("user32.dll")]
-        static extern IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+        static extern IntPtr GetWindowLongPtr32(IntPtr hWnd, int nIndex);
 
-        [DllImport("user32.dll")]
-        static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr newLongPtr);
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+        static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+        static extern IntPtr SetWindowLongPtr32(IntPtr hWnd, int nIndex, IntPtr newLongPtr);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr newLongPtr);
 
         [DllImport("user32.dll")]
         static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
@@ -213,24 +215,44 @@ namespace CM3D2.ConsistentWindowPosition.Plugin
             return MoveWindow(hWnd, rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top, true);
         }
 
+        // http://stackoverflow.com/a/3344276/2132223
+        public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex)
+        {
+            if (IntPtr.Size == 4)
+            {
+                return GetWindowLongPtr32(hWnd, nIndex);
+            }
+            return GetWindowLongPtr64(hWnd, nIndex);
+        }
+
         public static IntPtr GetWindowStyle(IntPtr hWnd)
         {
-            return GetWindowLongPtr(hWnd, -16);
+            return GetWindowLong(hWnd, -16);
         }
 
         public static IntPtr GetWindowExStyle(IntPtr hWnd)
         {
-            return GetWindowLongPtr(hWnd, -20);
+            return GetWindowLong(hWnd, -20);
+        }
+
+        // http://referencesource.microsoft.com/#System/compmod/microsoft/win32/UnsafeNativeMethods.cs,88
+        public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size == 4)
+            {
+                return SetWindowLongPtr32(hWnd, nIndex, dwNewLong);
+            }
+            return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
         }
 
         public static IntPtr SetWindowStyle(IntPtr hWnd, IntPtr style)
         {
-            return SetWindowLongPtr(hWnd, -16, style);
+            return SetWindowLong(hWnd, -16, style);
         }
 
         public static IntPtr SetWindowExStyle(IntPtr hWnd, IntPtr exStyle)
         {
-            return SetWindowLongPtr(hWnd, -20, exStyle);
+            return SetWindowLong(hWnd, -20, exStyle);
         }
     }
 }

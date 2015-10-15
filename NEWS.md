@@ -1,3 +1,36 @@
+### 2015/10/15
+
+ - [ライセンスファイル](LICENSE)追加
+    - 内容は [WTFPL Version 2](http://www.wtfpl.net/about/) です
+ - GearMenu
+    - 説明文の表示位置をパネルの下側に変更
+       - パネルの上側だとフルスクリーン時に消えてしまうため
+
+### 2015/10/14
+
+ - 公式パッチ 1.14 で動作を確認
+ - UnityInjctor を 1.0.4.0 へ更新
+ - プラグインのコードからプラグインフィルタをできるだけ削除
+    - 現状では制限がつくだけで、あまり積極的な意味がないので全廃
+ - AddModsSlider
+    - サンプルの ModsParam.xml から EYE_RATIO を削除
+ - ConsistentWindowPosition
+    - x86 で例外を出して落ちていたのを修正
+ - LogWindow
+    - 歯車メニューアイコンを追加
+ - MaidVoicePitch
+    - フリーコメント機能を全廃
+    - EYE_RATIO を削除
+ - SkillCommandShortCut
+    - UnityInjctor\Config\SkillCommandShortCut.ini にキー定義を追加
+    - 歯車メニューアイコンを追加
+    - レイアウトの変更に少し対応
+
+### 2015/10/08 (2)
+
+ - DynamicPluginLoader を追加
+ - EditSceneUndo を追加
+
 ### 2015/10/08
 
  - 公式パッチ 1.13 で動作を確認

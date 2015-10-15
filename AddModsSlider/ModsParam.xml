@@ -89,10 +89,6 @@
         <value prop_name="EYEBALL.height" min="0.1" max="2.0" default="1.0" label="縦" type="scale" />
     </mod>
 
-    <mod id="EYE_RATIO" description="目の縦横比率" on_wideslider="true" >
-        <value prop_name="EYE_RATIO" min="0.1" max="2.0" default="1.0" label="比率" type="scale" />
-    </mod>
-
     <mod id="EYE_ANG" description="目の角度" on_wideslider="true" >
         <value prop_name="EYE_ANG.angle" min="-60" max="60" default="0" label="角度" type="num" />
         <value prop_name="EYE_ANG.x" min="-200" max="200" default="0" label="縦補正" type="num" />
