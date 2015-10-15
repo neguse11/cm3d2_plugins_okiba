@@ -3,3 +3,4 @@
  - [インストール方法](INSTALL.md)
  - [開発版のインストール方法](DEVELOP.md)
  - [更新履歴](NEWS.md)
+ - [ライセンスについて](ABOUT-LICENSE.md)

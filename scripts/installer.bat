@@ -197,7 +197,7 @@ if not exist "%ROOT%\CM3D2%PLATFORM%_Data" (
 
 
 @rem
-@rem %ROOT%\_7z\ ‰º‚É 7zip ‚ð“WŠJ‚·‚é
+@rem %TEMP%\_7z\ ‰º‚É 7zip ‚ð“WŠJ‚·‚é
 @rem
 set "TEMP7Z=%TEMP%\cm3d2_okiba_7z_%TEMP_RAND%"
 rmdir /s /q _7z >nul 2>&1

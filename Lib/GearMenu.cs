@@ -18,7 +18,7 @@ namespace GearMenu
         static string Name_ = "CM3D2.GearMenu.Buttons";
 
         // バージョン文字列の実体。改善、改造した場合は文字列の辞書順がより大きい値に更新すること
-        static string Version_ = Name_ + " 0.0.1.0";
+        static string Version_ = Name_ + " 0.0.2.0";
 
         /// <summary>
         /// 識別名
@@ -528,7 +528,7 @@ namespace GearMenu
                 {
                     UISprite sse = SysShortcutExplanation;
                     Vector3 v = sse.gameObject.transform.localPosition;
-                    v.y = Base.transform.localPosition.y + sse.height;
+                    v.y = Base.transform.localPosition.y - b.height - sse.height;
                     sse.gameObject.transform.localPosition = v;
                 }
             }
