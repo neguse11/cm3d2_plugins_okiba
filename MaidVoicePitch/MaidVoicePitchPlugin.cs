@@ -8,11 +8,7 @@ using UnityInjector.Attributes;
 
 namespace CM3D2.MaidVoicePitch.Plugin
 {
-    [PluginFilter("CM3D2x64"),
-    PluginFilter("CM3D2x86"),
-    PluginFilter("CM3D2VRx64"),
-    PluginName("CM3D2 MaidVoicePitch"),
-    PluginVersion("0.2.4.0")]
+    [PluginName("CM3D2 MaidVoicePitch"), PluginVersion("0.2.11.0")]
     public class MaidVoicePitch : PluginBase
     {
         public static string PluginName { get { return "CM3D2.MaidVoicePitch"; } }
@@ -65,12 +61,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 new string[] { "Bip01 Neck_SCL_", "NECKSCL" },      // 首
                 //new string[] { "", "" },
         };
-
-
-        public MaidVoicePitch()
-        {
-            this.name = "MaidVoicePitch";
-        }
 
         public void Awake()
         {
@@ -125,7 +115,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
             {
                 bDeserialized = false;
                 ExSaveData.CleanupMaids();
-                FreeComment.FreeCommentToSetting(PluginName, false);
                 CleanupExSave();
             }
         }
@@ -147,13 +136,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
             }
             SliderTemplates.Update(PluginName);
 
-            // フリーコメントから設定を読み込む
-            if (Input.GetKey(KeyCode.F4))
-            {
-                FreeComment.FreeCommentToSetting(PluginName, true);
-                CleanupExSave();
-            }
-
             // エディット画面にいる場合は特別処理として毎フレームアップデートを行う
             if (Application.loadedLevel == 5)
             {
@@ -165,6 +147,12 @@ namespace CM3D2.MaidVoicePitch.Plugin
                         EditSceneMaidUpdate(cm.GetStockMaid(i));
                     }
                 }
+
+                // todo 以下を直すこと：
+                //      FARMFIX等のスライダーではないトグル操作等を行った場合にコールバックが
+                //      呼ばれていない。これを回避するため、とりあえず毎フレーム呼びだすことにする
+                //
+                MaidVoicePitch_UpdateSliders();
             }
         }
 
@@ -233,20 +221,47 @@ namespace CM3D2.MaidVoicePitch.Plugin
 
         /// <summary>
         /// AddModsSlider等から呼び出されるコールバック
-        /// 呼び出し方法はvar go = GameObject.Find("MaidVoicePitch"); go.SendMessage("UpdateSliders");
+        /// 呼び出し方法は this.gameObject.SendMessage("MaidVoicePitch.TestUpdateSliders");
         /// </summary>
-        public void UpdateSliders() {
+        public void MaidVoicePitch_UpdateSliders()
+        {
             if (GameMain.Instance != null && GameMain.Instance.CharacterMgr != null)
             {
                 CharacterMgr cm = GameMain.Instance.CharacterMgr;
                 for (int i = 0, n = cm.GetStockMaidCount(); i < n; i++)
                 {
                     Maid maid = cm.GetStockMaid(i);
-                    if(maid != null)
+                    if (maid != null && maid.body0 != null && maid.body0.bonemorph != null)
                     {
-                        // 同じ "sintyou" の値を入れて、強制的にモーフ再計算を行う
-                        float SCALE_Sintyou = maid.body0.bonemorph.SCALE_Sintyou;
-                        maid.body0.BoneMorph_FromProcItem("sintyou", SCALE_Sintyou);
+                        //
+                        //	todo	本当にこの方法しかないのか調べること
+                        //
+                        //	１人目のメイドをエディットし、管理画面に戻り、
+                        //	続けて２人目をエディットしようとすると、１人目のメイドの
+                        //	boneMorphLocal.linkT が null になっていて例外がおきるので
+                        //	あらかじめ linkT を調べる
+                        //
+                        bool safe = true;
+                        foreach (BoneMorphLocal boneMorphLocal in maid.body0.bonemorph.bones)
+                        {
+                            if (boneMorphLocal.linkT == null)
+                            {
+                                safe = false;
+                            }
+                        }
+                        if (safe)
+                        {
+                            try
+                            {
+                                // 同じ "sintyou" の値を入れて、強制的にモーフ再計算を行う
+                                float SCALE_Sintyou = maid.body0.bonemorph.SCALE_Sintyou;
+                                maid.body0.BoneMorph_FromProcItem("sintyou", SCALE_Sintyou);
+                            }
+                            catch (Exception)
+                            {
+                                ; // 最低だ…
+                            }
+                        }
                     }
                 }
             }
@@ -273,13 +288,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 // エディットシーンではリップシンクを強制的に復活させる
                 Helper.SetInstanceField(typeof(Maid), maid, "m_bFoceKuchipakuSelfUpdateTime", false);
             }
-
-            // AddModsSlider側へのPRが受領され次第削除予定
-            // エディット中は毎フレーム強制的にモーフ再計算を行わせるため、
-            // 同じ "sintyou" の値を入れる
-            // todo  本来はAddModsSliderの値が変わったのを検出して呼び出せば良いものなので、
-            // スライダーのイベントが取れないかどうかを調べること
-            UpdateSliders();
         }
 
         // 目を常時カメラに向ける
@@ -463,32 +471,6 @@ namespace CM3D2.MaidVoicePitch.Plugin
             //ただしボディに繋がっている中のアレは影響を受ける。
             string[] ignoreHeadBones = new string[] { "Bip01 Spine1a" };
 
-            Vector3 eyeScl;
-            {
-                float aspectRatioMin = 0.1f;
-                float aspectRatioMax = 10f;
-                float aspectRatio = Mathf.Clamp(ExSaveData.GetFloat(maid, PluginName, "EYE_RATIO", 1f), aspectRatioMin, aspectRatioMax);
-
-                float aspectW = 1f;
-                float aspectH = 1f;
-                if (aspectRatio >= 1f)
-                {
-                    // 1以上の場合、横幅は固定で、高さを小さくする
-                    aspectW = 1f;
-                    aspectH = 1f / aspectRatio;
-                }
-                else
-                {
-                    // 1未満の場合、高さは固定で、横幅を小さくする
-                    aspectW = 1f * aspectRatio;
-                    aspectH = 1f;
-                }
-
-                eyeScl = new Vector3(1.00f, aspectH, aspectW);
-            }
-            boneScale["Eyepos_L"] = eyeScl;
-            boneScale["Eyepos_R"] = eyeScl;
-
             float eyeAngAngle;
             float eyeAngX;
             float eyeAngY;
@@ -584,37 +566,40 @@ namespace CM3D2.MaidVoicePitch.Plugin
                             s = boneMorph_.SCALE_Ude;
                             break;
                         case 2:
-                            s = boneMorph_.SCALE_Eye;
+                            s = boneMorph_.SCALE_EyeX;
                             break;
                         case 3:
-                            s = boneMorph_.Postion_EyeX * (0.5f + boneMorph_.Postion_EyeY * 0.5f);
+                            s = boneMorph_.SCALE_EyeY;
                             break;
                         case 4:
-                            s = boneMorph_.Postion_EyeY;
+                            s = boneMorph_.Postion_EyeX * (0.5f + boneMorph_.Postion_EyeY * 0.5f);
                             break;
                         case 5:
-                            s = boneMorph_.SCALE_HeadX;
+                            s = boneMorph_.Postion_EyeY;
                             break;
                         case 6:
-                            s = boneMorph_.SCALE_HeadY;
+                            s = boneMorph_.SCALE_HeadX;
                             break;
                         case 7:
+                            s = boneMorph_.SCALE_HeadY;
+                            break;
+                        case 8:
                             s = boneMorph_.SCALE_DouPer;
                             if (boneMorphLocal.Kahanshin == 0f)
                             {
                                 s = 1f - s;
                             }
                             break;
-                        case 8:
+                        case 9:
                             s = boneMorph_.SCALE_Sintyou;
                             break;
-                        case 9:
+                        case 10:
                             s = boneMorph_.SCALE_Koshi;
                             break;
-                        case 10:
+                        case 11:
                             s = boneMorph_.SCALE_Kata;
                             break;
-                        case 11:
+                        case 12:
                             s = boneMorph_.SCALE_West;
                             break;
                         default:
@@ -788,6 +773,14 @@ namespace CM3D2.MaidVoicePitch.Plugin
                 foreach (string s in obsoleteSettings)
                 {
                     ExSaveData.Remove(maid, PluginName, s);
+                }
+
+                {
+                    string fname = ExSaveData.Get(maid, PluginName, "SLIDER_TEMPLATE", null);
+                    if (string.IsNullOrEmpty(fname))
+                    {
+                        ExSaveData.Set(maid, PluginName, "SLIDER_TEMPLATE", "UnityInjector/Config/MaidVoicePitchSlider.xml", true);
+                    }
                 }
             }
 
