@@ -1,3 +1,6 @@
+// CM3D2-01さんの下記のコードをもとに改変しています
+//     CM3D2：SystemShortcutにボタン追加
+//     https://gist.github.com/CM3D2-01/adcf5072ff5ba812858a
 using System;
 using System.Reflection;
 using System.Collections;
