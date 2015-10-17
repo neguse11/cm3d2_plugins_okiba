@@ -72,72 +72,92 @@
     </mod>
 
     <mod id="PITCH" description ="声のピッチ" >
-        <value prop_name="PITCH" min="-1" max="1" label="数値" type="num" />
+        <value prop_name="PITCH" min="-1" max="1" default="0" label="数値" type="num" />
     </mod>
 
     <mod id="MABATAKI" description ="目の開度" >
-        <value prop_name="MABATAKI" min="0" max="1.0" label="数値" type="num" />
+        <value prop_name="MABATAKI" min="0" max="1.0" default="1.0" label="数値" type="num" />
     </mod>
 
     <mod id="LIPSYNC_INTENISTY" description="リップシンク強度指定" type="toggle,slider" >
-        <value prop_name="LIPSYNC_INTENISTY.value" min="0.0" max="1.0" label="数値" type="num" />
+        <value prop_name="LIPSYNC_INTENISTY.value" min="0.0" max="1.0" default="1.0" label="数値" type="num" />
     </mod>
 
     <mod id="EYEBALL" description="瞳の大きさ" >
-        <value prop_name="EYEBALL.width"  min="0.1" max="2.0" label="横" type="scale" />
-        <value prop_name="EYEBALL.height" min="0.1" max="2.0" label="縦" type="scale" />
+        <value prop_name="EYEBALL.width"  min="0.1" max="2.0" default="1.0" label="横" type="scale" />
+        <value prop_name="EYEBALL.height" min="0.1" max="2.0" default="1.0" label="縦" type="scale" />
     </mod>
 
     <mod id="EYE_ANG" description="目の角度" on_wideslider="true" >
-        <value prop_name="EYE_ANG.angle" min="-60"  max="60"  label="角度" type="num" />
-        <value prop_name="EYE_ANG.x"     min="-200" max="200" label="縦補正" type="num" />
-        <value prop_name="EYE_ANG.y"     min="-200" max="200" label="横補正" type="num" />
+        <value prop_name="EYE_ANG.angle" min="-60"  max="60"  default="0" label="角度" type="num" />
+        <value prop_name="EYE_ANG.x"     min="-200" max="200" default="0" label="縦補正" type="num" />
+        <value prop_name="EYE_ANG.y"     min="-200" max="200" default="0" label="横補正" type="num" />
     </mod>
 
     <mod id="PELSCL" description="骨盤スケーリング" on_wideslider="true" >
-        <value prop_name="PELSCL.width"  min="0.1" max="2.0" label="横幅" type="scale" />
-        <value prop_name="PELSCL.depth"  min="0.1" max="2.0" label="奥行" type="scale" />
-        <value prop_name="PELSCL.height" min="0.1" max="2.0" label="高さ" type="scale" />
+        <value prop_name="PELSCL.width"  min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="PELSCL.depth"  min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="PELSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="THISCL" description="足全体のスケーリング"  on_wideslider="true" >
-        <value prop_name="THISCL.width" min="0.1" max="2.0" label="横幅" type="scale" />
-        <value prop_name="THISCL.depth" min="0.1" max="2.0" label="奥行" type="scale" />
+        <value prop_name="THISCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="THISCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="THISCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
+    </mod>
+
+    <mod id="THISCL2" description="膝のスケーリング"  on_wideslider="true" >
+        <value prop_name="THISCL2.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="THISCL2.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="THISCL2.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
+    </mod>
+
+    <mod id="CALFSCL" description="膝下のスケーリング"  on_wideslider="true" >
+        <value prop_name="CALFSCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="CALFSCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="CALFSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
     </mod>
 
     <mod id="THIPOS" description="足の位置"  on_wideslider="true" >
-        <value prop_name="THIPOS.x" min="-100" max="200" label="左右" type="num" />
-        <value prop_name="THIPOS.z" min="-100" max="200" label="前後" type="num" />
+        <value prop_name="THIPOS.x" min="-100" max="200" default="0.0" label="左右" type="num" />
+        <value prop_name="THIPOS.y" min="-100" max="200" default="0.0" label="高さ" type="num" visible="false" />
+        <value prop_name="THIPOS.z" min="-100" max="200" default="0.0" label="前後" type="num" />
     </mod>
 
     <mod id="SKTSCL" description="スカート周辺スケーリング" on_wideslider="true">
-        <value prop_name="SKTSCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="SKTSCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="SKTSCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="SKTSCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="SKTSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="SKTSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
+    </mod>
+
+    <mod id="SKTPOS" description="スカート位置"  on_wideslider="true" >
+        <value prop_name="THIPOS.x" min="-1" max="1" default="0.0" label="左右" type="num" visible="false" />
+        <value prop_name="THIPOS.y" min="-1" max="1" default="0.0" label="前後" type="num" visible="false" />
+        <value prop_name="THIPOS.z" min="-1" max="1" default="0.0" label="高さ" type="num" />
     </mod>
 
     <mod id="SPISCL" description="胴(下腹部)スケーリング" on_wideslider="true">
-        <value prop_name="SPISCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="SPISCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="SPISCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="SPISCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="SPISCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="SPISCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="S0ASCL" description="胴(腹部)スケーリング" on_wideslider="true">
-        <value prop_name="S0ASCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="S0ASCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="S0ASCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="S0ASCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="S0ASCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="S0ASCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="S1_SCL" description="胴(みぞおち)スケーリング" on_wideslider="true">
-        <value prop_name="S1_SCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="S1_SCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="S1_SCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="S1_SCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="S1_SCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="S1_SCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="S1ASCL" description="胴(肋骨)スケーリング" on_wideslider="true">
-        <value prop_name="S1ASCL.width"  min="0.1" max="3.0" label="横幅" type="scale" />
-        <value prop_name="S1ASCL.depth"  min="0.1" max="3.0" label="奥行" type="scale" />
-        <value prop_name="S1ASCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
+        <value prop_name="S1ASCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
+        <value prop_name="S1ASCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
+        <value prop_name="S1ASCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
     <mod id="S1ABASESCL" description="胴(肋骨から上)スケーリング" on_wideslider="true">
@@ -225,5 +245,4 @@
         <value prop_name="EYE_TRACK.ofsx"     min="-90" max="90"  default="0"    label="横オフセット (負で寄り目、正で離れ目)" type="num" />
         <value prop_name="EYE_TRACK.ofsy"     min="-90" max="90"  default="0"    label="縦オフセット (負で下、正で上)" type="num" />
     </mod>
-
 </mods>
