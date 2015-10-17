@@ -88,10 +88,6 @@
         <value prop_name="EYEBALL.height" min="0.1" max="2.0" label="縦" type="scale" />
     </mod>
 
-    <mod id="EYE_RATIO" description="目の縦横比率" on_wideslider="true" >
-        <value prop_name="EYE_RATIO" min="0.1" max="2.0" label="比率" type="scale" />
-    </mod>
-
     <mod id="EYE_ANG" description="目の角度" on_wideslider="true" >
         <value prop_name="EYE_ANG.angle" min="-60"  max="60"  label="角度" type="num" />
         <value prop_name="EYE_ANG.x"     min="-200" max="200" label="縦補正" type="num" />
@@ -144,7 +140,6 @@
         <value prop_name="S1ASCL.height" min="0.1" max="3.0" label="高さ" type="scale" />
     </mod>
 
-    <!--
     <mod id="S1ABASESCL" description="胴(肋骨から上)スケーリング" on_wideslider="true">
         <value prop_name="S1ABASESCL.width"  min="0.1" max="3.0" default="1.0" label="横幅" type="scale" />
         <value prop_name="S1ABASESCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
@@ -210,7 +205,6 @@
         <value prop_name="HANDSCL.depth"  min="0.1" max="3.0" default="1.0" label="奥行" type="scale" />
         <value prop_name="HANDSCL.height" min="0.1" max="3.0" default="1.0" label="高さ" type="scale" />
     </mod>
-    -->
 
     <mod id="HEAD_TRACK" description="顔と目の可動・追従範囲" type="toggle,slider">
         <value prop_name="HEAD_TRACK.lateral" min="0"   max="90"  default="30"   label="顔の横方向可動角度" type="num" />
