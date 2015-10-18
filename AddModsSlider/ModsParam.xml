@@ -131,9 +131,9 @@
     </mod>
 
     <mod id="SKTPOS" description="スカート位置"  on_wideslider="true" >
-        <value prop_name="THIPOS.x" min="-1" max="1" default="0.0" label="左右" type="num" visible="false" />
-        <value prop_name="THIPOS.y" min="-1" max="1" default="0.0" label="前後" type="num" visible="false" />
-        <value prop_name="THIPOS.z" min="-1" max="1" default="0.0" label="高さ" type="num" />
+        <value prop_name="SKTPOS.x" min="-1" max="1" default="0.0" label="左右" type="num" visible="false" />
+        <value prop_name="SKTPOS.y" min="-1" max="1" default="0.0" label="前後" type="num" visible="false" />
+        <value prop_name="SKTPOS.z" min="-1" max="1" default="0.0" label="高さ" type="num" />
     </mod>
 
     <mod id="SPISCL" description="胴(下腹部)スケーリング" on_wideslider="true">
