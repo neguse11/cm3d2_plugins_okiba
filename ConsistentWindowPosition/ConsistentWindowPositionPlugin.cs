@@ -2,17 +2,18 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
-using UnityInjector;
 using UnityInjector.Attributes;
 
 namespace CM3D2.ConsistentWindowPosition.Plugin
 {
-    [PluginName("CM3D2 Consistent Window Position"), PluginVersion("0.1.1.0")]
-    public class ConsistentWindowPositionPlugin : PluginBase
+    [PluginName("CM3D2 Consistent Window Position"), PluginVersion("0.1.2.0")]
+    public class ConsistentWindowPositionPlugin : UnityInjector.PluginBase
     {
         static readonly string windowTitle = "CUSTOM MAID 3D 2";
         static readonly string windowClass = "UnityWndClass";
+        static readonly string section = "Config";
         IntPtr hWnd = IntPtr.Zero;
+        Config config = new Config();
 
         void Awake()
         {
@@ -32,17 +33,19 @@ namespace CM3D2.ConsistentWindowPosition.Plugin
             {
                 return false;
             }
-            Win32.RECT rect;
-            long style;
-            long exStyle;
-            if (!GetPreferences("Config", out rect, out style, out exStyle))
+            Func<string, string> getValue = (key) =>
+            {
+                return Preferences[section][key].Value;
+            };
+            if (!config.GetPreferences(getValue))
             {
                 return false;
             }
 
-            Win32.SetWindowRect(hWnd, rect);
-            Win32.SetWindowStyle(hWnd, (IntPtr)style);
-            Win32.SetWindowExStyle(hWnd, (IntPtr)exStyle);
+            AdjustWindowStyles(ref config.style, ref config.exStyle);
+            Win32.SetWindowRect(hWnd, config.rect);
+            Win32.SetWindowStyle(hWnd, (IntPtr)config.style);
+            Win32.SetWindowExStyle(hWnd, (IntPtr)config.exStyle);
             return true;
         }
 
@@ -52,11 +55,16 @@ namespace CM3D2.ConsistentWindowPosition.Plugin
             {
                 return false;
             }
-            Win32.RECT rect = Win32.GetWindowRect(hWnd);
-            long style = (long)Win32.GetWindowStyle(hWnd);
-            long exStyle = (long)Win32.GetWindowExStyle(hWnd);
+            config.rect = Win32.GetWindowRect(hWnd);
+            config.style = (long)Win32.GetWindowStyle(hWnd);
+            config.exStyle = (long)Win32.GetWindowExStyle(hWnd);
+            AdjustWindowStyles(ref config.style, ref config.exStyle);
 
-            if (!SetPreferences("Config", rect, style, exStyle))
+            Action<string, string> setValue = (key, value) =>
+            {
+                Preferences[section][key].Value = value;
+            };
+            if (!config.SetPreferences(setValue))
             {
                 return false;
             }
@@ -64,41 +72,51 @@ namespace CM3D2.ConsistentWindowPosition.Plugin
             return true;
         }
 
-        bool SetPreferences(string section, Win32.RECT rect, long style, long exStyle)
+        static void AdjustWindowStyles(ref long style, ref long exStyle)
         {
-            Preferences[section]["rectLeft"].Value = rect.Left.ToString();
-            Preferences[section]["rectTop"].Value = rect.Top.ToString();
-            Preferences[section]["rectRight"].Value = rect.Right.ToString();
-            Preferences[section]["rectBottom"].Value = rect.Bottom.ToString();
-            Preferences[section]["style"].Value = style.ToString();
-            Preferences[section]["exStyle"].Value = exStyle.ToString();
-            return true;
+            // ウィンドウスタイルに WS_DISABLED が指定されないように補正 (その５>>69)
+            style &= ~Win32.WS_DISABLED;
+        }
+    }
+
+    internal class Config
+    {
+        public Win32.RECT rect;
+        public long style;
+        public long exStyle;
+
+        public Config()
+        {
+            Clear();
         }
 
-        bool GetPreferences(string section, out Win32.RECT rect, out long style, out long exStyle)
+        public void Clear()
         {
             rect = new Win32.RECT();
             style = 0;
             exStyle = 0;
+        }
 
-            if (!Preferences.HasSection(section))
-            {
-                return false;
-            }
-            string[] keys = { "rectLeft", "rectTop", "rectRight", "rectBottom", "style", "exStyle" };
-            foreach (string key in keys)
-            {
-                if (!Preferences[section].HasKey(key))
-                {
-                    return false;
-                }
-            }
-            if (!int.TryParse(Preferences[section]["rectLeft"].Value, out rect.Left)) { return false; }
-            if (!int.TryParse(Preferences[section]["rectTop"].Value, out rect.Top)) { return false; }
-            if (!int.TryParse(Preferences[section]["rectRight"].Value, out rect.Right)) { return false; }
-            if (!int.TryParse(Preferences[section]["rectBottom"].Value, out rect.Bottom)) { return false; }
-            if (!long.TryParse(Preferences[section]["style"].Value, out style)) { return false; }
-            if (!long.TryParse(Preferences[section]["exStyle"].Value, out exStyle)) { return false; }
+        public bool GetPreferences(Func<string, string> getValue)
+        {
+            Clear();
+            if (!int.TryParse(getValue("rectLeft"), out rect.Left)) { return false; }
+            if (!int.TryParse(getValue("rectTop"), out rect.Top)) { return false; }
+            if (!int.TryParse(getValue("rectRight"), out rect.Right)) { return false; }
+            if (!int.TryParse(getValue("rectBottom"), out rect.Bottom)) { return false; }
+            if (!long.TryParse(getValue("style"), out style)) { return false; }
+            if (!long.TryParse(getValue("exStyle"), out exStyle)) { return false; }
+            return true;
+        }
+
+        public bool SetPreferences(Action<string, string> setValue)
+        {
+            setValue("rectLeft", rect.Left.ToString());
+            setValue("rectTop", rect.Top.ToString());
+            setValue("rectRight", rect.Right.ToString());
+            setValue("rectBottom", rect.Bottom.ToString());
+            setValue("style", style.ToString());
+            setValue("exStyle", exStyle.ToString());
             return true;
         }
     }
@@ -147,6 +165,8 @@ namespace CM3D2.ConsistentWindowPosition.Plugin
         {
             public int Left, Top, Right, Bottom;
         }
+
+        public const uint WS_DISABLED = 0x8000000;
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
