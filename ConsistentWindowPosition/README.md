@@ -39,9 +39,11 @@ config.batの設定を行った後、このディレクトリの compile.bat を
 
 ## 履歴
 
+ - 0.1.2
+   - ウィンドウスタイルにWS_DISABLEDが指定された場合は無視するように修正 (その５>>69)
+
  - 0.1.1
    - x86 で GetWindowLongPtr, SetWindowLongPtr が正常に動作していなかったのを修正
-   - プラグインフィルタを削除
 
  - 0.1.0
    - 最初の版

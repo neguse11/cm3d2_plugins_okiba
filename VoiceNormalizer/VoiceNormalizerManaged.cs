@@ -9,16 +9,16 @@ namespace CM3D2.VoiceNormalizer.Managed
         {
             public static class LoadFromWf
             {
-                public delegate void Callback(global::AudioSourceMgr that, string f_strFileName);
+                public delegate void Callback(global::AudioSourceMgr that, string f_strFileName, bool stream);
                 public static Callbacks<Callback> Callbacks = new Callbacks<Callback>();
 
-                public static void Invoke(global::AudioSourceMgr that, string f_strFileName)
+                public static void Invoke(global::AudioSourceMgr that, string f_strFileName, bool stream)
                 {
                     try
                     {
                         foreach (Callback callback in Callbacks.Values)
                         {
-                            callback(that, f_strFileName);
+                            callback(that, f_strFileName, stream);
                         }
                     }
                     catch (Exception e)
