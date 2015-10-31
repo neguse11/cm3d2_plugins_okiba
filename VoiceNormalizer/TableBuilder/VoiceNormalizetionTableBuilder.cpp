@@ -45,15 +45,22 @@ using FilterFunc = std::function<void(const short* decoded, int len, int channel
 
 
 std::string getInstallPath() {
-    std::array<char,1024> buf {};
-    HKEY hKey {};
-    RegOpenKeyA(HKEY_CURRENT_USER, "Software\\KISS\\カスタムメイド3D2", &hKey);
-    if(hKey) {
-        DWORD size = (DWORD) buf.size();
-        const auto q = RegQueryValueExA(hKey, "InstallPath", 0, nullptr, (LPBYTE)buf.data(), &size);
-        RegCloseKey(hKey);
+    std::string s;
+    {
+        std::array<char,1024> buf {};
+        HKEY hKey {};
+        RegOpenKeyA(HKEY_CURRENT_USER, "Software\\KISS\\カスタムメイド3D2", &hKey);
+        if(hKey) {
+            DWORD size = (DWORD) buf.size();
+            const auto q = RegQueryValueExA(hKey, "InstallPath", 0, nullptr, (LPBYTE)buf.data(), &size);
+            RegCloseKey(hKey);
+        }
+        s = buf.data();
     }
-    return buf.data();
+    if(! s.empty() && s.back() != '\\') {
+        s.push_back('\\');
+    }
+    return s;
 }
 
 
@@ -91,6 +98,7 @@ void filterOggFile(const std::vector<char>& file, const FilterFunc& filterFunc) 
 ///////////////////////////////////////////////////////////////
 struct ResultValues {
     int     peak;
+    float   rms;
 };
 
 using Results = std::map<std::string, ResultValues>;
@@ -118,15 +126,37 @@ void dumpArc(Cm3d2Dll* dll, const std::string& arcPath, Results& results) {
             filterOggFile(
                 dll->GetFile(oggFilenames[i].c_str()),
                 [&](const short* decoded, int len, int channels) {
-                    int vmin = 0;
-                    int vmax = 0;
-                    for(int i = 0; i < len * channels; ++i) {
-                        short d = decoded[i];
-                        if(d < vmin) vmin = d;
-                        else if(d > vmax) vmax = d;
+                    // peak
+                    {
+                        int vmin = 0;
+                        int vmax = 0;
+                        for(int i = 0; i < len * channels; ++i) {
+                            short d = decoded[i];
+                            if(d < vmin) vmin = d;
+                            else if(d > vmax) vmax = d;
+                        }
+                        if(-vmin > vmax) resultValues.peak = -vmin;
+                        else resultValues.peak = vmax;
                     }
-                    if(-vmin > vmax) resultValues.peak = -vmin;
-                    else resultValues.peak = vmax;
+                    // RMS
+                    {
+                        // 50ms で 1% に減るローパスフィルタ
+                        const float samplingRate = 44100.0f;
+                        const float milliSeconds = 1.0f / 1000.0f;
+                        const float coef = exp(log(0.01f) / (50.0f * milliSeconds * samplingRate));
+                        float yMax = 0.0f;
+                        float y1 = 0.0f;
+                        for(int i = 0, n = len * channels; i < n; ++i) {
+                            short d = decoded[i];
+                            float f = (float)d * (1.0f / 32768.0f);
+                            f *= f;
+                            y1 = f + coef * (y1 - f);
+                            if(y1 > yMax) {
+                                yMax = y1;
+                            }
+                        }
+                        resultValues.rms = sqrtf(yMax);
+                    }
                 });
             return resultValues;
         }, i);
@@ -162,7 +192,7 @@ void dumpAll(const std::string& dllPath, const std::string& basePath, FILE* fp) 
     // 結果を出力
     for(auto it = results.cbegin(); it != results.cend(); ++it) {
         const ResultValues& resultValues = it->second;
-        fprintf(fp, "%s,%d\n", it->first.c_str(), resultValues.peak);
+        fprintf(fp, "%s,%d,%f\n", it->first.c_str(), resultValues.peak, resultValues.rms);
     }
 }
 

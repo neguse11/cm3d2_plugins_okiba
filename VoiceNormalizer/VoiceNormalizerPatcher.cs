@@ -1,4 +1,22 @@
-﻿using Mono.Cecil;
+/*
+# 1.15 で動作しなかった理由のメモ
+
+## フックする関数はちゃんとシグネチャを見たほうが良い
+
+1.15 で落ちていたのは、メソッドのシグネチャが以下のように変更されたため
+
+```C#
+  // .. ver 1.14
+  class AudioSourceMgr { public bool LoadFromWf(string f_strFilename); }
+
+  // ver 1.15 ..
+  class AudioSourceMgr { public bool LoadFromWf(string f_strFilename, bool stream); }
+```
+
+落ちるよりはフックが動作しないほうがはるかに良いので、必ずシグネチャを見て
+マッチしない場合はフックせずにあきらめるようにすること。
+*/
+using Mono.Cecil;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -30,10 +48,22 @@ namespace CM3D2.VoiceNormalizer.Patcher
                 AssemblyDefinition da = PatcherHelper.GetAssemblyDefinition(args, "CM3D2.VoiceNormalizer.Managed.dll");
                 string m = "CM3D2.VoiceNormalizer.Managed.";
 
+                // 引数の型
+                string[] targetArgTypes = {
+                    "System.String",
+                    "System.Boolean"
+                };
+
+                string[] calleeArgTypes = {
+                    "AudioSourceMgr",
+                    "System.String",
+                    "System.Boolean"
+                };
+
                 PatcherHelper.SetHook(
                     PatcherHelper.HookType.PreCall,
-                    ta, "AudioSourceMgr.LoadFromWf",
-                    da, m + "Callbacks.AudioSourceMgr.LoadFromWf.Invoke");
+                    ta, "AudioSourceMgr.LoadFromWf", targetArgTypes,
+                    da, m + "Callbacks.AudioSourceMgr.LoadFromWf.Invoke", calleeArgTypes);
             }
             catch (Exception e)
             {
