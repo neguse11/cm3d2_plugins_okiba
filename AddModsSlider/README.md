@@ -20,6 +20,10 @@ MaidVoicePitch、ExternalSaveDataと関係が深く、また主に当リポジトリ管理者の動作テ
 
 ## 履歴
 
+ - 2015/11/01
+    - [0.1.2.17](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/tree/93c9644d35853f425654ccfc26941d86e15c84b3)へ更新
+       - ModsParam.xml を format="1.21" へ更新
+       - バッチファイル内から不要になった png のダウンロードおよびコピー処理を削除
  - 2015/10/14
     - ModsParam.xmlからEYE_RATIOを削除
  - 2015/10/08

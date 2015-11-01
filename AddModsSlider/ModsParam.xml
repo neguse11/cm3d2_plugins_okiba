@@ -17,14 +17,14 @@
                     max           CDATA "10"
                     label         CDATA ""
                     type          CDATA "num"
-                    default       CDATA "0"
+                    default       CDATA "NaN"
                     visible       CDATA "true">
 ] >
 
 <!--
     設置場所 : \CM3D2\UnityInjector\Config\ModsParam.xml
 
-    書式説明 : CM3D2.AddModsSlider.Plugin.0.1.1.8 以降に対応
+    書式説明 : CM3D2.AddModsSlider.Plugin.0.1.2.17 以降に対応
 
     <mod id="EYEBALL"                    : 必須。modの識別名。拡張セーブデータを参照。
          description="..."               : 省略可。規定値は空白。modの説明。
@@ -38,7 +38,7 @@
                max="2.0"                 : 省略可。規定値は"10"。スライダーの最大値。
                label="横"                : 省略可。規定値は空白。スライダーのラベル。
                type="scale"              : 省略可。規定値は"num"。「倍率」なら"scale"。「整数値」なら"int"。
-               default="1.0"          	 : 省略可。規定値は"0"(type="scale"の時は"1")。valueの初期値。
+               default="1.0"          	 : 省略可。規定値は"NaN"。valueの初期値。(省略時はtype="num"or"int"の時は"0"、type="scale"の時は"1"として扱う)。
                visible="true"            : 省略可。規定値は"true"。"false"指定でこのvalueのスライダーを表示させない。
         />
 
@@ -50,7 +50,7 @@
 -->
 
 
-<mods format="1.2" name="ModsParam.xml"
+<mods format="1.21" name="ModsParam.xml"
       description="CM3D2.AddModsSlider.Plugin の各modスライダーのパラメータ定義用XML">
 
     <mod id="WIDESLIDER"  description ="スライダー拡張" type="toggle" />
@@ -100,6 +100,12 @@
         <value prop_name="PELSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" />
     </mod>
 
+    <mod id="THIPOS" description="足の位置"  on_wideslider="true" >
+        <value prop_name="THIPOS.x" min="-100" max="200" default="0.0" label="左右" type="num" />
+        <value prop_name="THIPOS.y" min="-100" max="200" default="0.0" label="高さ" type="num" visible="false" />
+        <value prop_name="THIPOS.z" min="-100" max="200" default="0.0" label="前後" type="num" />
+    </mod>
+
     <mod id="THISCL" description="足全体のスケーリング"  on_wideslider="true" >
         <value prop_name="THISCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
         <value prop_name="THISCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
@@ -116,12 +122,6 @@
         <value prop_name="CALFSCL.width" min="0.1" max="2.0" default="1.0" label="横幅" type="scale" />
         <value prop_name="CALFSCL.depth" min="0.1" max="2.0" default="1.0" label="奥行" type="scale" />
         <value prop_name="CALFSCL.height" min="0.1" max="2.0" default="1.0" label="高さ" type="scale" visible="false" />
-    </mod>
-
-    <mod id="THIPOS" description="足の位置"  on_wideslider="true" >
-        <value prop_name="THIPOS.x" min="-100" max="200" default="0.0" label="左右" type="num" />
-        <value prop_name="THIPOS.y" min="-100" max="200" default="0.0" label="高さ" type="num" visible="false" />
-        <value prop_name="THIPOS.z" min="-100" max="200" default="0.0" label="前後" type="num" />
     </mod>
 
     <mod id="SKTSCL" description="スカート周辺スケーリング" on_wideslider="true">
@@ -227,22 +227,23 @@
     </mod>
 
     <mod id="HEAD_TRACK" description="顔と目の可動・追従範囲" type="toggle,slider">
-        <value prop_name="HEAD_TRACK.lateral" min="0"   max="90"  default="30"   label="顔の横方向可動角度" type="num" />
-        <value prop_name="HEAD_TRACK.above"   min="-90" max="90"  default="30"   label="顔の上方向可動角度" type="num" />
-        <value prop_name="HEAD_TRACK.below"   min="-90" max="90"  default="15"   label="顔の下方向可動角度" type="num" />
-        <value prop_name="HEAD_TRACK.behind"  min="0"   max="180" defalut="90"   label="顔が追従をあきらめる角度" type="num" />
-        <value prop_name="HEAD_TRACK.speed"   min="0"   max="1.0" default="0.04" label="顔の回転速度" type="scale" />
-        <value prop_name="HEAD_TRACK.ofsx"    min="-90" max="90"  default="0"    label="横回転オフセット (負で右、正で左を向く)" type="num" />
-        <value prop_name="HEAD_TRACK.ofsy"    min="-90" max="90"  default="0"    label="縦回転オフセット (負で下、正で上を向く) " type="num" />
-        <value prop_name="HEAD_TRACK.ofsz"    min="-90" max="90"  default="0"    label="回転オフセット (負で右、正で左にかしげる)" type="num" />
+        <value prop_name="HEAD_TRACK.lateral" min="0"   max="90"  default="30"   label="顔の横可動角度" type="num" />
+        <value prop_name="HEAD_TRACK.above"   min="-90" max="90"  default="30"   label="顔の上可動角度" type="num" />
+        <value prop_name="HEAD_TRACK.below"   min="-90" max="90"  default="15"   label="顔の下可動角度" type="num" />
+        <value prop_name="HEAD_TRACK.behind"  min="0"   max="180" defalut="90"   label="顔の追従最大角度" type="scale" />
+        <value prop_name="HEAD_TRACK.speed"   min="0"   max="1.0" default="0.04" label="顔の回転速度" type="num" />
+        <value prop_name="HEAD_TRACK.ofsx"    min="-90" max="90"  default="0"    label="横回転Offset (右＜0＜左)" type="num" />
+        <value prop_name="HEAD_TRACK.ofsy"    min="-90" max="90"  default="0"    label="縦回転Offset (下＜0＜上) " type="num" />
+        <value prop_name="HEAD_TRACK.ofsz"    min="-90" max="90"  default="0"    label="回転Offset (右＜0＜左)" type="num" />
 
-        <value prop_name="EYE_TRACK.inside"   min="0"   max="90"  default="35"   label="目の内側可動角度" type="num" />
-        <value prop_name="EYE_TRACK.outside"  min="0"   max="90"  default="65"   label="目の外側可動角度" type="num" />
-        <value prop_name="EYE_TRACK.above"    min="-90" max="90"  default="10"   label="目の上方向可動角度" type="num" />
-        <value prop_name="EYE_TRACK.below"    min="-90" max="90"  default="20"   label="目の下方向可動角度" type="num" />
-        <value prop_name="EYE_TRACK.behind"   min="0"   max="180" default="0.04" label="目が追従をあきらめる角度" type="scale" />
+        <value prop_name="EYE_TRACK.inside"   min="0"   max="90"  default="35"   label="目の内可動角度" type="num" />
+        <value prop_name="EYE_TRACK.outside"  min="0"   max="90"  default="65"   label="目の外可動角度" type="num" />
+        <value prop_name="EYE_TRACK.above"    min="-90" max="90"  default="10"   label="目の上可動角度" type="num" />
+        <value prop_name="EYE_TRACK.below"    min="-90" max="90"  default="20"   label="目の下可動角度" type="num" />
+        <value prop_name="EYE_TRACK.behind"   min="0"   max="180" default="0.04" label="目の追従最大角度" type="scale" />
         <value prop_name="EYE_TRACK.speed"    min="0"   max="1.0" default="0.07" label="目の回転速度" type="num" />
-        <value prop_name="EYE_TRACK.ofsx"     min="-90" max="90"  default="0"    label="横オフセット (負で寄り目、正で離れ目)" type="num" />
-        <value prop_name="EYE_TRACK.ofsy"     min="-90" max="90"  default="0"    label="縦オフセット (負で下、正で上)" type="num" />
+        <value prop_name="EYE_TRACK.ofsx"     min="-90" max="90"  default="0"    label="横Offset (寄り＜0＜離れ)" type="num" />
+        <value prop_name="EYE_TRACK.ofsy"     min="-90" max="90"  default="0"    label="縦Offset (下＜0＜上)" type="num" />
     </mod>
+
 </mods>
