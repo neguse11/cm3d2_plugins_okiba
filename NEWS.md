@@ -1,3 +1,10 @@
+### 2015/11/1
+
+ - AddModsSlider
+    - [0.1.2.17](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin/tree/93c9644d35853f425654ccfc26941d86e15c84b3)へ更新
+ - MaidVoicePitch
+    - @PropSet等のスクリプトフックが動作していなかったのを修正 (その５>>376, >>378)
+
 ### 2015/10/31
 
  - バージョン 1.15 対応
