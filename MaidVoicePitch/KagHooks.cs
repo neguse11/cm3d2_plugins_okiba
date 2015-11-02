@@ -7,7 +7,6 @@ internal static class KagHooks
 {
     static bool bKagTagPropSetHooked = false;
     static string PluginName;
-    static MethodInfo GetMaidAndManMethodInfo;
     static MethodInfo GetWaitEventListMethodInfo;
     delegate bool TagProcDelegate(BaseKagManager baseKagManager, KagTagSupport tag_data);
 
@@ -61,15 +60,15 @@ internal static class KagHooks
 
     static bool TagPropSet(BaseKagManager baseKagManager, KagTagSupport tag_data)
     {
-        Maid maidAndMan = GetMaidAndMan(tag_data);
+        Maid maidAndMan = baseKagManager.GetMaidAndMan(tag_data);
         if (maidAndMan != null && ExSaveData.GetBool(maidAndMan, PluginName, "PROPSET_OFF", false))
         {
             string str = tag_data.GetTagProperty("category").AsString();
             if (Array.IndexOf(PluginHelper.MpnStrings, str) >= 0)
             {
 #if DEBUG
-				Console.WriteLine("PROPSET_OFF(category={0}) -> match", str);
-				Helper.Log("PROPSET_OFF(category={0}) -> match", str);
+                Console.WriteLine("PROPSET_OFF(category={0}) -> match", str);
+                Helper.Log("PROPSET_OFF(category={0}) -> match", str);
 #endif
                 return false;
             }
@@ -80,7 +79,7 @@ internal static class KagHooks
 
     static bool TagEyeToCamera(BaseKagManager baseKagManager, KagTagSupport tag_data)
     {
-        Maid maidAndMan = GetMaidAndMan(tag_data);
+        Maid maidAndMan = baseKagManager.GetMaidAndMan(tag_data);
         if (maidAndMan != null && ExSaveData.GetBool(maidAndMan, PluginName, "EYETOCAMERA_OFF", false))
         {
             return false;
@@ -90,7 +89,7 @@ internal static class KagHooks
 
     static bool TagFace(BaseKagManager baseKagManager, KagTagSupport tag_data)
     {
-        Maid maidAndMan = GetMaidAndMan(tag_data);
+        Maid maidAndMan = baseKagManager.GetMaidAndMan(tag_data);
         if (maidAndMan == null)
         {
             return false;
@@ -133,7 +132,7 @@ internal static class KagHooks
 
     static bool TagFaceBlend(BaseKagManager baseKagManager, KagTagSupport tag_data)
     {
-        Maid maidAndMan = GetMaidAndMan(tag_data);
+        Maid maidAndMan = baseKagManager.GetMaidAndMan(tag_data);
         if (maidAndMan == null)
         {
             return false;
@@ -156,29 +155,6 @@ internal static class KagHooks
 
         maidAndMan.FaceBlend(newName);
         return false;
-    }
-
-    static Maid GetMaidAndMan(KagTagSupport tag_data)
-    {
-        MethodInfo methodInfo = GetMaidAndManMethodInfo;
-        if (methodInfo == null)
-        {
-            // class BaseKagManager protected static Maid MaidAndMan(KagTagSupport);
-            methodInfo = typeof(BaseKagManager).GetMethod(
-                "GetMaidAndMan",
-                BindingFlags.NonPublic | BindingFlags.Static,
-                null,
-                new Type[] { typeof(KagTagSupport) },
-                null
-            );
-            GetMaidAndManMethodInfo = methodInfo;
-        }
-        if (methodInfo == null)
-        {
-            return null;
-        }
-        object obj = methodInfo.Invoke(null, new object[] { tag_data });
-        return obj as Maid;
     }
 
     static WaitEventList GetWaitEventList(BaseKagManager baseKagManager, string list_name)
