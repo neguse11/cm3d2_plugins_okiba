@@ -19,3 +19,18 @@ notepad installer_edit.bat
 @rem installer_edit.bat の編集ができたら、以下を実行
 local-test-x64.bat
 ```
+
+## 履歴
+
+### 2015/11/04
+
+ - installer.bat
+    - 7zip の展開にシェルのモジュールではなく、msiexec を使うように修正 (その５>>78, 83)
+
+### 2015/11/03
+
+ - installer.bat
+    - 管理者権限チェックを追加
+    - バージョンチェックを追加。1.00～1.14 では動作しないように修正
+ - base.bat
+    - バージョンチェックを追加。1.00～1.14 では動作しないように修正

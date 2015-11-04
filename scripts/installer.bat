@@ -10,11 +10,11 @@ set "UNITYINJECTOR_URL=https://mega.nz/#!jxBWXBpA!hzTpIK6OVjifmANK1N-E_NDFFbG48i
 set "UNITYINJECTOR_7Z=UnityInjector_1.0.4.0.7z"
 set "UNITYINJECTOR_PASSWD=byreisen"
 
-set "_7Z_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip"
-set "_7Z_FILE=%TEMP%\7za920.zip"
+set "_7ZMSI_URL=http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7z920.msi"
+set "_7ZMSI_FILE=%TEMP%\7z920.msi"
 
 set "REIPATCHER_INI=CM3D2%PLATFORM%.ini"
-set "_7z=%ROOT%\_7z\7za.exe"
+set "_7z=%ROOT%\_7z\7z.exe"
 set "MEGADL=%ROOT%\%OKIBA_DIR%\scripts\megadl.exe"
 
 set "INSTALL_PATH="
@@ -25,7 +25,7 @@ set "SAME_PATH="
 @rem
 @rem テンポラリ用の乱数を生成
 @rem
-for /f "tokens=* USEBACKQ" %%F in (`powershell -Command "Get-Random;"`) do (
+for /f "tokens=* USEBACKQ" %%F in (`powershell -Command "'' + $(Get-Date -format 'yyyyMMdd_HHmmss_') + $(Get-Random)"`) do (
   set TEMP_RAND=%%F
 )
 
@@ -33,19 +33,41 @@ for /f "tokens=* USEBACKQ" %%F in (`powershell -Command "Get-Random;"`) do (
 @rem
 @rem
 if not defined ROOT (
-  echo "インストーラーから実行してください （環境変数 ROOT が未設定）"
+  echo "エラー：インストーラーから実行してください （環境変数 ROOT が未設定）"
   exit /b 1
 )
 
 if not defined PLATFORM (
-  echo "インストーラーから実行してください （環境変数 PLATFORM が未設定）"
+  echo "エラー：インストーラーから実行してください （環境変数 PLATFORM が未設定）"
   exit /b 1
 )
 
 if not defined OKIBA_BRANCH (
-  echo "インストーラーから実行してください （環境変数 OKIBA_BRANCH が未設定）"
+  echo "エラー：インストーラーから実行してください （環境変数 OKIBA_BRANCH が未設定）"
   exit /b 1
 )
+
+
+@rem
+@rem 管理者権限を確認
+@rem
+@rem http://stackoverflow.com/a/21295806/2132223
+@rem
+
+echo "管理者権限を確認しています..."
+
+set "IS_ADMIN="
+sfc 2>&1 | find /i "/SCANNOW" >nul
+if not %errorLevel% == 0 (
+  echo.
+  echo "エラー：管理者権限が無いため、実行を中止します。"
+  echo "ゲーム本体のインストーラーを実行した際と同じユーザーで実行してください。"
+  echo.
+  exit /b 1
+)
+set "IS_ADMIN=True"
+
+echo "管理者権限があることを確認しました。"
 
 
 @rem
@@ -62,7 +84,7 @@ for /F "usebackq skip=2 tokens=1-2*" %%A in (`REG QUERY "%CSC_REG_KEY%" /v "%CSC
 set "CSC=%CSC_PATH%\csc.exe"
 
 if not exist "%CSC%" (
-  echo ".NET Framework 3.5 が見つかりません" 
+  echo "エラー：.NET Framework 3.5 が見つかりません" 
   echo "インストール後に実行してください" 
   exit /b 1
 )
@@ -108,10 +130,10 @@ if defined VERSION_CHECK (
     if exist "%INSTALL_PATH%" (
       pushd "%INSTALL_PATH%"
       findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,10[0-9]$" Update.lst && set "BAD_VERSION=True"
-      findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,110$" Update.lst && set "BAD_VERSION=True"
+      findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-4]$" Update.lst && set "BAD_VERSION=True"
       popd
       if defined BAD_VERSION (
-        echo "非対応のバージョンの CM3D2 がインストールされています。"
+        echo "エラー：非対応のバージョンの CM3D2 がインストールされています。"
         echo.
         echo "現在インストールされているバージョン："
         pushd "%INSTALL_PATH%"
@@ -149,13 +171,13 @@ if defined INSTALL_PATH (
 
 
 if defined SAME_PATH (
-  echo "通常のゲームがインストールされたフォルダーでの実行はできません" 
+  echo "エラー：通常のゲームがインストールされたフォルダーでの実行はできません" 
   echo "改造版用のフォルダーを別に作り、そこで実行してください" 
   exit /b 1
 )
 
 if exist "%ROOT%\ReiPatcher" (
-  echo "ReiPatcher が既に存在しています"
+  echo "エラー：ReiPatcher が既に存在しています"
   echo "フォルダー「%ROOT%\ReiPatcher」が存在するため、処理を中止します" 
   echo.
   echo "このインストーラーは新規インストール用です"
@@ -164,7 +186,7 @@ if exist "%ROOT%\ReiPatcher" (
 )
 
 if exist "%ROOT%\UnityInjector" (
-  echo "UnityInjector が既に存在しています"
+  echo "エラー：UnityInjector が既に存在しています"
   echo "フォルダー「%ROOT%\UnityInjector」が存在するため、処理を中止します"
   echo.
   echo "このインストーラーは新規インストール用です"
@@ -179,12 +201,13 @@ if exist "%ROOT%\UnityInjector" (
 cd|findstr /R "[\^'%%]">"%TEMP%\cm3d2_okiba_bad_dir"
 for /f %%i in ("%TEMP%\cm3d2_okiba_bad_dir") do set size=%%~zi
 if %size% gtr 0 (
-  echo "フォルダー名が不適切です"
+  echo "エラー：フォルダー名が不適切です"
   echo "フォルダーに不適切な文字が含まれているため、処理を中止します"
   echo.
   echo "フォルダー名には「^」「'」「%%」を含めることはできません"
   exit /b 1
 )
+del "%TEMP%\cm3d2_okiba_bad_dir"
 
 
 @rem
@@ -205,6 +228,8 @@ exit /b 1
 @rem
 @rem %TEMP%\_7z\ 下に 7zip を展開する
 @rem
+@rem todo テンポラリを削除する機能をつけること
+@rem
 set "TEMP7Z=%TEMP%\cm3d2_okiba_7z_%TEMP_RAND%"
 rmdir /s /q _7z >nul 2>&1
 mkdir _7z >nul 2>&1 || goto _7Z_DIR_ERROR1
@@ -213,32 +238,34 @@ mkdir "%TEMP7Z%" >nul 2>&1 || goto _7Z_DIR_ERROR2
 goto _7Z_DIR_OK
 
 :_7Z_DIR_ERROR1
-echo "ディレクトリ「_7z」の生成に失敗しました。" && exit /b 1
+echo "エラー：ディレクトリ「_7z」の生成に失敗しました。" && exit /b 1
 
 :_7Z_DIR_ERROR2
-echo "ディレクトリ「%TEMP7Z%」の生成に失敗しました。" && exit /b 1
+echo "エラー：ディレクトリ「%TEMP7Z%」の生成に失敗しました。" && exit /b 1
 
 :_7Z_DIR_OK
 
 pushd _7z
-if not exist "%_7Z_FILE%" (
-  echo "7zのアーカイブ「%_7Z_URL%」のダウンロード中"
-  powershell -Command "(New-Object Net.WebClient).DownloadFile('%_7Z_URL%', '%_7Z_FILE%')"
+
+if not exist "%_7ZMSI_FILE%" (
+  echo "7zのアーカイブ「%_7ZMSI_URL%」のダウンロード中"
+  powershell -Command "(New-Object Net.WebClient).DownloadFile('%_7ZMSI_URL%', '%_7ZMSI_FILE%')"
   if not exist "%_7Z_FILE%" (
-    echo "7zのアーカイブ「%_7Z_URL%」のダウンロードに失敗しました。"
+    echo "エラー：7zのアーカイブ「%_7ZMSI_URL%」のダウンロードに失敗しました。"
     exit /b 1
   )
 )
-@rem powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%ROOT%\_7z\%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%ROOT%\_7z').copyhere($i,0x14)}"
-powershell -Command "$s=new-object -com shell.application;$z=$s.NameSpace('%_7Z_FILE%');foreach($i in $z.items()){$s.Namespace('%TEMP7Z%').copyhere($i,0x14)}"
-if not exist "%TEMP7Z%\7za.exe" (
-  echo "7zのアーカイブの展開に失敗しました。"
+
+rem その５＞＞78, 83
+start /wait msiexec /quiet /a "%_7ZMSI_FILE%" targetdir="%TEMP7Z%"
+if not exist "%TEMP7Z%\Files\7-Zip\7z.exe" (
+  echo "エラー：7zのアーカイブの展開に失敗しました。"
   exit /b 1
 )
 
-copy /y "%TEMP7Z%\*.*" . >nul 2>&1
-if not exist ".\7za.exe" (
-  echo "7zのアーカイブの展開後のコピーに失敗しました。"
+copy /y "%TEMP7Z%\Files\7-Zip\*.*" . >nul 2>&1
+if not exist ".\7z.exe" (
+  echo "エラー：7zのアーカイブの展開後のコピーに失敗しました。"
   exit /b 1
 )
 
@@ -256,7 +283,7 @@ echo "「%OKIBA_URL%」から「%OKIBA_FILE%」のダウンロード中"
 @rem:http://stackoverflow.com/a/20476904/2132223
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%OKIBA_URL%', '%OKIBA_FILE%')"
 if not exist "%OKIBA_FILE%" (
-  echo "「%OKIBA_FILE%」のダウンロードに失敗しました。"
+  echo "エラー：「%OKIBA_FILE%」のダウンロードに失敗しました。"
   exit /b 1
 )
 
@@ -266,7 +293,7 @@ rmdir /s /q "%OKIBA_DIR%" >nul 2>&1
 @rem http://stackoverflow.com/questions/2359372/
 "%_7z%" -y x "%OKIBA_FILE%" >nul 2>&1
 if not exist "%OKIBA_DIR%\config.bat.txt" (
-  echo "「%OKIBA_FILE%」の展開に失敗しました"
+  echo "エラー：「%OKIBA_FILE%」の展開に失敗しました"
   exit /b 1
 )
 del "%OKIBA_FILE%" >nul 2>&1
@@ -282,7 +309,7 @@ pushd "%ROOT%\%OKIBA_DIR%\scripts\"
 "%CSC%" /nologo megadl.cs
 popd
 if not exist "%MEGADL%" (
-  echo "「%ROOT%\%OKIBA_DIR%\scripts\megadl.cs」のコンパイルに失敗しました"
+  echo "エラー：「%ROOT%\%OKIBA_DIR%\scripts\megadl.cs」のコンパイルに失敗しました"
   exit /b 1
 )
 
@@ -294,7 +321,7 @@ echo "「%REIPATCHER_URL%」をダウンロード中"
 if not exist "%REIPATCHER_7Z%" (
     "%MEGADL%" %REIPATCHER_URL% "%REIPATCHER_7Z%"
     if not exist "%REIPATCHER_7Z%" (
-      echo "「%REIPATCHER_URL%」のダウンロードに失敗しました"
+      echo "エラー：「%REIPATCHER_URL%」のダウンロードに失敗しました"
       exit /b 1
     )
 )
@@ -307,7 +334,7 @@ echo "「%UNITYINJECTOR_URL%」をダウンロード中"
 if not exist "%UNITYINJECTOR_7Z%" (
     "%MEGADL%" %UNITYINJECTOR_URL% "%UNITYINJECTOR_7Z%"
     if not exist "%UNITYINJECTOR_7Z%" (
-      echo "「%UNITYINJECTOR_7Z%」のダウンロードに失敗しました"
+      echo "エラー：「%UNITYINJECTOR_7Z%」のダウンロードに失敗しました"
       exit /b 1
     )
 )
@@ -317,7 +344,7 @@ if not exist "%UNITYINJECTOR_7Z%" (
 @rem ROOT\ReiPatcher\ 下に ReiPatcher を展開する
 @rem
 if not exist "%REIPATCHER_7Z%" (
-  echo "ReiPatcherのアーカイブファイル「%REIPATCHER_7Z%」がありません"
+  echo "エラー：ReiPatcherのアーカイブファイル「%REIPATCHER_7Z%」がありません"
   echo "アーカイブをダウンロードして、「%ROOT%」に配置してください"
   exit /b 1
 )
@@ -358,7 +385,7 @@ echo "ReiPatcherの展開完了"
 @rem ROOT\UnityInjector\ 下に UnityInjector を展開する
 @rem
 if not exist "%UNITYINJECTOR_7Z%" (
-  echo "UnityInjectorのアーカイブファイル「%UNITYINJECTOR_7Z%」がありません"
+  echo "エラー：UnityInjectorのアーカイブファイル「%UNITYINJECTOR_7Z%」がありません"
   echo "アーカイブをダウンロードして、「%ROOT%」に配置してください"
   exit /b 1
 )
