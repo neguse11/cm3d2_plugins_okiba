@@ -134,7 +134,7 @@ if defined VERSION_CHECK (
     if exist "%CM3D2_VANILLA_DIR%" (
       pushd "%CM3D2_VANILLA_DIR%"
       findstr /i /r "^CM3D2%CM3D2_PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,10[0-9]$" Update.lst && set "BAD_VERSION=True"
-      findstr /i /r "^CM3D2%CM3D2_PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-4]$" Update.lst && set "BAD_VERSION=True"
+      findstr /i /r "^CM3D2%CM3D2_PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-5]$" Update.lst && set "BAD_VERSION=True"
       popd
       if defined BAD_VERSION (
         echo "非対応のバージョンの CM3D2 がインストールされています。"
