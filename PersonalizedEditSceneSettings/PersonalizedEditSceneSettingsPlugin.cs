@@ -1,4 +1,4 @@
-﻿using CM3D2.ExternalSaveData.Managed;
+using CM3D2.ExternalSaveData.Managed;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using PluginBase = CM3D2.DynamicLoader.Plugin.DynamicPluginBase;
 
 namespace CM3D2.PersonalizedEditSceneSettings.Plugin
 {
-    [PluginName("CM3D2 PersonalizedEditSceneSettings"), PluginVersion("0.1.4.0")]
+    [PluginName("CM3D2 PersonalizedEditSceneSettings"), PluginVersion("0.1.5.0")]
     public class PersonalizedEditSceneSettings : PluginBase
     {
         const string PluginName = "CM3D2.PersonalizedEditSceneSettings";
@@ -117,6 +117,10 @@ namespace CM3D2.PersonalizedEditSceneSettings.Plugin
                     }
                     foreach (Transform t in goGrid.transform)
                     {
+                        if (!t.name.StartsWith("Pose_"))
+                        {
+                            continue;
+                        }
                         GameObject go = t.gameObject;
                         UIButton uiButton = go.GetComponent<UIButton>();
                         EventDelegate.Add(uiButton.onClick, poseButtonCallback);
@@ -382,7 +386,7 @@ namespace CM3D2.PersonalizedEditSceneSettings.Plugin
             return field == null ? null : field.GetValue(instance);
         }
 
-		[System.Diagnostics.Conditional("DEBUG")]
+        [System.Diagnostics.Conditional("DEBUG")]
         public static void DebugWriteLine(string str)
         {
             Console.WriteLine(str);
