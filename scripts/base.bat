@@ -120,8 +120,9 @@ if not exist "%CSC%" (
 @rem
 @rem 更新時の注意：x64, x86 版のみバージョンチェックを行う。
 @rem 更新時の注意：上記以外のプラットフォームはバージョン命名規則が違うためチェック対象にしないこと
-@rem 更新時の注意：バージョンチェックは「対応していないバージョン」を検出すること
-@rem 更新時の注意：未来のバージョンについてはユーザーがチャレンジする余地を残すこと
+@rem 更新時の注意：masterブランチのバージョンチェックは「対応確認をしているバージョン」を検出すること
+@rem 更新時の注意：developブランチのバージョンチェックは「対応していないバージョン」を検出すること
+@rem 更新時の注意：developブランチでは、未来のバージョンについてはユーザーがチャレンジする余地を残すこと
 @rem 更新時の注意：installer.bat内のバージョンチェックも更新すること
 @rem
 set "VERSION_CHECK="
@@ -133,8 +134,13 @@ if defined VERSION_CHECK (
   if defined CM3D2_VANILLA_DIR (
     if exist "%CM3D2_VANILLA_DIR%" (
       pushd "%CM3D2_VANILLA_DIR%"
-      findstr /i /r "^CM3D2%CM3D2_PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,10[0-9]$" Update.lst && set "BAD_VERSION=True"
-      findstr /i /r "^CM3D2%CM3D2_PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-5]$" Update.lst && set "BAD_VERSION=True"
+      if "%OKIBA_BRANCH%" == "master" (
+        findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,10[0-9]$" Update.lst && set "BAD_VERSION=True"
+        findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-57-9]$" Update.lst && set "BAD_VERSION=True"
+      ) else (
+        findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,10[0-9]$" Update.lst && set "BAD_VERSION=True"
+        findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-5]$" Update.lst && set "BAD_VERSION=True"
+      )
       popd
       if defined BAD_VERSION (
         echo "非対応のバージョンの CM3D2 がインストールされています。"
