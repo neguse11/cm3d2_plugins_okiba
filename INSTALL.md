@@ -1,7 +1,10 @@
 # ネットワークインストーラーもどき
 
   - 公式パッチ 1.16 でのみ動作します
-  - 公式パッチ 1.17 以降の場合は(developブランチ)[DEVELOP.md]を使用してください
+  - 公式パッチ 1.17 以降の場合は[developブランチ](DEVELOP.md)を使用してください
+
+
+## 概要
 
 実行を行うと、以下の要素を自動設定します
 
@@ -9,14 +12,7 @@
  - [UnityInjector](http://www.hongfire.com/forum/showthread.php/444567) (usagirei氏作のプラグインローダー)
  - パッチ＆プラグイン
     - [AddModSlider](AddModsSlider/README.md) ([CM3D2-01氏作](https://github.com/CM3D2-01/CM3D2.AddModsSlider.Plugin)。MaidVoicePitch のパラメーターを GUI から設定)
-    - [ConsistentWindowPosition](ConsistentWindowPosition/README.md) (ウィンドウ位置の保存)
-    - [ConsoleCodePage](ConsoleCodePage/README.md) ([asm256氏作](https://gist.github.com/asm256/9bfb88336a1433e2328a)。コンソールの文字化け解消)
-    - [ExternalSaveData](ExternalSaveData/README.md) (拡張セーブデータ)
-    - [FastFade](FastFade/README.md) (フェードイン高速化)
-    - [MaidVoicePitch](MaidVoicePitch/README.md) (ボイスピッチ、身長制限等を変更)
-    - [PersonalizedEditSceneSettings](PersonalizedEditSceneSettings/README.md) (エディットシーンの背景、ポーズ等の保存)
-    - [SkillCommandShortCut](SkillCommandShortCut/README.md) (スキルをショートカットキーで選択)
-    - [VoiceNormalizer](VoiceNormalizer/README.md) (音声の音量の正規化)
+    - [その他いろいろ](PLUGINS.md)
 
 
 ## 準備
@@ -25,7 +21,7 @@
  - Microsoft .NET Framework 3.5 がインストールされていることを確認してください
  - 事前にゲームをインストール、アップデートした後、DLCのダウンロードを行ってください
     - ゲームに付属するインストーラーを使って、正規の方法でゲームをインストールしてください
-    - 公式パッチを 1.15 まで適用してください
+    - 公式パッチを 1.16 まで適用してください
         - 可能なら 32bit(x86), 64bit(x64) の両方のパッチを適用することを推奨します
     - ランチャー (CM3D2.exe) からゲームを起動し、DLCを含めて正常に動作することを確認してください
 
@@ -101,6 +97,11 @@ cd cm3d2_plugins_okiba-master
 ## 動作の確認
 
 セーブデータのロード後、「メイド管理」→「エディット」へ移動し、「F5」キーを押して画面右側にスライダーが出ることを確認してください
+
+
+## 消したいとき
+
+`C:\KISS\CM3D2_KAIZOU` フォルダーを削除してください
 
 
 ## 上級者向け：個別コンパイル
