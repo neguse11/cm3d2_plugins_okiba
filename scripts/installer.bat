@@ -53,21 +53,21 @@ if not defined OKIBA_BRANCH (
 @rem
 @rem http://stackoverflow.com/a/21295806/2132223
 @rem
-
-echo "管理者権限を確認しています..."
-
-set "IS_ADMIN="
-sfc 2>&1 | find /i "/SCANNOW" >nul
-if not %errorLevel% == 0 (
-  echo.
-  echo "エラー：管理者権限が無いため、実行を中止します。"
-  echo "ゲーム本体のインストーラーを実行した際と同じユーザーで実行してください。"
-  echo.
-  exit /b 1
-)
-set "IS_ADMIN=True"
-
-echo "管理者権限があることを確認しました。"
+@rem 
+@rem echo "管理者権限を確認しています..."
+@rem 
+@rem set "IS_ADMIN="
+@rem sfc 2>&1 | find /i "/SCANNOW" >nul
+@rem if not %errorLevel% == 0 (
+@rem   echo.
+@rem   echo "エラー：管理者権限が無いため、実行を中止します。"
+@rem   echo "ゲーム本体のインストーラーを実行した際と同じユーザーで実行してください。"
+@rem   echo.
+@rem   exit /b 1
+@rem )
+@rem set "IS_ADMIN=True"
+@rem 
+@rem echo "管理者権限があることを確認しました。"
 
 
 @rem
