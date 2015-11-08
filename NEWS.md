@@ -1,3 +1,9 @@
+### 2015/11/8
+
+ - バージョン 1.16 対応
+ - PersonalizedEditSceneSettings
+    - ポーズの操作方法を修正
+
 ### 2015/11/1
 
  - AddModsSlider
