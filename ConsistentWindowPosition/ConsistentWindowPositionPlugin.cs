@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityInjector.Attributes;
 
 namespace CM3D2.ConsistentWindowPosition.Plugin
 {
-    [PluginName("CM3D2 Consistent Window Position"), PluginVersion("0.1.2.0")]
+    [PluginName("CM3D2 Consistent Window Position"), PluginVersion("0.1.3.0")]
     public class ConsistentWindowPositionPlugin : UnityInjector.PluginBase
     {
         static readonly string windowTitle = "CUSTOM MAID 3D 2";
@@ -17,6 +18,10 @@ namespace CM3D2.ConsistentWindowPosition.Plugin
 
         void Awake()
         {
+            if (IsVr())
+            {
+                return;
+            }
             GameObject.DontDestroyOnLoad(this);
             hWnd = Win32.FindCurrentApplicationWindow(windowTitle, windowClass);
             LoadWindowPosition(hWnd);
@@ -76,6 +81,13 @@ namespace CM3D2.ConsistentWindowPosition.Plugin
         {
             // ウィンドウスタイルに WS_DISABLED が指定されないように補正 (その５>>69)
             style &= ~Win32.WS_DISABLED;
+        }
+
+        static bool IsVr()
+        {
+            string fullFilename = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            string filename = Path.GetFileNameWithoutExtension(fullFilename);
+            return filename.IndexOf("VRx64", StringComparison.OrdinalIgnoreCase) >= 0;
         }
     }
 
