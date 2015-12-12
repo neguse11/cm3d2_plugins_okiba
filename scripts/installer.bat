@@ -132,7 +132,7 @@ if defined VERSION_CHECK (
       pushd "%INSTALL_PATH%"
       if "%OKIBA_BRANCH%" == "master" (
         findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,10[0-9]$" Update.lst && set "BAD_VERSION=True"
-        findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-58-9]$" Update.lst && set "BAD_VERSION=True"
+        findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-5]$" Update.lst && set "BAD_VERSION=True"
       ) else (
         findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,10[0-9]$" Update.lst && set "BAD_VERSION=True"
         findstr /i /r "^CM3D2%PLATFORM%_Data\\Managed\\Assembly-CSharp\.dll,11[0-5]$" Update.lst && set "BAD_VERSION=True"
