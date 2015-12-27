@@ -22,6 +22,11 @@ local-test-x64.bat
 
 ## 履歴
 
+### 2015/12/27
+
+ - installer.bat, base.bat
+    - master のバージョンチェックを修正し、developと同様の動作をするように変更
+
 ### 2015/11/04
 
  - installer.bat
