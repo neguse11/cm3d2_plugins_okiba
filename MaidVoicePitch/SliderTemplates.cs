@@ -38,7 +38,7 @@ internal static class SliderTemplates
         }
         string fname = ExSaveData.Get(maid, PluginName, "SLIDER_TEMPLATE", "UnityInjector/Config/MaidVoicePitchSlider.xml");
         SliderTemplate sliderTemplate = sliderTemplates.Get(fname);
-        string guid = maid.Param.status.guid;
+        string guid = maid.status.guid;
         if (sliderTemplate != null && !sliderTemplate.LoadedMaidGuids.Contains(guid))
         {
             sliderTemplate.WriteProps(maid);
