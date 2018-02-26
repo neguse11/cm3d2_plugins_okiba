@@ -40,7 +40,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 SetMaid(maid);
             }
-            return PluginSettings.Get(maid.Param.status.guid, pluginName, propName, defaultValue);
+            return PluginSettings.Get((string)Helper.GetMaidStatusValue(maid, "guid"), pluginName, propName, defaultValue);
         }
 
         public static bool GetBool(Maid maid, string pluginName, string propName, bool defaultValue)
@@ -87,7 +87,7 @@ namespace CM3D2.ExternalSaveData.Managed
                     return false;
                 }
             }
-            return PluginSettings.Set(maid.Param.status.guid, pluginName, propName, value);
+            return PluginSettings.Set((string)Helper.GetMaidStatusValue(maid, "guid"), pluginName, propName, value);
         }
 
         public static bool SetBool(Maid maid, string pluginName, string propName, bool value, bool overwrite)
@@ -146,7 +146,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 return false;
             }
-            return PluginSettings.Remove(maid.Param.status.guid, pluginName, propName);
+            return PluginSettings.Remove((string)Helper.GetMaidStatusValue(maid, "guid"), pluginName, propName);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 SetMaid(maid);
             }
-            return PluginSettings.Contains(maid.Param.status.guid, pluginName, propName);
+            return PluginSettings.Contains((string)Helper.GetMaidStatusValue(maid, "guid"), pluginName, propName);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 return false;
             }
-            return PluginSettings.ContainsMaid(maid.Param.status.guid);
+            return PluginSettings.ContainsMaid((string)Helper.GetMaidStatusValue(maid, "guid"));
         }
 
         /// <summary>
@@ -194,8 +194,14 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 return;
             }
-            var s = maid.Param.status;
-            PluginSettings.SetMaid(s.guid, s.last_name, s.first_name, s.create_time);
+            var s = Helper.GetMaidStatus(maid);
+            var t = s.GetType();
+            string[] cm3d2keys = { "last_name", "first_name", "create_time" },  com3d2keys = { "lastName", "firstName", "creationTime" };
+            string[] keys = t.GetProperty("lastName") != null ? com3d2keys : cm3d2keys;
+            PluginSettings.SetMaid((string)t.GetProperty("guid").GetValue(s, null),
+                                   (string)t.GetProperty(keys[0]).GetValue(s, null),
+                                   (string)t.GetProperty(keys[1]).GetValue(s, null),
+                                   (string)t.GetProperty(keys[2]).GetValue(s, null));
         }
 
         /// <summary>
@@ -215,7 +221,7 @@ namespace CM3D2.ExternalSaveData.Managed
             for (int i = 0, n = cm.GetStockMaidCount(); i < n; i++)
             {
                 Maid maid = cm.GetStockMaid(i);
-                guids.Add(maid.Param.status.guid);
+                guids.Add((string)Helper.GetMaidStatusValue(maid, "guid"));
             }
             CleanupMaids(guids);
         }
@@ -393,8 +399,14 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 return false;
             }
-            var s = maid.Param.status;
-            return PluginSettings.SetMaidName(s.guid, s.last_name, s.first_name, s.create_time);
+            var s = Helper.GetMaidStatus(maid);
+            var t = s.GetType();
+            string[] cm3d2keys = { "last_name", "first_name", "create_time" },  com3d2keys = { "lastName", "firstName", "creationTime" };
+            string[] keys = t.GetProperty("lastName") != null ? com3d2keys : cm3d2keys;
+            return PluginSettings.SetMaidName((string)t.GetProperty("guid").GetValue(s, null),
+                                              (string)t.GetProperty(keys[0]).GetValue(s, null),
+                                              (string)t.GetProperty(keys[1]).GetValue(s, null),
+                                              (string)t.GetProperty(keys[2]).GetValue(s, null));
         }
 
         //

@@ -161,4 +161,17 @@ internal static class Helper
     {
         return FileVersionInfo.GetVersionInfo(GetCurrentAssembly().Location);
     }
+
+    public static object GetMaidStatus(Maid maid) {
+        var type = maid.GetType();
+        PropertyInfo pi = type.GetProperty("Param");
+        var param = (pi != null ? pi.GetValue(maid, null) : maid);
+        return param.GetType().GetProperty("status").GetValue(param, null);
+    }
+
+    public static object GetMaidStatusValue(Maid maid, String propkey) {
+        var status = GetMaidStatus(maid);
+        PropertyInfo pi = status.GetType().GetProperty(propkey);
+        return pi.GetValue(status, null);
+    }
 }
