@@ -18,19 +18,6 @@ namespace CM3D2.ExternalSaveData.Managed
         // 通常のプラグインは "CM3D2～" のように英数字から始まる名前をつけること
         const string CallbackName = ".CM3D2 ExternalSaveData";
 
-        private static object GetMaidStatus(Maid maid) {
-            var type = maid.GetType();
-            PropertyInfo pi = type.GetProperty("Param");
-            var param = (pi != null ? pi.GetValue(maid, null) : maid);
-            return param.GetType().GetProperty("status").GetValue(param, null);
-        }
-
-        private static object GetMaidStatusValue(Maid maid, String propkey) {
-            var status = GetMaidStatus(maid);
-            PropertyInfo pi = status.GetType().GetProperty(propkey);
-            return pi.GetValue(status, null);
-        }
-
         /// <summary>
         /// 拡張セーブデータ内の設定を得る(文字列)
         /// <para>指定した設定が存在しない場合はdefaultValueを返す</para>
@@ -53,7 +40,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 SetMaid(maid);
             }
-            return PluginSettings.Get((string)GetMaidStatusValue(maid, "guid"), pluginName, propName, defaultValue);
+            return PluginSettings.Get((string)Helper.GetMaidStatusValue(maid, "guid"), pluginName, propName, defaultValue);
         }
 
         public static bool GetBool(Maid maid, string pluginName, string propName, bool defaultValue)
@@ -100,7 +87,7 @@ namespace CM3D2.ExternalSaveData.Managed
                     return false;
                 }
             }
-            return PluginSettings.Set((string)GetMaidStatusValue(maid, "guid"), pluginName, propName, value);
+            return PluginSettings.Set((string)Helper.GetMaidStatusValue(maid, "guid"), pluginName, propName, value);
         }
 
         public static bool SetBool(Maid maid, string pluginName, string propName, bool value, bool overwrite)
@@ -159,7 +146,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 return false;
             }
-            return PluginSettings.Remove((string)GetMaidStatusValue(maid, "guid"), pluginName, propName);
+            return PluginSettings.Remove((string)Helper.GetMaidStatusValue(maid, "guid"), pluginName, propName);
         }
 
         /// <summary>
@@ -179,7 +166,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 SetMaid(maid);
             }
-            return PluginSettings.Contains((string)GetMaidStatusValue(maid, "guid"), pluginName, propName);
+            return PluginSettings.Contains((string)Helper.GetMaidStatusValue(maid, "guid"), pluginName, propName);
         }
 
         /// <summary>
@@ -193,7 +180,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 return false;
             }
-            return PluginSettings.ContainsMaid((string)GetMaidStatusValue(maid, "guid"));
+            return PluginSettings.ContainsMaid((string)Helper.GetMaidStatusValue(maid, "guid"));
         }
 
         /// <summary>
@@ -207,7 +194,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 return;
             }
-            var s = GetMaidStatus(maid);
+            var s = Helper.GetMaidStatus(maid);
             var t = s.GetType();
             string[] cm3d2keys = { "last_name", "first_name", "create_time" },  com3d2keys = { "lastName", "firstName", "creationTime" };
             string[] keys = t.GetProperty("lastName") != null ? com3d2keys : cm3d2keys;
@@ -234,7 +221,7 @@ namespace CM3D2.ExternalSaveData.Managed
             for (int i = 0, n = cm.GetStockMaidCount(); i < n; i++)
             {
                 Maid maid = cm.GetStockMaid(i);
-                guids.Add((string)GetMaidStatusValue(maid, "guid"));
+                guids.Add((string)Helper.GetMaidStatusValue(maid, "guid"));
             }
             CleanupMaids(guids);
         }
@@ -412,7 +399,7 @@ namespace CM3D2.ExternalSaveData.Managed
             {
                 return false;
             }
-            var s = GetMaidStatus(maid);
+            var s = Helper.GetMaidStatus(maid);
             var t = s.GetType();
             string[] cm3d2keys = { "last_name", "first_name", "create_time" },  com3d2keys = { "lastName", "firstName", "creationTime" };
             string[] keys = t.GetProperty("lastName") != null ? com3d2keys : cm3d2keys;
